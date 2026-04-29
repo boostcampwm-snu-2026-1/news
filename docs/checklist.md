@@ -2,7 +2,7 @@
 
 Use this as the first-pass implementation order. The current priority is to make the publisher grid usable before building ticker and opened-press article flows. Mark items complete only after the behavior is implemented and checked in the running UI when possible.
 
-- [ ] Define Tailwind/CSS design tokens from `docs/design-notes.md`: colors, type scale, spacing, radii, borders, and motion durations.
+- [x] Define Tailwind/CSS design tokens from `docs/design-notes.md`: colors, type scale, spacing, radii, borders, and motion durations.
 - [ ] Define TypeScript types for publishers, articles, ticker items, categories, wordmark styling, and newsstand state.
 - [ ] Prepare publisher-first mock data: at least 48 publishers, categories, wordmark styling, and initial subscriptions.
 - [ ] Create the base newsstand page shell that centers the 930px content column and reserves space for future header/ticker areas.
