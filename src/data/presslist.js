@@ -1,4 +1,4 @@
-const presslist = [
+const pressList = [
   { id: 1,  name: "조선일보",    logo: "/logos/chosun.png",       url: "https://www.chosun.com" },
   { id: 2,  name: "중앙일보",    logo: "/logos/joongang.png",     url: "https://www.joongang.co.kr" },
   { id: 3,  name: "동아일보",    logo: "/logos/donga.png",        url: "https://www.donga.com" },
@@ -101,4 +101,4 @@ const presslist = [
   { id: 100, name: "그린포스트코리아", logo: "/logos/greenpostkorea.png", url: "https://www.greenpostkorea.co.kr" },
 ];
 
-export default presslist;
+export default pressList;
