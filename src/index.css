@@ -9,6 +9,9 @@
   --ns-text-muted: #aaa;
   --ns-radius: 8px;
   --ns-shadow-card: 0 1px 4px rgba(0, 0, 0, 0.08);
+  --ns-overlay-bg: rgba(0, 0, 0, 0.55);
+  --ns-overlay-btn: #ffffff;
+  --ns-overlay-btn-hover: #b0b0b0;
 
   --text: #6b6375;
   --text-h: #08060d;

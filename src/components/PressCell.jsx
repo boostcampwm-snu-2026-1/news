@@ -17,6 +17,11 @@ export default function PressCell({ press }) {
         onError={() => setLogoFailed(true)}
       />
       <span className={styles.name}>{press.name}</span>
+
+      <div className={styles.overlay}>
+        <button className={styles.overlayBtn}>구독</button>
+        <button className={styles.overlayBtn}>기사보기</button>
+      </div>
     </div>
   );
 }

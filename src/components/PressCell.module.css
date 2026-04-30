@@ -1,4 +1,5 @@
 .cell {
+  position: relative;
   border-right: 1px solid var(--ns-border);
   border-bottom: 1px solid var(--ns-border);
   display: flex;
@@ -23,4 +24,38 @@
   text-align: center;
   line-height: 1.3;
   word-break: keep-all;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--ns-overlay-bg);
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.2s ease;
+}
+
+.cell:hover .overlay {
+  opacity: 1;
+}
+
+.overlayBtn {
+  background: none;
+  border: none;
+  color: var(--ns-overlay-btn);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  padding: 4px 12px;
+  transition: color 0.15s;
+}
+
+.overlayBtn:hover {
+  color: var(--ns-overlay-btn-hover);
+  text-decoration: underline;
 }
