@@ -1,51 +1,53 @@
 .newsstand-shell {
   min-height: 100vh;
-  background: #fefefe;
-  color: #14212b;
+  background: var(--color-page);
+  color: var(--color-ink);
 }
 
 .newsstand-canvas {
   position: relative;
-  width: min(100%, 1280px);
-  min-height: 720px;
+  width: min(100%, var(--canvas-width));
+  min-height: var(--canvas-height);
   margin: 0 auto;
-  padding-top: 58px;
+  padding-top: var(--header-top);
 }
 
 .newsstand-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 930px;
-  height: 29px;
+  width: var(--content-width);
+  height: var(--header-height);
   margin: 0 auto;
 }
 
 .newsstand-brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-8);
 }
 
 .newsstand-brand h1 {
   margin: 0;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 1;
+  font-size: var(--text-display-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-display-line-height);
+  letter-spacing: var(--letter-spacing-default);
 }
 
 .newsstand-date {
   margin: 0;
-  color: #5f6e76;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1;
+  color: var(--color-sub);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-weight);
+  line-height: var(--text-heading-line-height);
+  letter-spacing: var(--letter-spacing-default);
 }
 
 .newsstand-placeholder {
-  width: 930px;
-  height: 388px;
+  width: var(--content-width);
+  height: var(--content-height);
   margin: 169px auto 0;
-  border: 1px solid #d2dae0;
-  background: #ffffff;
+  border: var(--stroke-line);
+  background: var(--color-card);
 }
