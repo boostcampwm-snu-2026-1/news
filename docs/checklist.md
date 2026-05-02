@@ -43,7 +43,7 @@
   - 글꼴 계열, weight, italic, underline, tracking, accent char, accent bg, flag, long latin wrapping 규칙을 props 기반으로 렌더링한다.
   - 완료 기준: 긴 언론사 이름이 셀 안에서 최대 2줄로 안정적으로 줄바꿈된다.
 
-- [ ] 09. 전체 언론사 6x4 그리드 구현
+- [x] 09. 전체 언론사 6x4 그리드 구현
   - 930x388 영역, 6 columns x 4 rows, 1px gap, 각 cell 배경/중앙 정렬을 만든다.
   - 완료 기준: 24개 셀이 한 페이지에 보이고 divider가 `#D2DAE0` 1px로 표현된다.
 
