@@ -12,7 +12,7 @@
 | 4 | `<Header>` — 날짜 표시 | [x] |
 | 5 | `<Ticker>` — 2레인 텍스트 렌더링 (애니메이션 제외) | [x] |
 | 6 | `<TabBar>` — 전체/구독 탭 UI 구조 | [x] |
-| 7 | `<PressWordmark>` — CSS 전용 언론사 로고 렌더링 | [ ] |
+| 7 | `<PressWordmark>` — CSS 전용 언론사 로고 렌더링 | [x] |
 | 8 | `<GridCell>` — 셀 레이아웃 (hover 전 정적 상태) | [ ] |
 | 9 | `<PressGrid>` — 6×4 그리드 + `<Chevron>` 배치 | [ ] |
 | 10 | `<Newsstand>` 루트 상태 초안 (useReducer 뼈대) | [ ] |
