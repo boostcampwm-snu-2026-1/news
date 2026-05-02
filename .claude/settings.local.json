@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(cp -r newsstand-tmp/* newsstand-tmp/.* .)",
+      "Bash(rm -rf newsstand-tmp)",
+      "Bash(npm install:*)",
+      "Bash(npx vite:*)"
+    ]
+  }
+}
