@@ -8,7 +8,7 @@ Use this as the first-pass implementation order. The current priority is to make
 - [x] Create the base newsstand page shell that centers the 930px content column and reserves space for future header/ticker areas.
 - [x] Implement scope tabs for `전체 언론사` and `내가 구독한 언론사`, including the computed subscription-count badge.
 - [x] Implement the list/grid view toggle icons and active/inactive visual states.
-- [ ] Implement `PressWordmark` as a data-driven typographic logo component using static Tailwind utilities for layout and CSS variables or inline styles for data-driven color/tracking/accent details.
+- [x] Implement `PressWordmark` as a data-driven typographic logo component using static Tailwind utilities for layout and CSS variables or inline styles for data-driven color/tracking/accent details.
 - [ ] Implement the 6x4 publisher grid shell with 1px divider gaps, responsive fallback, and page-size constants.
 - [ ] Render publisher mock data in the grid with stable cell sizing and centered wordmarks.
 - [ ] Implement grid pagination chevrons with computed page counts, disabled state, and accessible labels.

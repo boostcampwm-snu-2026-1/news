@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import { NewsstandShell } from './components/NewsstandShell'
+import { PressWordmark } from './components/PressWordmark'
 import { ScopeTabs } from './components/ScopeTabs'
 import { ViewToggle } from './components/ViewToggle'
-import { INITIAL_SUBSCRIBED_PUBLISHER_IDS } from './data/newsStand'
+import { INITIAL_SUBSCRIBED_PUBLISHER_IDS, PUBLISHERS } from './data/newsStand'
 import type {
   NewsstandViewMode,
   Publisher,
   PublisherScope,
 } from './types/newsStand'
+
+const WORDMARK_PREVIEW_PUBLISHERS = PUBLISHERS.slice(0, 4)
 
 function App() {
   const [scope, setScope] = useState<PublisherScope>('all')
@@ -37,12 +40,21 @@ function App() {
         </div>
       }
     >
-      <div className="flex min-h-[var(--layout-content-height)] items-center justify-center border border-dashed border-line bg-card px-6 text-center">
+      <div className="flex min-h-[var(--layout-content-height)] flex-col items-center justify-center border border-dashed border-line bg-card px-6 text-center">
         <p className="text-[length:var(--text-caption-size)] font-medium leading-[var(--text-caption-leading)] text-sub">
           930px 뉴스스탠드 콘텐츠 영역
           <br />
           {placeholderMessage}
         </p>
+        <div
+          aria-label="언론사 로고 미리보기"
+          className="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3"
+          role="group"
+        >
+          {WORDMARK_PREVIEW_PUBLISHERS.map((publisher) => (
+            <PressWordmark key={publisher.id} publisher={publisher} />
+          ))}
+        </div>
       </div>
     </NewsstandShell>
   )
