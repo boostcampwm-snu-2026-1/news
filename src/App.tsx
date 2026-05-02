@@ -5,21 +5,15 @@ import { PublisherGrid } from './components/PublisherGrid'
 import { ScopeTabs } from './components/ScopeTabs'
 import { ViewToggle } from './components/ViewToggle'
 import { PUBLISHER_GRID_PAGE_SIZE } from './constants/newsStand'
-import { INITIAL_SUBSCRIBED_PUBLISHER_IDS, PUBLISHERS } from './data/newsStand'
-import type {
-  NewsstandViewMode,
-  Publisher,
-  PublisherScope,
-} from './types/newsStand'
+import { PUBLISHERS } from './data/newsStand'
+import { usePublisherSubscriptions } from './hooks/usePublisherSubscriptions'
+import type { NewsstandViewMode, PublisherScope } from './types/newsStand'
 
 function App() {
   const [scope, setScope] = useState<PublisherScope>('all')
   const [viewMode, setViewMode] = useState<NewsstandViewMode>('grid')
   const [pageIndex, setPageIndex] = useState(0)
-  const [subscribedPublisherIds] = useState<ReadonlySet<Publisher['id']>>(
-    () => new Set<Publisher['id']>(INITIAL_SUBSCRIBED_PUBLISHER_IDS),
-  )
-  const subscribedCount = subscribedPublisherIds.size
+  const { subscribedCount, subscribedPublisherIds } = usePublisherSubscriptions()
   const visiblePublishers =
     scope === 'all'
       ? PUBLISHERS
