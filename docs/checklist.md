@@ -10,7 +10,7 @@ Use this as the first-pass implementation order. The current priority is to make
 - [x] Implement the list/grid view toggle icons and active/inactive visual states.
 - [x] Implement `PressWordmark` as a data-driven typographic logo component using static Tailwind utilities for layout and CSS variables or inline styles for data-driven color/tracking/accent details.
 - [x] Implement the 6x4 publisher grid shell with 1px divider gaps, responsive fallback, and page-size constants.
-- [ ] Render publisher mock data in the grid with stable cell sizing and centered wordmarks.
+- [x] Render publisher mock data in the grid with stable cell sizing and centered wordmarks.
 - [ ] Implement grid pagination chevrons with computed page counts, disabled state, and accessible labels.
 - [ ] Implement subscription state management keyed by publisher ID.
 - [ ] Implement grid hover/focus behavior that shows `+ 구독하기` or `- 해지하기` pills without breaking keyboard access.

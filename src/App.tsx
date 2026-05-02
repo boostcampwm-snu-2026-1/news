@@ -3,7 +3,8 @@ import { NewsstandShell } from './components/NewsstandShell'
 import { PublisherGrid } from './components/PublisherGrid'
 import { ScopeTabs } from './components/ScopeTabs'
 import { ViewToggle } from './components/ViewToggle'
-import { INITIAL_SUBSCRIBED_PUBLISHER_IDS } from './data/newsStand'
+import { PUBLISHER_GRID_PAGE_SIZE } from './constants/newsStand'
+import { INITIAL_SUBSCRIBED_PUBLISHER_IDS, PUBLISHERS } from './data/newsStand'
 import type {
   NewsstandViewMode,
   Publisher,
@@ -17,6 +18,11 @@ function App() {
     () => new Set<Publisher['id']>(INITIAL_SUBSCRIBED_PUBLISHER_IDS),
   )
   const subscribedCount = subscribedPublisherIds.size
+  const visiblePublishers =
+    scope === 'all'
+      ? PUBLISHERS
+      : PUBLISHERS.filter((publisher) => subscribedPublisherIds.has(publisher.id))
+  const pagePublishers = visiblePublishers.slice(0, PUBLISHER_GRID_PAGE_SIZE)
   const gridLabel = scope === 'all' ? '전체 언론사 그리드' : '구독한 언론사 그리드'
   const placeholderMessage =
     scope === 'all'
@@ -39,7 +45,7 @@ function App() {
       }
     >
       {viewMode === 'grid' ? (
-        <PublisherGrid ariaLabel={gridLabel} />
+        <PublisherGrid ariaLabel={gridLabel} publishers={pagePublishers} />
       ) : (
         <div className="flex min-h-[var(--layout-content-height)] items-center justify-center border border-dashed border-line bg-card px-6 text-center">
           <p className="text-[length:var(--text-caption-size)] font-medium leading-[var(--text-caption-leading)] text-sub">
