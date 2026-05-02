@@ -72,10 +72,21 @@
 
   --canvas-width: 1280px;
   --canvas-height: 720px;
+  --content-gutter: 175px;
   --content-width: 930px;
   --content-height: 388px;
   --header-top: 58px;
   --header-height: 29px;
+  --ticker-top: 127px;
+  --ticker-height: 49px;
+  --tabbar-top: 208px;
+  --tabbar-height: 24px;
+  --content-top: 256px;
+  --chevron-top: 430px;
+  --chevron-left: 103px;
+  --chevron-right: 1153px;
+  --chevron-width: 24px;
+  --chevron-height: 40px;
 
   font-family: var(--font-sans);
   font-synthesis: none;

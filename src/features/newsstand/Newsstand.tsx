@@ -1,4 +1,4 @@
-import { Newspaper } from "lucide-react";
+import { ChevronLeft, ChevronRight, Newspaper } from "lucide-react";
 
 import "./Newsstand.css";
 
@@ -13,7 +13,17 @@ export function Newsstand() {
           </div>
           <p className="newsstand-date">2026. 01. 14. 수요일</p>
         </header>
-        <div className="newsstand-placeholder" aria-label="뉴스스탠드 구현 영역" />
+
+        <div className="newsstand-ticker-slot" aria-hidden="true" />
+        <div className="newsstand-tabbar-slot" aria-hidden="true" />
+        <div className="newsstand-content-slot" aria-label="뉴스스탠드 구현 영역" />
+
+        <button className="newsstand-chevron newsstand-chevron-left" type="button" aria-label="이전 페이지">
+          <ChevronLeft aria-hidden="true" size={24} strokeWidth={1.4} />
+        </button>
+        <button className="newsstand-chevron newsstand-chevron-right" type="button" aria-label="다음 페이지">
+          <ChevronRight aria-hidden="true" size={24} strokeWidth={1.4} />
+        </button>
       </section>
     </main>
   );
