@@ -5,7 +5,7 @@ Use this as the first-pass implementation order. The current priority is to make
 - [x] Define Tailwind/CSS design tokens from `docs/design-notes.md`: colors, type scale, spacing, radii, borders, and motion durations.
 - [x] Define TypeScript types for publishers, articles, ticker items, categories, wordmark styling, and newsstand state.
 - [x] Prepare publisher-first mock data: at least 48 publishers, categories, wordmark styling, and initial subscriptions.
-- [ ] Create the base newsstand page shell that centers the 930px content column and reserves space for future header/ticker areas.
+- [x] Create the base newsstand page shell that centers the 930px content column and reserves space for future header/ticker areas.
 - [ ] Implement scope tabs for `전체 언론사` and `내가 구독한 언론사`, including the computed subscription-count badge.
 - [ ] Implement the list/grid view toggle icons and active/inactive visual states.
 - [ ] Implement `PressWordmark` as a data-driven typographic logo component using static Tailwind utilities for layout and CSS variables or inline styles for data-driven color/tracking/accent details.
