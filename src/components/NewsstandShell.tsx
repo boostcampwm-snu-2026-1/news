@@ -22,6 +22,7 @@ export function NewsstandShell({
           <div className="mt-8 h-[var(--layout-tabbar-height)]">{toolbar}</div>
           <section
             aria-label="뉴스스탠드 콘텐츠"
+            id="newsstand-content"
             className="mt-6 min-h-[var(--layout-content-height)]"
           >
             {children}
