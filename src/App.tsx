@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NewsstandShell } from './components/NewsstandShell'
+import { Pagination } from './components/Pagination'
 import { PublisherGrid } from './components/PublisherGrid'
 import { ScopeTabs } from './components/ScopeTabs'
 import { ViewToggle } from './components/ViewToggle'
@@ -14,6 +15,7 @@ import type {
 function App() {
   const [scope, setScope] = useState<PublisherScope>('all')
   const [viewMode, setViewMode] = useState<NewsstandViewMode>('grid')
+  const [pageIndex, setPageIndex] = useState(0)
   const [subscribedPublisherIds] = useState<ReadonlySet<Publisher['id']>>(
     () => new Set<Publisher['id']>(INITIAL_SUBSCRIBED_PUBLISHER_IDS),
   )
@@ -22,7 +24,13 @@ function App() {
     scope === 'all'
       ? PUBLISHERS
       : PUBLISHERS.filter((publisher) => subscribedPublisherIds.has(publisher.id))
-  const pagePublishers = visiblePublishers.slice(0, PUBLISHER_GRID_PAGE_SIZE)
+  const pageCount = Math.ceil(visiblePublishers.length / PUBLISHER_GRID_PAGE_SIZE)
+  const currentPageIndex = pageCount > 0 ? Math.min(pageIndex, pageCount - 1) : 0
+  const pageStartIndex = currentPageIndex * PUBLISHER_GRID_PAGE_SIZE
+  const pagePublishers = visiblePublishers.slice(
+    pageStartIndex,
+    pageStartIndex + PUBLISHER_GRID_PAGE_SIZE,
+  )
   const gridLabel = scope === 'all' ? '전체 언론사 그리드' : '구독한 언론사 그리드'
   const placeholderMessage =
     scope === 'all'
@@ -37,7 +45,10 @@ function App() {
         <div className="flex h-full items-center justify-between">
           <ScopeTabs
             activeScope={scope}
-            onScopeChange={setScope}
+            onScopeChange={(nextScope) => {
+              setScope(nextScope)
+              setPageIndex(0)
+            }}
             subscribedCount={subscribedCount}
           />
           <ViewToggle activeMode={viewMode} onModeChange={setViewMode} />
@@ -45,7 +56,21 @@ function App() {
       }
     >
       {viewMode === 'grid' ? (
-        <PublisherGrid ariaLabel={gridLabel} publishers={pagePublishers} />
+        <div className="relative">
+          <PublisherGrid ariaLabel={gridLabel} publishers={pagePublishers} />
+          <Pagination
+            onNext={() => {
+              setPageIndex((current) =>
+                Math.min(current + 1, Math.max(pageCount - 1, 0)),
+              )
+            }}
+            onPrevious={() => {
+              setPageIndex((current) => Math.max(current - 1, 0))
+            }}
+            pageCount={pageCount}
+            pageIndex={currentPageIndex}
+          />
+        </div>
       ) : (
         <div className="flex min-h-[var(--layout-content-height)] items-center justify-center border border-dashed border-line bg-card px-6 text-center">
           <p className="text-[length:var(--text-caption-size)] font-medium leading-[var(--text-caption-leading)] text-sub">
