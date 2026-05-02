@@ -79,6 +79,8 @@
   --header-height: 29px;
   --ticker-top: 127px;
   --ticker-height: 49px;
+  --ticker-rotation-ms: 3200ms;
+  --ticker-crossfade-ms: 550ms;
   --tabbar-top: 208px;
   --tabbar-height: 24px;
   --content-top: 256px;

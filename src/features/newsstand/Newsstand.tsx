@@ -1,6 +1,8 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Header } from "./components/Header";
+import { Ticker } from "./components/Ticker";
+import { tickerItems } from "./data/tickerItems";
 import "./Newsstand.css";
 
 export function Newsstand() {
@@ -9,7 +11,7 @@ export function Newsstand() {
       <section className="newsstand-canvas">
         <Header date={new Date(2026, 0, 14)} />
 
-        <div className="newsstand-ticker-slot" aria-hidden="true" />
+        <Ticker items={tickerItems} />
         <div className="newsstand-tabbar-slot" aria-hidden="true" />
         <div className="newsstand-content-slot" aria-label="뉴스스탠드 구현 영역" />
 

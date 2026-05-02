@@ -27,7 +27,7 @@
   - 신문 아이콘, `뉴스스탠드` 워드마크, 날짜 텍스트를 flex space-between 구조로 만든다.
   - 완료 기준: 날짜는 `2026. 01. 14. 수요일` 형식으로 렌더링 가능하다.
 
-- [ ] 05. 자동 롤링 뉴스 티커 구현
+- [x] 05. 자동 롤링 뉴스 티커 구현
   - 2개 lane, 49px 높이, press name/title 구조, 3.2초 회전, 0.55초 crossfade, lane offset을 구현한다.
   - 완료 기준: hover/focus 시 정지하고 reduced-motion에서는 자동 회전하지 않는다.
 
