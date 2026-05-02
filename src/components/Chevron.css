@@ -1,0 +1,26 @@
+.chevron {
+  position: absolute;
+  top: 430px;
+  width: 24px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-mute);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.chevron--left {
+  left: 103px;
+}
+
+.chevron--right {
+  right: 103px;
+}
+
+.chevron:disabled {
+  opacity: 0;
+  cursor: default;
+  pointer-events: none;
+}

@@ -4,6 +4,7 @@ import Ticker from './components/Ticker';
 import TabBar from './components/TabBar';
 import type { TabType, ViewType } from './components/TabBar';
 import PressGrid from './components/PressGrid';
+import Chevron from './components/Chevron';
 import { tickerData, pressData } from './data/press';
 
 function getFormattedDate(): string {
@@ -31,11 +32,18 @@ function App() {
       return next;
     });
   };
-  const [page] = useState(0);
+  const [page, setPage] = useState(0);
 
-  const pageItems = activeTab === 'all'
-    ? pressData.slice(page * 24, (page + 1) * 24)
-    : pressData.filter((p) => subscribed.has(p.id)).slice(page * 24, (page + 1) * 24);
+  const allItems = activeTab === 'all'
+    ? pressData
+    : pressData.filter((p) => subscribed.has(p.id));
+  const totalPages = Math.max(1, Math.ceil(allItems.length / 24));
+  const pageItems = allItems.slice(page * 24, (page + 1) * 24);
+
+  const handleTabChange = (tab: TabType) => {
+    setActiveTab(tab);
+    setPage(0);
+  };
 
   return (
     <div className="newsstand-wrap">
@@ -45,7 +53,7 @@ function App() {
         activeTab={activeTab}
         subCount={subscribed.size}
         viewer={viewer}
-        onTabChange={setActiveTab}
+        onTabChange={handleTabChange}
         onViewerChange={setViewer}
       />
       <PressGrid
@@ -54,6 +62,8 @@ function App() {
           isSubTab={activeTab === 'sub'}
           onToggle={handleToggle}
         />
+      <Chevron dir="left" disabled={page === 0} onClick={() => setPage((p) => p - 1)} />
+      <Chevron dir="right" disabled={page >= totalPages - 1} onClick={() => setPage((p) => p + 1)} />
     </div>
   );
 }
