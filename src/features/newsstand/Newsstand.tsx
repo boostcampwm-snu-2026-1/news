@@ -28,7 +28,10 @@ export function Newsstand() {
           onViewerChange={setViewer}
         />
         <div className="newsstand-content-slot" aria-label="뉴스스탠드 구현 영역">
-          <PressGrid items={presses.slice(0, 24)} />
+          <PressGrid
+            action={activeTab === "subscribed" ? "unsubscribe" : "subscribe"}
+            items={presses.slice(0, 24)}
+          />
         </div>
 
         <button className="newsstand-chevron newsstand-chevron-left" type="button" aria-label="이전 페이지">

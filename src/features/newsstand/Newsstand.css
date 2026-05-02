@@ -208,6 +208,7 @@
 }
 
 .press-grid-cell {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -219,11 +220,66 @@
   cursor: pointer;
 }
 
+.press-grid-cell:hover,
+.press-grid-cell:focus {
+  background: var(--color-soft);
+}
+
 .press-grid-cell:focus-visible {
   position: relative;
   z-index: 1;
   outline: var(--stroke-width) solid var(--color-accent);
   outline-offset: calc(var(--stroke-width) * -1);
+}
+
+.press-grid-wordmark,
+.press-grid-action-pill {
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.press-grid-wordmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.press-grid-action-pill {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  height: 28px;
+  padding: 0 var(--space-12);
+  color: var(--color-sub);
+  background: var(--color-card);
+  border: var(--stroke-line);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-pill);
+  font-size: var(--text-badge-size);
+  font-weight: var(--text-badge-weight);
+  line-height: var(--text-badge-line-height);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -44%);
+  white-space: nowrap;
+}
+
+.press-grid-cell:hover .press-grid-wordmark,
+.press-grid-cell:focus .press-grid-wordmark {
+  opacity: 0;
+  transform: translateY(-2px);
+}
+
+.press-grid-cell:hover .press-grid-action-pill,
+.press-grid-cell:focus .press-grid-action-pill {
+  opacity: 1;
+  transform: translate(-50%, -50%);
 }
 
 .press-wordmark {
@@ -345,7 +401,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .press-grid-wordmark,
+  .press-grid-action-pill,
   .newsstand-ticker-item {
+    transition: none;
     animation: none;
   }
 }
