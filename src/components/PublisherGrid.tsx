@@ -5,11 +5,15 @@ import type { Publisher } from '../types/newsStand'
 interface PublisherGridProps {
   publishers?: readonly Publisher[]
   ariaLabel?: string
+  isPublisherSubscribed: (publisherId: Publisher['id']) => boolean
+  onToggleSubscription: (publisherId: Publisher['id']) => void
 }
 
 export function PublisherGrid({
   publishers = [],
   ariaLabel = '언론사 그리드',
+  isPublisherSubscribed,
+  onToggleSubscription,
 }: PublisherGridProps) {
   const gridSlots = Array.from(
     { length: PUBLISHER_GRID_PAGE_SIZE },
@@ -25,10 +29,16 @@ export function PublisherGrid({
         {gridSlots.map((publisher, index) => (
           <li
             aria-hidden={publisher === null ? true : undefined}
-            className="flex min-h-[var(--grid-cell-height)] items-center justify-center bg-card p-3 text-center lg:min-h-0"
+            className="group flex min-h-[var(--grid-cell-height)] items-center justify-center bg-card p-3 text-center transition-colors hover:bg-soft focus-within:bg-soft lg:min-h-0"
             key={publisher?.id ?? `empty-${index}`}
           >
-            {publisher ? <PublisherCell publisher={publisher} /> : null}
+            {publisher ? (
+              <PublisherCell
+                isSubscribed={isPublisherSubscribed(publisher.id)}
+                onToggleSubscription={onToggleSubscription}
+                publisher={publisher}
+              />
+            ) : null}
           </li>
         ))}
       </ul>

@@ -13,7 +13,12 @@ function App() {
   const [scope, setScope] = useState<PublisherScope>('all')
   const [viewMode, setViewMode] = useState<NewsstandViewMode>('grid')
   const [pageIndex, setPageIndex] = useState(0)
-  const { subscribedCount, subscribedPublisherIds } = usePublisherSubscriptions()
+  const {
+    isPublisherSubscribed,
+    subscribedCount,
+    subscribedPublisherIds,
+    togglePublisherSubscription,
+  } = usePublisherSubscriptions()
   const visiblePublishers =
     scope === 'all'
       ? PUBLISHERS
@@ -51,7 +56,12 @@ function App() {
     >
       {viewMode === 'grid' ? (
         <div className="relative">
-          <PublisherGrid ariaLabel={gridLabel} publishers={pagePublishers} />
+          <PublisherGrid
+            ariaLabel={gridLabel}
+            isPublisherSubscribed={isPublisherSubscribed}
+            onToggleSubscription={togglePublisherSubscription}
+            publishers={pagePublishers}
+          />
           <Pagination
             onNext={() => {
               setPageIndex((current) =>

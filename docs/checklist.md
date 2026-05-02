@@ -13,7 +13,7 @@ Use this as the first-pass implementation order. The current priority is to make
 - [x] Render publisher mock data in the grid with stable cell sizing and centered wordmarks.
 - [x] Implement grid pagination chevrons with computed page counts, disabled state, and accessible labels.
 - [x] Implement subscription state management keyed by publisher ID.
-- [ ] Implement grid hover/focus behavior that shows `+ 구독하기` or `- 해지하기` pills without breaking keyboard access.
+- [x] Implement grid hover/focus behavior that shows `+ 구독하기` or `- 해지하기` pills without breaking keyboard access.
 - [ ] Implement subscribed-only mode that filters to subscribed publishers and keeps pagination consistent.
 - [ ] Add focus management for tab switches, pagination, and subscription removal from subscribed mode.
 - [ ] Implement the header with newspaper icon, `뉴스스탠드` title, and formatted date.
