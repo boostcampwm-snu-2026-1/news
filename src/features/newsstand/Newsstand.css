@@ -191,10 +191,98 @@
 
 .newsstand-content-slot {
   top: var(--content-top);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: var(--content-width);
   height: var(--content-height);
   border: var(--stroke-line);
   background: var(--color-card);
+}
+
+.newsstand-wordmark-preview {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-24);
+  width: 78%;
+}
+
+.press-wordmark {
+  --press-wordmark-bg: transparent;
+  --press-wordmark-color: var(--color-ink);
+  --press-wordmark-accent: var(--color-accent);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 88%;
+  min-height: 32px;
+  margin: 0 auto;
+  color: var(--press-wordmark-color);
+  font-size: var(--text-heading-size);
+  font-weight: var(--text-body-weight);
+  line-height: 1.15;
+  letter-spacing: var(--letter-spacing-default);
+  text-align: center;
+  text-decoration-color: currentColor;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.press-wordmark-chip {
+  max-width: 100%;
+  min-height: 24px;
+  padding: 0 var(--space-8);
+  color: var(--press-wordmark-color);
+  background: var(--press-wordmark-bg);
+  border-radius: var(--radius-sub);
+}
+
+.press-wordmark-small {
+  font-size: var(--text-list-item-size);
+}
+
+.press-wordmark-underlined {
+  text-decoration-line: underline;
+  text-underline-offset: 3px;
+}
+
+.press-wordmark-label {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.press-wordmark-letter-accent {
+  color: var(--press-wordmark-accent);
+}
+
+.press-wordmark-letter-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.1em;
+  min-height: 1.1em;
+  color: var(--color-card);
+  background: var(--press-wordmark-accent);
+  border-radius: var(--radius-sub);
+}
+
+.press-wordmark-letter-underlined {
+  text-decoration-line: underline;
+  text-decoration-color: var(--press-wordmark-accent);
+  text-underline-offset: 3px;
+}
+
+.press-wordmark-flag {
+  display: inline-block;
+  width: 5px;
+  height: 7px;
+  margin-left: 3px;
+  background: var(--color-flag);
+  clip-path: polygon(0 0, 100% 18%, 100% 72%, 0 54%);
+  transform: translateY(-0.35em);
 }
 
 .newsstand-chevron {

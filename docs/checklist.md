@@ -39,7 +39,7 @@
   - press id, name, category, wordmark style props, subscription state, article list, edit time, category counts를 담는 mock data를 만든다.
   - 완료 기준: 전체 언론사 72개 이상 또는 페이지네이션 검증 가능한 충분한 mock data가 있다.
 
-- [ ] 08. PressWordmark 컴포넌트 구현
+- [x] 08. PressWordmark 컴포넌트 구현
   - 글꼴 계열, weight, italic, underline, tracking, accent char, accent bg, flag, long latin wrapping 규칙을 props 기반으로 렌더링한다.
   - 완료 기준: 긴 언론사 이름이 셀 안에서 최대 2줄로 안정적으로 줄바꿈된다.
 

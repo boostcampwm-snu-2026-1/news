@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Header } from "./components/Header";
+import { PressWordmark } from "./components/PressWordmark";
 import { TabBar, type NewsstandTab, type ViewerMode } from "./components/TabBar";
 import { Ticker } from "./components/Ticker";
 import { presses } from "./data/presses";
@@ -26,7 +27,13 @@ export function Newsstand() {
           onTabChange={setActiveTab}
           onViewerChange={setViewer}
         />
-        <div className="newsstand-content-slot" aria-label="뉴스스탠드 구현 영역" />
+        <div className="newsstand-content-slot" aria-label="뉴스스탠드 구현 영역">
+          <div className="newsstand-wordmark-preview">
+            {presses.slice(0, 16).map((press) => (
+              <PressWordmark press={press} key={press.id} />
+            ))}
+          </div>
+        </div>
 
         <button className="newsstand-chevron newsstand-chevron-left" type="button" aria-label="이전 페이지">
           <ChevronLeft aria-hidden="true" size={24} strokeWidth={1.4} />
