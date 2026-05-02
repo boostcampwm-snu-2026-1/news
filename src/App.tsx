@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import Header from './components/Header';
 import Ticker from './components/Ticker';
+import TabBar from './components/TabBar';
+import type { TabType, ViewType } from './components/TabBar';
 import { tickerData } from './data/press';
 
 function getFormattedDate(): string {
@@ -12,10 +15,21 @@ function getFormattedDate(): string {
 }
 
 function App() {
+  const [activeTab, setActiveTab] = useState<TabType>('all');
+  const [viewer, setViewer] = useState<ViewType>('grid');
+  const [subscribed] = useState<Set<number>>(new Set());
+
   return (
     <div className="newsstand-wrap">
       <Header date={getFormattedDate()} />
       <Ticker items={tickerData} />
+      <TabBar
+        activeTab={activeTab}
+        subCount={subscribed.size}
+        viewer={viewer}
+        onTabChange={setActiveTab}
+        onViewerChange={setViewer}
+      />
     </div>
   );
 }
