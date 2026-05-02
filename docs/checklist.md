@@ -31,7 +31,7 @@
   - 2개 lane, 49px 높이, press name/title 구조, 3.2초 회전, 0.55초 crossfade, lane offset을 구현한다.
   - 완료 기준: hover/focus 시 정지하고 reduced-motion에서는 자동 회전하지 않는다.
 
-- [ ] 06. 탭바와 뷰 토글 구현
+- [x] 06. 탭바와 뷰 토글 구현
   - `전체 언론사`, `내가 구독한 언론사` 탭, 구독 수 badge, 리스트/그리드 토글 아이콘을 만든다.
   - 완료 기준: active/inactive 타이포와 색상, badge 20x20 스타일이 디자인 토큰과 일치한다.
 
