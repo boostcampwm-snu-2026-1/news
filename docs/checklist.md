@@ -6,7 +6,7 @@
 
 | # | 항목 | 상태 |
 |---|------|------|
-| 1 | Vite + React + TypeScript 프로젝트 초기화 | [ ] |
+| 1 | Vite + React + TypeScript 프로젝트 초기화 | [x] |
 | 2 | CSS Variables 정의 (색상·타이포·스페이싱 토큰) | [ ] |
 | 3 | 언론사 데이터 및 기사 mock 데이터 작성 | [ ] |
 | 4 | `<Header>` — 날짜 표시 | [ ] |
