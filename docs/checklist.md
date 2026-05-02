@@ -35,7 +35,7 @@
   - `전체 언론사`, `내가 구독한 언론사` 탭, 구독 수 badge, 리스트/그리드 토글 아이콘을 만든다.
   - 완료 기준: active/inactive 타이포와 색상, badge 20x20 스타일이 디자인 토큰과 일치한다.
 
-- [ ] 07. 언론사 데이터 모델 설계
+- [x] 07. 언론사 데이터 모델 설계
   - press id, name, category, wordmark style props, subscription state, article list, edit time, category counts를 담는 mock data를 만든다.
   - 완료 기준: 전체 언론사 72개 이상 또는 페이지네이션 검증 가능한 충분한 mock data가 있다.
 

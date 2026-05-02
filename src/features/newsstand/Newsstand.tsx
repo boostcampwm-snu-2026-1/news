@@ -4,12 +4,14 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Header } from "./components/Header";
 import { TabBar, type NewsstandTab, type ViewerMode } from "./components/TabBar";
 import { Ticker } from "./components/Ticker";
+import { presses } from "./data/presses";
 import { tickerItems } from "./data/tickerItems";
 import "./Newsstand.css";
 
 export function Newsstand() {
   const [activeTab, setActiveTab] = useState<NewsstandTab>("all");
   const [viewer, setViewer] = useState<ViewerMode>("grid");
+  const subscribedCount = presses.filter((press) => press.subscribed).length;
 
   return (
     <main className="newsstand-shell" aria-label="뉴스스탠드">
@@ -19,7 +21,7 @@ export function Newsstand() {
         <Ticker items={tickerItems} />
         <TabBar
           activeTab={activeTab}
-          subCount={8}
+          subCount={subscribedCount}
           viewer={viewer}
           onTabChange={setActiveTab}
           onViewerChange={setViewer}
