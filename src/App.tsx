@@ -24,7 +24,8 @@ function App() {
       ? PUBLISHERS
       : PUBLISHERS.filter((publisher) => subscribedPublisherIds.has(publisher.id))
   const pageCount = Math.ceil(visiblePublishers.length / PUBLISHER_GRID_PAGE_SIZE)
-  const currentPageIndex = pageCount > 0 ? Math.min(pageIndex, pageCount - 1) : 0
+  const lastPageIndex = Math.max(pageCount - 1, 0)
+  const currentPageIndex = Math.min(pageIndex, lastPageIndex)
   const pageStartIndex = currentPageIndex * PUBLISHER_GRID_PAGE_SIZE
   const pagePublishers = visiblePublishers.slice(
     pageStartIndex,
@@ -64,12 +65,10 @@ function App() {
           />
           <Pagination
             onNext={() => {
-              setPageIndex((current) =>
-                Math.min(current + 1, Math.max(pageCount - 1, 0)),
-              )
+              setPageIndex(Math.min(currentPageIndex + 1, lastPageIndex))
             }}
             onPrevious={() => {
-              setPageIndex((current) => Math.max(current - 1, 0))
+              setPageIndex(Math.max(currentPageIndex - 1, 0))
             }}
             pageCount={pageCount}
             pageIndex={currentPageIndex}
