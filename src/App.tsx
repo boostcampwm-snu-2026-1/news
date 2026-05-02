@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react'
+import { Header } from './components/Header'
 import { NewsstandShell } from './components/NewsstandShell'
 import { Pagination } from './components/Pagination'
 import { PublisherGrid } from './components/PublisherGrid'
@@ -100,6 +101,7 @@ function App() {
 
   return (
     <NewsstandShell
+      header={<Header />}
       toolbar={
         <div className="flex h-full items-center justify-between">
           <ScopeTabs

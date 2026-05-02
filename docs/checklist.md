@@ -16,7 +16,7 @@ Use this as the first-pass implementation order. The current priority is to make
 - [x] Implement grid hover/focus behavior that shows `+ 구독하기` or `- 해지하기` pills without breaking keyboard access.
 - [x] Implement subscribed-only mode that filters to subscribed publishers and keeps pagination consistent.
 - [x] Add focus management for tab switches, pagination, and subscription removal from subscribed mode.
-- [ ] Implement the header with newspaper icon, `뉴스스탠드` title, and formatted date.
+- [x] Implement the header with newspaper icon, `뉴스스탠드` title, and formatted date.
 - [ ] Implement the two-lane auto-rolling ticker with pause on hover/focus and reduced-motion handling.
 - [ ] Implement press-cell click behavior that opens the selected publisher's article list view.
 - [ ] Implement opened-press layout with category field tabs, edit time, subscribe pill, headline block, article list, and footnote.
