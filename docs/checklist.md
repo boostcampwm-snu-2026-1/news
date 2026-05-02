@@ -15,7 +15,7 @@
 | 7 | `<PressWordmark>` — CSS 전용 언론사 로고 렌더링 | [x] |
 | 8 | `<GridCell>` — 셀 레이아웃 (hover 전 정적 상태) | [x] |
 | 9 | `<PressGrid>` — 6×4 그리드 + `<Chevron>` 배치 | [x] |
-| 10 | `<Newsstand>` 루트 상태 초안 (useReducer 뼈대) | [ ] |
+| 10 | `<Newsstand>` 루트 상태 초안 (useReducer 뼈대) | [x] |
 
 ---
 

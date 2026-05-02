@@ -1,0 +1,14 @@
+.root {
+  width: 1280px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--page);
+}
+
+.content {
+  padding: var(--sp-6) 0 var(--sp-16);
+}
+
+.gridArea {
+  padding: var(--sp-6) var(--sp-8);
+}

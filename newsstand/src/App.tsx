@@ -1,5 +1,7 @@
+import { Newsstand } from './components/Newsstand/Newsstand'
+
 function App() {
-  return <div>뉴스스탠드</div>
+  return <Newsstand />
 }
 
 export default App
