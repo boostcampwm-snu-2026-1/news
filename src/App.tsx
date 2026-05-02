@@ -3,7 +3,8 @@ import Header from './components/Header';
 import Ticker from './components/Ticker';
 import TabBar from './components/TabBar';
 import type { TabType, ViewType } from './components/TabBar';
-import { tickerData } from './data/press';
+import PressGrid from './components/PressGrid';
+import { tickerData, pressData } from './data/press';
 
 function getFormattedDate(): string {
   const now = new Date();
@@ -17,7 +18,24 @@ function getFormattedDate(): string {
 function App() {
   const [activeTab, setActiveTab] = useState<TabType>('all');
   const [viewer, setViewer] = useState<ViewType>('grid');
-  const [subscribed] = useState<Set<number>>(new Set());
+  const [subscribed, setSubscribed] = useState<Set<number>>(new Set());
+
+  const handleToggle = (id: number) => {
+    setSubscribed((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+  const [page] = useState(0);
+
+  const pageItems = activeTab === 'all'
+    ? pressData.slice(page * 24, (page + 1) * 24)
+    : pressData.filter((p) => subscribed.has(p.id)).slice(page * 24, (page + 1) * 24);
 
   return (
     <div className="newsstand-wrap">
@@ -30,6 +48,12 @@ function App() {
         onTabChange={setActiveTab}
         onViewerChange={setViewer}
       />
+      <PressGrid
+          items={pageItems}
+          subscribedIds={subscribed}
+          isSubTab={activeTab === 'sub'}
+          onToggle={handleToggle}
+        />
     </div>
   );
 }
