@@ -1,16 +1,14 @@
 import { useState } from 'react'
 import { NewsstandShell } from './components/NewsstandShell'
-import { PressWordmark } from './components/PressWordmark'
+import { PublisherGrid } from './components/PublisherGrid'
 import { ScopeTabs } from './components/ScopeTabs'
 import { ViewToggle } from './components/ViewToggle'
-import { INITIAL_SUBSCRIBED_PUBLISHER_IDS, PUBLISHERS } from './data/newsStand'
+import { INITIAL_SUBSCRIBED_PUBLISHER_IDS } from './data/newsStand'
 import type {
   NewsstandViewMode,
   Publisher,
   PublisherScope,
 } from './types/newsStand'
-
-const WORDMARK_PREVIEW_PUBLISHERS = PUBLISHERS.slice(0, 4)
 
 function App() {
   const [scope, setScope] = useState<PublisherScope>('all')
@@ -19,12 +17,12 @@ function App() {
     () => new Set<Publisher['id']>(INITIAL_SUBSCRIBED_PUBLISHER_IDS),
   )
   const subscribedCount = subscribedPublisherIds.size
-  const viewModeLabel = viewMode === 'grid' ? '그리드' : '목록'
+  const gridLabel = scope === 'all' ? '전체 언론사 그리드' : '구독한 언론사 그리드'
   const placeholderMessage =
     scope === 'all'
-      ? `전체 언론사 ${viewModeLabel} 보기 영역입니다.`
+      ? '전체 언론사 목록 보기 영역입니다.'
       : subscribedCount > 0
-        ? `구독한 언론사 ${viewModeLabel} 보기 영역입니다.`
+        ? '구독한 언론사 목록 보기 영역입니다.'
         : '아직 구독한 언론사가 없습니다.'
 
   return (
@@ -40,22 +38,17 @@ function App() {
         </div>
       }
     >
-      <div className="flex min-h-[var(--layout-content-height)] flex-col items-center justify-center border border-dashed border-line bg-card px-6 text-center">
-        <p className="text-[length:var(--text-caption-size)] font-medium leading-[var(--text-caption-leading)] text-sub">
-          930px 뉴스스탠드 콘텐츠 영역
-          <br />
-          {placeholderMessage}
-        </p>
-        <div
-          aria-label="언론사 로고 미리보기"
-          className="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3"
-          role="group"
-        >
-          {WORDMARK_PREVIEW_PUBLISHERS.map((publisher) => (
-            <PressWordmark key={publisher.id} publisher={publisher} />
-          ))}
+      {viewMode === 'grid' ? (
+        <PublisherGrid ariaLabel={gridLabel} />
+      ) : (
+        <div className="flex min-h-[var(--layout-content-height)] items-center justify-center border border-dashed border-line bg-card px-6 text-center">
+          <p className="text-[length:var(--text-caption-size)] font-medium leading-[var(--text-caption-leading)] text-sub">
+            930px 뉴스스탠드 콘텐츠 영역
+            <br />
+            {placeholderMessage}
+          </p>
         </div>
-      </div>
+      )}
     </NewsstandShell>
   )
 }
