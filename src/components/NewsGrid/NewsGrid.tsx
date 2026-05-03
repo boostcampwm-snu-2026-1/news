@@ -30,7 +30,7 @@ export function NewsGrid({
   }
 
   return viewMode === 'grid' ? (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
       {publishers.map((publisher) => (
         <NewsCard
           key={publisher.id}
