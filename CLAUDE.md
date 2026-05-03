@@ -24,9 +24,9 @@ src/
   index.css                 # 전역 스타일 + Tailwind import
   types/index.ts            # 공유 타입 정의
   data/mockData.ts          # 목업 데이터 (언론사, 티커 등)
+  data/logos.tsx            # 언론사 로고 SVG/JSX 정의 + PressLogo 컴포넌트
   hooks/useSubscription.ts  # 구독 상태 훅
   components/
-    logos/                  # 언론사 로고 SVG/JSX 컴포넌트
     ...                     # 기타 컴포넌트
 design/                     # 디자인 참고 이미지
 docs/
@@ -41,9 +41,9 @@ Tailwind v4는 Vite 플러그인(`@tailwindcss/vite`)으로 설정됨. `tailwind
 
 ## 기능 완료 기준
 
-`CHECKLIST.md` 항목을 `[x]`로 체크하는 것은 **사용자가 `/next-step`을 명시적으로 호출했을 때만** 한다. Claude가 임의로 체크해서는 안 된다.
+`CHECKLIST.md` 항목을 `[x]`로 체크하는 것은 **사용자가 `$next-step`을 명시적으로 호출했을 때만** 한다. Agent가 임의로 체크해서는 안 된다.
 
-`/next-step` 실행 시 아래 조건을 모두 만족해야 체크한다:
+`$next-step` 실행 시 아래 조건을 모두 만족해야 체크한다:
 
 1. **에러 없음** — 다음 세 명령이 모두 통과해야 한다:
    ```bash
@@ -64,8 +64,8 @@ Tailwind v4는 Vite 플러그인(`@tailwindcss/vite`)으로 설정됨. `tailwind
 1. **버그 없는 완성** — 구현 후 반드시 `pnpm dev`로 직접 브라우저에서 확인하고, 버그가 없는 상태로 마무리한다.
 2. **디자인 일치** — `design/` 폴더의 이미지와 최대한 동일하게 구현한다. 색상, 간격, 정렬, 인터랙션 모두 포함.
 3. **컴포넌트 분리** — 하나의 컴포넌트가 너무 커지지 않도록 적절히 분리한다. 역할이 명확히 구분되면 별도 컴포넌트로 나눈다.
-4. **로고 직접 구현** — 언론사 로고는 외부 이미지 파일 없이 SVG/JSX로 직접 만든다. `src/components/logos/` 에 언론사별 컴포넌트로 분리.
-5. **목업 데이터 직접 생성** — 실제 데이터가 없으므로 디자인 이미지와 spec을 보고 Claude가 직접 fake data를 작성한다.
+4. **로고 직접 구현** — 언론사 로고는 외부 이미지 파일 없이 SVG/JSX로 직접 만든다. 불필요한 파일 분리를 피하고 `src/data/logos.tsx` 한 파일에서 관리한다.
+5. **목업 데이터 직접 생성** — 실제 데이터가 없으므로 디자인 이미지와 spec을 보고 직접 fake data를 작성한다.
 
 ## 디자인 참고
 

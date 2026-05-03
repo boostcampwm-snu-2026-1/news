@@ -12,7 +12,7 @@
 
 ### 그리드 뷰
 
-- [ ] #6 언론사 로고 컴포넌트 — 각 언론사 로고를 SVG/JSX로 구현 (`src/components/logos/`)
+- [x] #6 언론사 로고 컴포넌트 — 각 언론사 로고를 SVG/JSX로 구현 (`src/data/logos.tsx`)
 - [ ] #7 PressGridCell 컴포넌트 — 언론사 셀, hover 인터랙션 (구독하기/해지하기)
 - [ ] #8 PressGrid + 페이지네이션 — 6×4 그리드, 좌우 화살표
 - [ ] #9 구독/해지 기능 — useSubscription 훅, 뱃지 카운트
