@@ -9,6 +9,12 @@ interface GridCellProps {
   onOpen: (id: PressId) => void
 }
 
-export function GridCell(_props: GridCellProps) {
-  return null
+export function GridCell({ press }: GridCellProps) {
+  return (
+    <div className="bg-white flex items-center justify-center">
+      {press && (
+        <span className="text-sm text-[#14212B]">{press.wordmark.name}</span>
+      )}
+    </div>
+  )
 }
