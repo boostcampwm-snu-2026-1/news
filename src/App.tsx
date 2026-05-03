@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { ArticleListView } from './components/ArticleListView'
 import { Header } from './components/Header'
 import { NewsstandShell } from './components/NewsstandShell'
@@ -9,6 +9,7 @@ import { ScopeTabs } from './components/ScopeTabs'
 import { ViewToggle } from './components/ViewToggle'
 import { PUBLISHER_GRID_PAGE_SIZE } from './constants/newsStand'
 import { CATEGORIES, PUBLISHERS, TICKER_ITEMS } from './data/newsStand'
+import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion'
 import { usePublisherSubscriptions } from './hooks/usePublisherSubscriptions'
 import type {
   NewsstandViewMode,
@@ -21,9 +22,12 @@ type GridFocusTarget =
   | { type: 'grid' }
   | { type: 'publisher-action'; publisherId: Publisher['id'] }
 
+const OPENED_PROGRESS_DURATION_MS = 6000
+
 function App() {
   const gridRegionRef = useRef<HTMLDivElement | null>(null)
   const pendingGridFocusRef = useRef<GridFocusTarget | null>(null)
+  const prefersReducedMotion = usePrefersReducedMotion()
   const [scope, setScope] = useState<PublisherScope>('all')
   const [viewMode, setViewMode] = useState<NewsstandViewMode>('grid')
   const [pageIndex, setPageIndex] = useState(0)
@@ -50,6 +54,11 @@ function App() {
   )
   const selectedPublisher =
     PUBLISHERS.find((publisher) => publisher.id === selectedPublisherId) ?? null
+  const selectedCategoryPublishers = selectedPublisher
+    ? PUBLISHERS.filter(
+        (publisher) => publisher.category === selectedPublisher.category,
+      )
+    : []
   const categoryCounts = new Map(
     CATEGORIES.map((category) => [
       category.key,
@@ -57,9 +66,9 @@ function App() {
     ]),
   )
   const selectedCategoryIndex = selectedPublisher
-    ? PUBLISHERS.filter(
-        (publisher) => publisher.category === selectedPublisher.category,
-      ).findIndex((publisher) => publisher.id === selectedPublisher.id) + 1
+    ? selectedCategoryPublishers.findIndex(
+        (publisher) => publisher.id === selectedPublisher.id,
+      ) + 1
     : 1
   const gridLabel = scope === 'all' ? '전체 언론사 그리드' : '구독한 언론사 그리드'
   const placeholderMessage =
@@ -95,6 +104,22 @@ function App() {
 
     gridRegionRef.current?.focus()
   })
+
+  useEffect(() => {
+    if (!selectedPublisher || prefersReducedMotion) {
+      return
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setSelectedPublisherId((currentPublisherId) =>
+        getNextOpenedPublisherId(currentPublisherId),
+      )
+    }, OPENED_PROGRESS_DURATION_MS)
+
+    return () => {
+      window.clearTimeout(timeoutId)
+    }
+  }, [prefersReducedMotion, selectedPublisher])
 
   const handleScopeChange = (nextScope: PublisherScope) => {
     pendingGridFocusRef.current = { type: 'grid' }
@@ -172,6 +197,7 @@ function App() {
           onCategorySelect={handleCategorySelect}
           onClose={handleClosePublisher}
           onToggleSubscription={togglePublisherSubscription}
+          progressEnabled={!prefersReducedMotion}
           publisher={selectedPublisher}
         />
       ) : viewMode === 'grid' ? (
@@ -216,3 +242,36 @@ function App() {
 }
 
 export default App
+
+function getNextOpenedPublisherId(currentPublisherId: Publisher['id'] | null) {
+  const currentPublisher = PUBLISHERS.find(
+    (publisher) => publisher.id === currentPublisherId,
+  )
+
+  if (!currentPublisher) {
+    return currentPublisherId
+  }
+
+  const categoryIndex = CATEGORIES.findIndex(
+    (category) => category.key === currentPublisher.category,
+  )
+  const currentCategoryPublishers = PUBLISHERS.filter(
+    (publisher) => publisher.category === currentPublisher.category,
+  )
+  const currentPublisherIndex = currentCategoryPublishers.findIndex(
+    (publisher) => publisher.id === currentPublisher.id,
+  )
+  const nextPublisher = currentCategoryPublishers[currentPublisherIndex + 1]
+
+  if (nextPublisher) {
+    return nextPublisher.id
+  }
+
+  const nextCategory =
+    CATEGORIES[(categoryIndex + 1) % CATEGORIES.length] ?? CATEGORIES[0]
+  const nextCategoryPublisher = PUBLISHERS.find(
+    (publisher) => publisher.category === nextCategory.key,
+  )
+
+  return nextCategoryPublisher?.id ?? currentPublisher.id
+}

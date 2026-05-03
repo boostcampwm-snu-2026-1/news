@@ -12,6 +12,7 @@ interface ArticleListViewProps {
   categories: readonly CategoryMeta[]
   categoryCounts: ReadonlyMap<PublisherCategory, number>
   publisher: Publisher
+  progressEnabled: boolean
   isSubscribed: boolean
   onCategorySelect: (category: PublisherCategory) => void
   onClose: () => void
@@ -24,6 +25,7 @@ export function ArticleListView({
   categories,
   categoryCounts,
   publisher,
+  progressEnabled,
   isSubscribed,
   onCategorySelect,
   onClose,
@@ -54,7 +56,7 @@ export function ArticleListView({
             <button
               aria-controls="selected-publisher-panel"
               aria-selected={isActive}
-              className={`relative flex min-w-0 flex-1 items-center justify-between gap-2 px-4 text-left text-[14px] transition-colors focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-accent ${
+              className={`relative flex min-w-0 flex-1 items-center justify-between gap-2 overflow-hidden px-4 text-left text-[14px] transition-colors focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-accent ${
                 isActive
                   ? 'bg-accent font-bold text-card'
                   : 'font-medium text-sub hover:bg-card'
@@ -64,9 +66,20 @@ export function ArticleListView({
               role="tab"
               type="button"
             >
-              <span className="truncate">{category.label}</span>
+              {isActive ? (
+                <span
+                  aria-hidden="true"
+                  className={`absolute inset-y-0 left-0 w-full origin-left bg-accent-deep ${
+                    progressEnabled
+                      ? 'animate-[field-tab-progress_var(--duration-progress)_linear_forwards]'
+                      : 'scale-x-0'
+                  }`}
+                  key={publisher.id}
+                />
+              ) : null}
+              <span className="relative z-10 truncate">{category.label}</span>
               <span
-                className={`shrink-0 font-mono text-[length:var(--text-mono-tab-size)] font-medium leading-[var(--text-mono-tab-leading)] ${
+                className={`relative z-10 shrink-0 font-mono text-[length:var(--text-mono-tab-size)] font-medium leading-[var(--text-mono-tab-leading)] ${
                   isActive ? 'text-card/80' : 'text-mute'
                 }`}
               >

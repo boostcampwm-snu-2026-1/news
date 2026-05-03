@@ -20,7 +20,7 @@ Use this as the first-pass implementation order. The current priority is to make
 - [x] Implement the two-lane auto-rolling ticker with pause on hover/focus and reduced-motion handling.
 - [x] Implement press-cell click behavior that opens the selected publisher's article list view.
 - [x] Implement opened-press layout with category field tabs, edit time, subscribe pill, headline block, article list, and footnote.
-- [ ] Implement the 6-second field-tab progress bar and automatic advancement across publishers/categories.
+- [x] Implement the 6-second field-tab progress bar and automatic advancement across publishers/categories.
 - [ ] Implement smooth transitions for ticker changes, grid/list switching, hover pills, and progress changes while respecting `prefers-reduced-motion`.
 
 ## Verification
