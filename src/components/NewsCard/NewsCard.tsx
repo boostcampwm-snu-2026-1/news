@@ -7,45 +7,62 @@ interface NewsCardProps {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  '종합': 'bg-blue-100 text-blue-700',
-  '경제': 'bg-orange-100 text-orange-700',
-  'IT/과학': 'bg-emerald-100 text-emerald-700',
-  '스포츠': 'bg-red-100 text-red-700',
+  '종합':     'bg-blue-100 text-blue-700',
+  '경제':     'bg-orange-100 text-orange-700',
+  'IT/과학':  'bg-emerald-100 text-emerald-700',
+  '스포츠':   'bg-red-100 text-red-700',
   '방송/연예': 'bg-purple-100 text-purple-700',
-  '지역': 'bg-gray-100 text-gray-600',
+  '지역':     'bg-gray-100 text-gray-600',
 };
 
 export function NewsCard({ publisher, isSubscribed, onToggle }: NewsCardProps) {
-  const { id, name, logoUrl, category, description } = publisher;
+  const { id, name, logoUrl, category } = publisher;
   const badgeClass = CATEGORY_COLORS[category] ?? 'bg-gray-100 text-gray-600';
 
   return (
-    <article className="card p-4 flex flex-col gap-3">
-      <img
-        src={logoUrl}
-        alt={`${name} 로고`}
-        className="h-10 w-auto object-contain self-start"
-      />
-
-      <div className="flex-1 flex flex-col gap-1">
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-text-primary">{name}</span>
-          <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${badgeClass}`}>
-            {category}
+    <article className="card overflow-hidden">
+      {/* 로고 영역 — 호버 시 오버레이 */}
+      <div className="relative h-24 bg-gray-50 flex items-center justify-center group">
+        {/* 구독 중 표시 */}
+        {isSubscribed && (
+          <span className="absolute top-2 right-2 z-10 text-xs bg-primary text-white px-1.5 py-0.5 rounded font-semibold">
+            구독중
           </span>
+        )}
+
+        <img
+          src={logoUrl}
+          alt={`${name} 로고`}
+          className="h-10 w-auto object-contain transition-opacity duration-200 group-hover:opacity-30"
+        />
+
+        {/* 호버 오버레이 버튼 */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <button
+            onClick={() => onToggle(id)}
+            aria-pressed={isSubscribed}
+            className={[
+              'w-20 py-1 text-xs font-semibold rounded border transition-colors',
+              isSubscribed
+                ? 'border-red-400 text-red-500 bg-white hover:bg-red-50'
+                : 'border-primary text-primary bg-white hover:bg-green-50',
+            ].join(' ')}
+          >
+            {isSubscribed ? '해지' : '+ 구독'}
+          </button>
+          <button className="w-20 py-1 text-xs font-semibold rounded border border-gray-400 text-gray-600 bg-white hover:bg-gray-50 transition-colors">
+            기사보기
+          </button>
         </div>
-        <p className="text-xs text-text-secondary leading-relaxed line-clamp-2">
-          {description}
-        </p>
       </div>
 
-      <button
-        onClick={() => onToggle(id)}
-        className={`btn-subscribe self-start ${isSubscribed ? 'subscribed' : ''}`}
-        aria-pressed={isSubscribed}
-      >
-        {isSubscribed ? '✓ 구독중' : '+ 구독'}
-      </button>
+      {/* 카드 하단 정보 */}
+      <div className="px-3 py-2 flex items-center justify-between gap-2">
+        <span className="text-sm font-semibold text-text-primary truncate">{name}</span>
+        <span className={`shrink-0 text-xs px-1.5 py-0.5 rounded font-medium ${badgeClass}`}>
+          {category}
+        </span>
+      </div>
     </article>
   );
 }

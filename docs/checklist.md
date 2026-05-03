@@ -51,19 +51,21 @@
   - Props: `publisher`, `isSubscribed`, `onToggle`
   - 의존성: #2, #5
 
-- [ ] **7. 뉴스 그리드(NewsGrid) 컴포넌트 — 카드형 레이아웃**
-  - CSS Grid로 카드 배치 (`repeat(auto-fill, minmax(160px, 1fr))`)
-  - publishers.json 데이터를 받아 NewsCard 렌더링
-  - Props: `publishers`, `subscribedIds`, `onToggle`
+- [x] **7. 뉴스 그리드(NewsGrid) 컴포넌트 — 카드형 레이아웃**
+  - CSS Grid (`grid-cols-2 ~ lg:grid-cols-5`) 반응형 배치
+  - publishers 배열을 받아 NewsCard 렌더링, 빈 상태 메시지 처리
+  - NewsCard 재디자인: 로고 호버 시 오버레이("+ 구독" / "기사보기") 표시
+  - Props: `publishers`, `subscribedIds`, `onToggle`, `emptyMessage`
   - 의존성: #5, #6
 
 ### P1 · 상태 관리 & 인터랙션
 
-- [ ] **8. 탭 전환 상태 로직 연결**
-  - `App.jsx`에서 `activeTab` state 관리
+- [x] **8. 탭 전환 상태 로직 연결**
+  - `App.tsx`에서 `activeTab` state 관리
   - "전체 언론사": 전체 publishers 표시
-  - "구독한 언론사": 구독 ID 필터링하여 표시
-  - TabBar ↔ NewsGrid 연결
+  - "구독한 언론사": subscribedIds 기반 필터링
+  - TabBar에 구독 수 뱃지 표시 (구독 언론사 탭 옆 숫자)
+  - TabBar ↔ NewsGrid 연결 완료
   - 의존성: #4, #7
 
 - [ ] **9. 구독/해지 상태 관리**
@@ -128,7 +130,7 @@
 
 | 주차 | 완료 항목 | 진행 중 | 남은 항목 |
 |------|----------|--------|----------|
-| 1주차 | 6 / 9 | - | 7~9 |
+| 1주차 | 8 / 9 | - | 9 |
 | 2주차 | 0 / 5 | - | 10~14 |
 
 > 이 표는 작업 완료 시마다 수동으로 업데이트할 것.
