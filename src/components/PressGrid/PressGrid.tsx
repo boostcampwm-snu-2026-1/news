@@ -1,16 +1,15 @@
+import { mockPressData } from '../../data/pressData';
+import GridCell from './GridCell';
 import styles from './PressGrid.module.css';
 
 const PressGrid = () => {
-  // 우선 24개의 빈 셀을 만듭니다. (나중에 데이터를 넣을 예정)
-  const cells = Array.from({ length: 24 });
+  const cells = Array.from({ length: 24 }, (_, i) => mockPressData[i] || null);
 
   return (
     <main className={styles.gridContainer}>
       <div className={styles.grid}>
-        {cells.map((_, index) => (
-          <div key={index} className={styles.gridCell}>
-            {/* 여기에 언론사 로고(Wordmark)가 들어갈 예정입니다. */}
-          </div>
+        {cells.map((press, index) => (
+          <GridCell key={index} press={press} />
         ))}
       </div>
       
