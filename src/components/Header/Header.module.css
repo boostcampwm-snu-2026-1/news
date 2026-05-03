@@ -22,6 +22,7 @@
   line-height: var(--t-display-lh);
   letter-spacing: var(--t-tracking-display);
   color: var(--c-ink);
+  margin: 0;
 }
 
 .date {

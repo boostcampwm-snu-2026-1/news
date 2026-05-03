@@ -70,6 +70,7 @@
   font-weight: var(--t-heading-weight);
   line-height: 1.45;
   color: var(--c-ink);
+  margin: 0;
 }
 
 .right {
@@ -111,5 +112,10 @@
   font-size: var(--t-caption-size);
   font-weight: var(--t-caption-weight);
   line-height: var(--t-caption-lh);
-  color: var(--c-mute);
+  /*
+   * Spec calls for `mute` (#879298) but CLAUDE.md restricts mute to 14px+ for
+   * WCAG AA contrast on white. Footnote is 12px → use `sub` (#5F6E76) which
+   * passes AA at 12px while keeping the same visual hierarchy intent.
+   */
+  color: var(--c-sub);
 }

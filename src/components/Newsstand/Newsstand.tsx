@@ -125,7 +125,7 @@ export function Newsstand() {
   };
 
   return (
-    <div className="canvas">
+    <main className="canvas" aria-label="뉴스스탠드">
       <Header date="2026. 01. 14. 수요일" />
       <Ticker />
       <TabBar
@@ -171,6 +171,6 @@ export function Newsstand() {
       </div>
       <Chevron dir="left" disabled={leftDisabled} onClick={onLeft} />
       <Chevron dir="right" disabled={rightDisabled} onClick={onRight} />
-    </div>
+    </main>
   );
 }

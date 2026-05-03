@@ -6,6 +6,13 @@
   align-items: center;
   justify-content: center;
   background: transparent;
+  outline: none;
+}
+
+.chevron:focus-visible {
+  color: var(--c-ink);
+  box-shadow: 0 0 0 2px var(--c-accent);
+  border-radius: var(--r-sub);
 }
 
 .disabled {

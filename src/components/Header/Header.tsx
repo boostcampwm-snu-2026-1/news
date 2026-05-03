@@ -9,7 +9,7 @@ export function Header({ date }: HeaderProps) {
     <header className={`contentCol headerRow ${styles.header}`}>
       <div className={styles.brand}>
         <NewspaperIcon />
-        <span className={styles.title}>뉴스스탠드</span>
+        <h1 className={styles.title}>뉴스스탠드</h1>
       </div>
       <time className={styles.date}>{date}</time>
     </header>

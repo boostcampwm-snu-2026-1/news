@@ -54,8 +54,10 @@ export function PressOpen({
         </div>
         <div className={styles.bodyRow}>
           <div className={styles.left}>
-            <div className={styles.imageBox}>headline image</div>
-            <div className={styles.headline}>{headlineTitle}</div>
+            <div className={styles.imageBox} aria-hidden="true">
+              headline image
+            </div>
+            <h2 className={styles.headline}>{headlineTitle}</h2>
           </div>
           <div className={styles.right}>
             <ul className={styles.list}>
