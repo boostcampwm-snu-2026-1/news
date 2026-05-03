@@ -1,7 +1,7 @@
 export default function PressWordmark({ press }) {
   const wordmark = press.wordmark ?? press
   const family = wordmark.family === 'serif' ? 'var(--font-serif)' : 'var(--font-sans)'
-  const fontSize = wordmark.compact ? '14px' : '16px'
+  const fontSize = wordmark.compact ? 'var(--type-list-size)' : 'var(--type-heading-size)'
   const hasBackground = wordmark.background && wordmark.background !== 'transparent'
 
   return (

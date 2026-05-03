@@ -21,7 +21,7 @@
 - [x] checklist-10 구독 상태 관리 (useState로 Set<pressId> 추적, 구독/해지 로직)
 
 ### 스타일링 & 접근성
-- [ ] checklist-11 디자인 시스템 준수 (색상 토큰, 타이포그래피, 8px 스페이싱)
+- [x] checklist-11 디자인 시스템 준수 (색상 토큰, 타이포그래피, 8px 스페이싱)
 - [ ] checklist-12 접근성 + 반응형 (role="tablist", aria-selected, 1280px 콘텐츠 폭)
 
 ---

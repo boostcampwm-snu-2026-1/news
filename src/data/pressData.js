@@ -55,7 +55,7 @@ export const PRESS_DATA = [
   createPress({ id: 'asiae-econ', name: '아시아경제' }),
   createPress({ id: 'edaily', name: '이데일리', color: red, weight: 700 }),
   createPress({ id: 'chosun', name: '조선일보', label: '朝鮮日報', family: 'serif' }),
-  createPress({ id: 'inews24', name: '아이뉴스24', color: 'var(--color-accent)', weight: 700 }),
+  createPress({ id: 'inews24', name: '아이뉴스24', color: blue, weight: 700 }),
   createPress({ id: 'financial-news', name: '파이낸셜뉴스' }),
   createPress({ id: 'sports-seoul', name: '스포츠서울', category: '스포츠/연예' }),
   createPress({ id: 'sports-donga', name: '스포츠동아', category: '스포츠/연예' }),

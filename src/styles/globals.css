@@ -147,12 +147,12 @@ svg {
 
 ::selection {
   color: var(--color-card);
-  background: var(--color-accent-deep);
+  background: var(--color-ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
+  outline: var(--stroke-width) solid var(--color-ink);
+  outline-offset: var(--space-4);
 }
 
 .visually-hidden {
@@ -193,11 +193,11 @@ svg {
 
 .header__icon {
   display: inline-grid;
-  grid-template-columns: repeat(2, 7px);
-  grid-template-rows: repeat(2, 7px);
-  gap: 3px;
-  width: 17px;
-  height: 17px;
+  grid-template-columns: repeat(2, 6px);
+  grid-template-rows: repeat(2, 6px);
+  gap: var(--space-4);
+  width: var(--space-16);
+  height: var(--space-16);
   color: var(--color-ink);
 }
 
@@ -447,7 +447,7 @@ svg {
 }
 
 .chevron:not(:disabled):hover {
-  color: var(--color-accent-deep);
+  color: var(--color-sub);
 }
 
 .chevron:not(:disabled):active {
@@ -457,8 +457,8 @@ svg {
 .chevron__icon {
   width: 14px;
   height: 14px;
-  border-top: 2px solid currentColor;
-  border-right: 2px solid currentColor;
+  border-top: var(--stroke-width) solid currentColor;
+  border-right: var(--stroke-width) solid currentColor;
 }
 
 .chevron--left .chevron__icon {
