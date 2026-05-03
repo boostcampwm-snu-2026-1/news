@@ -8,3 +8,7 @@
   background: var(--c-line);
   border: var(--bw) solid var(--c-line);
 }
+
+.cellEmpty {
+  background: var(--c-card);
+}

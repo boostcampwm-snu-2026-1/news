@@ -34,7 +34,7 @@
 - [x] **7. `<TabBar>`** — `all`/`sub` 토글 + 카운트 배지 + grid/list 뷰 토글 아이콘. `role="tablist"`.
 - [x] **8. 그리드 + 구독 토글** — `<PressGrid>` 6×4 + `<GridCell>` hover-스왑 + `<SubscribePill>`. 리듀서로 `subscribed` Set 관리, `localStorage` 동기화 훅.
 - [x] **9. 페이지네이션 + `<Chevron>`** — 좌/우, `opacity:0` + `disabled` 처리. 탭별 페이지 수 계산.
-- [ ] **10. 구독 탭 희소 그리드** — 빈 셀 흰색, hover 시 `−해지하기`.
+- [x] **10. 구독 탭 희소 그리드** — 빈 셀 흰색, hover 시 `−해지하기`.
 - [ ] **11. 리스트 뷰** — `<PressOpen>` + `<FieldTab>`(6초 진행 바) + 헤드라인 이미지 placeholder + 6 항목 리스트. `progress→currentInTab→tabKey` 자동 전환.
 - [ ] **12. 접근성 마감** — 키보드 focus parity, aria 라벨, `prefers-reduced-motion` 전역 적용 검증.
 - [ ] **13. 테스트** — 리듀서 케이스(구독/해지/페이지네이션/탭 전환/progress 오버플로) + 핵심 hover-state 1~2건.

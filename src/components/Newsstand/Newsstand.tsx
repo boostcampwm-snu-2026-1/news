@@ -30,8 +30,10 @@ export function Newsstand() {
 
   const visible = useMemo(() => {
     if (state.tab === "all") return ALL_PRESS;
-    const set = new Set(state.subscribed);
-    return ALL_PRESS.filter((p) => set.has(p.id));
+    const byId = new Map(ALL_PRESS.map((p) => [p.id, p]));
+    return state.subscribed
+      .map((id) => byId.get(id))
+      .filter((p): p is Press => p !== undefined);
   }, [state.tab, state.subscribed]);
 
   const lastPage = Math.max(0, Math.ceil(visible.length / PER_PAGE) - 1);
