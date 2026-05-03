@@ -1,0 +1,19 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--h-pill);
+  padding: 0 var(--s-3);
+  background: var(--c-card);
+  border: var(--bw) solid var(--c-line);
+  border-radius: var(--r-pill);
+  color: var(--c-sub);
+  box-shadow: var(--sh-pill);
+}
+
+.label {
+  font-size: var(--t-caption-size);
+  font-weight: var(--t-caption-weight);
+  line-height: var(--t-caption-lh);
+  color: var(--c-sub);
+}

@@ -1,0 +1,50 @@
+/*
+ * Canvas + content column layout — design system §4.
+ * Fixed 1280×720 canvas, absolute positioning by y-token.
+ */
+
+.canvas {
+  position: relative;
+  width: var(--canvas-w);
+  height: var(--canvas-h);
+  margin: 0 auto;
+  background: var(--c-card);
+}
+
+.contentCol {
+  position: absolute;
+  left: var(--gutter);
+  width: var(--content-w);
+}
+
+.headerRow {
+  top: var(--y-header);
+  height: var(--h-header);
+}
+
+.tickerRow {
+  top: var(--y-ticker);
+  height: var(--h-ticker);
+}
+
+.tabbarRow {
+  top: var(--y-tabbar);
+  height: var(--h-tabbar);
+}
+
+.contentArea {
+  top: var(--y-content);
+  height: var(--h-content);
+}
+
+.chevron-left {
+  position: absolute;
+  left: var(--x-chevron-left);
+  top: var(--y-chevrons);
+}
+
+.chevron-right {
+  position: absolute;
+  left: var(--x-chevron-right);
+  top: var(--y-chevrons);
+}

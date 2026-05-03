@@ -1,0 +1,43 @@
+.cell {
+  position: relative;
+  background: var(--c-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+}
+
+.cell:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--c-accent);
+}
+
+.face {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: var(--s-2);
+}
+
+.hover {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-soft);
+}
+
+.cell:hover .face,
+.cell:focus-visible .face,
+.cell:has(:focus-visible) .face {
+  visibility: hidden;
+}
+
+.cell:hover .hover,
+.cell:focus-visible .hover,
+.cell:has(:focus-visible) .hover {
+  display: flex;
+}
