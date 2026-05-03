@@ -4,11 +4,20 @@ import { NewsCard } from '../NewsCard/NewsCard';
 interface NewsGridProps {
   publishers: Publisher[];
   subscribedIds: Set<string>;
-  onToggle: (id: string) => void;
+  onSubscribe: (id: string) => void;
+  onUnsubscribeRequest: (id: string) => void;
+  viewMode: 'grid' | 'list';
   emptyMessage?: string;
 }
 
-export function NewsGrid({ publishers, subscribedIds, onToggle, emptyMessage }: NewsGridProps) {
+export function NewsGrid({
+  publishers,
+  subscribedIds,
+  onSubscribe,
+  onUnsubscribeRequest,
+  viewMode,
+  emptyMessage,
+}: NewsGridProps) {
   if (publishers.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 gap-3">
@@ -20,14 +29,29 @@ export function NewsGrid({ publishers, subscribedIds, onToggle, emptyMessage }: 
     );
   }
 
-  return (
+  return viewMode === 'grid' ? (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
       {publishers.map((publisher) => (
         <NewsCard
           key={publisher.id}
           publisher={publisher}
           isSubscribed={subscribedIds.has(publisher.id)}
-          onToggle={onToggle}
+          onSubscribe={onSubscribe}
+          onUnsubscribeRequest={onUnsubscribeRequest}
+          viewMode="grid"
+        />
+      ))}
+    </div>
+  ) : (
+    <div className="flex flex-col gap-2">
+      {publishers.map((publisher) => (
+        <NewsCard
+          key={publisher.id}
+          publisher={publisher}
+          isSubscribed={subscribedIds.has(publisher.id)}
+          onSubscribe={onSubscribe}
+          onUnsubscribeRequest={onUnsubscribeRequest}
+          viewMode="list"
         />
       ))}
     </div>

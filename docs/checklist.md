@@ -68,10 +68,10 @@
   - TabBar ↔ NewsGrid 연결 완료
   - 의존성: #4, #7
 
-- [ ] **9. 구독/해지 상태 관리**
-  - `subscribedIds` state를 `App.jsx`에서 관리 (Set 또는 배열)
-  - 구독 버튼 클릭 시 toggle 로직
-  - `localStorage`에 구독 목록 저장/불러오기 (새로고침 후 유지)
+- [x] **9. 구독/해지 상태 관리**
+  - `subscribedIds` state를 `App.tsx`에서 `useState` lazy initializer로 관리
+  - `localStorage('news-subscribed')`에 저장·복원 — 새로고침 후에도 유지
+  - 구독(`handleSubscribe`)과 해지(`handleUnsubscribeRequest`) 핸들러 분리
   - 의존성: #6, #8
 
 ---
@@ -80,17 +80,16 @@
 
 ### P2 · 구독 확인 모달
 
-- [ ] **10. 구독 해지 확인 모달(SubscribeModal) 구현**
-  - 해지 시도 시 모달 표시: "정말 해지하시겠습니까?"
-  - 확인/취소 버튼으로 처리
-  - 오버레이 클릭 시 모달 닫힘
-  - 접근성: `role="dialog"`, `aria-modal="true"` 속성 추가
+- [x] **10. 구독 해지 확인 모달(SubscribeModal) 구현**
+  - 해지 버튼 클릭 → `pendingUnsubscribeId` 설정 → 모달 표시
+  - ESC 키 / 오버레이 클릭으로 취소, 확인 버튼으로 실제 해지
+  - `role="dialog"`, `aria-modal="true"`, `aria-labelledby` 접근성 처리
   - 의존성: #9
 
-- [ ] **11. 카드형 ↔ 리스트형 뷰 전환**
-  - 그리드 우측 상단에 뷰 전환 토글 버튼 (아이콘)
-  - 리스트형: 언론사명 + 간략 설명을 가로로 나열
-  - `viewMode` state: `'grid'` | `'list'`
+- [x] **11. 카드형 ↔ 리스트형 뷰 전환**
+  - 콘텐츠 우상단 그리드/리스트 아이콘 토글 버튼
+  - 리스트형: 로고 + 이름·카테고리·설명 + 버튼 한 줄 배치
+  - `viewMode: 'grid' | 'list'` state, NewsGrid/NewsCard 양쪽에 전파
   - 의존성: #7
 
 ### P1 · 페이지네이션 / 무한 스크롤
@@ -130,7 +129,7 @@
 
 | 주차 | 완료 항목 | 진행 중 | 남은 항목 |
 |------|----------|--------|----------|
-| 1주차 | 8 / 9 | - | 9 |
-| 2주차 | 0 / 5 | - | 10~14 |
+| 1주차 | 9 / 9 | - | 완료 |
+| 2주차 | 2 / 5 | - | 12~14 |
 
 > 이 표는 작업 완료 시마다 수동으로 업데이트할 것.

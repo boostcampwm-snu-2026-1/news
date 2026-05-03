@@ -3,7 +3,9 @@ import type { Publisher } from '../../types';
 interface NewsCardProps {
   publisher: Publisher;
   isSubscribed: boolean;
-  onToggle: (id: string) => void;
+  onSubscribe: (id: string) => void;
+  onUnsubscribeRequest: (id: string) => void;
+  viewMode: 'grid' | 'list';
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -15,24 +17,38 @@ const CATEGORY_COLORS: Record<string, string> = {
   '지역':     'bg-gray-100 text-gray-600',
 };
 
-export function NewsCard({ publisher, isSubscribed, onToggle }: NewsCardProps) {
-  const { id, name, logoUrl, category } = publisher;
+export function NewsCard({ publisher, isSubscribed, onSubscribe, onUnsubscribeRequest, viewMode }: NewsCardProps) {
+  const { id, name, logoUrl, category, description } = publisher;
   const badgeClass = CATEGORY_COLORS[category] ?? 'bg-gray-100 text-gray-600';
 
-  return (
-    <article className="card overflow-hidden">
-      {/* 로고 영역 */}
-      <div className="relative h-24 bg-gray-50 flex items-center justify-center group">
-        <img
-          src={logoUrl}
-          alt={`${name} 로고`}
-          className="h-10 w-auto object-contain"
-        />
+  const handleActionClick = () => {
+    if (isSubscribed) {
+      onUnsubscribeRequest(id);
+    } else {
+      onSubscribe(id);
+    }
+  };
 
-        {/* 호버 오버레이 — 로고는 그대로, 버튼만 좌우로 */}
-        <div className="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-white/80">
+  if (viewMode === 'list') {
+    return (
+      <article className="card flex items-center gap-4 px-4 py-3">
+        <img src={logoUrl} alt={`${name} 로고`} className="h-8 w-20 object-contain shrink-0" />
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-0.5">
+            <span className="text-sm font-semibold text-text-primary">{name}</span>
+            <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${badgeClass}`}>{category}</span>
+          </div>
+          <p className="text-xs text-text-secondary truncate">{description}</p>
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
           <button
-            onClick={() => onToggle(id)}
+            onClick={handleActionClick}
+            className="px-3 py-1.5 text-xs font-semibold rounded border transition-colors border-primary text-primary bg-white hover:bg-green-50"
+          >
+            기사보기
+          </button>
+          <button
+            onClick={handleActionClick}
             aria-pressed={isSubscribed}
             className={[
               'px-3 py-1.5 text-xs font-semibold rounded border transition-colors',
@@ -43,7 +59,35 @@ export function NewsCard({ publisher, isSubscribed, onToggle }: NewsCardProps) {
           >
             {isSubscribed ? '해지' : '+ 구독'}
           </button>
-          <button className="px-3 py-1.5 text-xs font-semibold rounded border border-gray-400 text-gray-600 bg-white hover:bg-gray-50 transition-colors">
+        </div>
+      </article>
+    );
+  }
+
+  return (
+    <article className="card overflow-hidden">
+      {/* 로고 영역 — 호버 시 초록 오버레이 */}
+      <div className="relative h-24 bg-gray-50 flex items-center justify-center group">
+        <img
+          src={logoUrl}
+          alt={`${name} 로고`}
+          className="h-10 w-auto object-contain"
+        />
+
+        <div className="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-primary/90">
+          <button
+            onClick={handleActionClick}
+            aria-pressed={isSubscribed}
+            className={[
+              'px-3 py-1.5 text-xs font-semibold rounded border transition-colors',
+              isSubscribed
+                ? 'border-white/60 text-white bg-red-500/80 hover:bg-red-500'
+                : 'border-white text-primary bg-white hover:bg-green-50',
+            ].join(' ')}
+          >
+            {isSubscribed ? '해지' : '+ 구독'}
+          </button>
+          <button className="px-3 py-1.5 text-xs font-semibold rounded border border-white text-primary bg-white hover:bg-green-50 transition-colors">
             기사보기
           </button>
         </div>
@@ -57,10 +101,7 @@ export function NewsCard({ publisher, isSubscribed, onToggle }: NewsCardProps) {
         </span>
       </div>
 
-      {/* 구독 중 하단 바 */}
-      {isSubscribed && (
-        <div className="h-0.5 bg-primary" />
-      )}
+      {isSubscribed && <div className="h-0.5 bg-primary" />}
     </article>
   );
 }
