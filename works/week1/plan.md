@@ -25,7 +25,7 @@
 
 각 항목 = 한 커밋 단위. 항목 번호가 commit 메시지의 `#N` (feature 번호).
 
-- [ ] **1. 프로젝트 부트스트랩** — Vite + React + TS, ESLint/Prettier, Vitest, 디렉터리 골격(`src/{components,data,hooks,styles,state}`).
+- [x] **1. 프로젝트 부트스트랩** — Vite + React + TS, ESLint/Prettier, Vitest, 디렉터리 골격(`src/{components,data,hooks,styles,state}`).
 - [ ] **2. 디자인 토큰 + 폰트** — `styles/tokens.css`(컬러/타이포/스페이싱/radii CSS 변수), `styles/fonts.css`(`@fontsource`), 최소 reset.
 - [ ] **3. 타입 + 픽스처** — `state/types.ts`(Press, TickerItem, Article, Category), `data/press.json`(72개 wordmark 데이터, 디자인 PDF 6 프레임에서 추출), `data/ticker.json`, `data/articles.json`.
 - [ ] **4. 레이아웃 셸** — 1280 캔버스, 175 거터, 930 콘텐츠 컬럼. `<Header>`(아이콘 + display + 날짜).

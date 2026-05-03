@@ -1,3 +1,13 @@
 .claude/settings.local.json
 .claude/hooks/hook.log
 .DS_Store
+
+node_modules
+dist
+coverage
+.vite
+*.log
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+.claude/scheduled_tasks.lock
