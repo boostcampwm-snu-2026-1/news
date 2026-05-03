@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #14212b;
+  --color-ink-alt: #14202b;
+  --color-sub: #5f6e76;
+  --color-mute: #879298;
+  --color-line: #d2dae0;
+  --color-soft: #f5f7f9;
+  --color-soft-alt: #f7f7fc;
+  --color-card: #ffffff;
+  --color-page: #fefefe;
+  --color-accent: #7890e7;
+  --color-accent-deep: #4362d0;
+  --color-badge-ink: rgb(255 255 255 / 70%);
+  --color-danger: #ffd1cf;
+
+  --font-sans: "Pretendard Variable", Pretendard, "Noto Sans KR", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-serif: "Noto Serif KR", ui-serif, Georgia, serif;
+
+  --radius-sub: 2px;
+  --radius-pill: 14px;
+  --radius-badge: 10px;
+
+  --shadow-pill: 0 1px 2px rgb(20 33 43 / 4%);
+
+  --ease-standard: cubic-bezier(.4, 0, .2, 1);
+  --duration-ticker: 550ms;
+  --duration-progress: 6000ms;
+}
+
+:root {
+  --color-ink: #14212b;
+  --color-ink-alt: #14202b;
+  --color-sub: #5f6e76;
+  --color-mute: #879298;
+  --color-line: #d2dae0;
+  --color-soft: #f5f7f9;
+  --color-soft-alt: #f7f7fc;
+  --color-card: #ffffff;
+  --color-page: #fefefe;
+  --color-accent: #7890e7;
+  --color-accent-deep: #4362d0;
+  --color-badge-ink: rgb(255 255 255 / 70%);
+  --color-danger: #ffd1cf;
+
+  --font-sans: "Pretendard Variable", Pretendard, "Noto Sans KR", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-serif: "Noto Serif KR", ui-serif, Georgia, serif;
+
+  --text-display-size: 24px;
+  --text-display-weight: 700;
+  --text-display-leading: 1;
+  --text-display-tracking: -0.02em;
+  --text-heading-size: 16px;
+  --text-heading-weight: 700;
+  --text-heading-leading: 1;
+  --text-body-size: 16px;
+  --text-body-weight: 500;
+  --text-body-leading: 22px;
+  --text-body-tracking: -0.01em;
+  --text-list-item-size: 14px;
+  --text-list-item-weight: 500;
+  --text-list-item-leading: 1.5;
+  --text-caption-size: 12px;
+  --text-caption-weight: 500;
+  --text-caption-leading: 1;
+  --text-badge-size: 12px;
+  --text-badge-weight: 500;
+  --text-badge-leading: 1;
+  --text-mono-tab-size: 12px;
+  --text-mono-tab-weight: 500;
+  --text-mono-tab-leading: 1;
+  --text-mono-label-size: 10px;
+  --text-mono-label-weight: 500;
+  --text-mono-label-leading: 1;
+
+  --space-base: 8px;
+  --layout-canvas-width: 1280px;
+  --layout-canvas-height: 720px;
+  --layout-content-width: 930px;
+  --layout-content-height: 388px;
+  --layout-gutter: 175px;
+  --layout-header-top: 58px;
+  --layout-header-height: 29px;
+  --layout-ticker-top: 127px;
+  --layout-ticker-height: 49px;
+  --layout-tabbar-top: 208px;
+  --layout-tabbar-height: 24px;
+  --layout-content-top: 256px;
+  --layout-chevron-top: 430px;
+  --layout-chevron-left: 103px;
+  --layout-chevron-right: 1153px;
+
+  --grid-columns: 6;
+  --grid-rows: 4;
+  --grid-page-size: 24;
+  --grid-divider-size: 1px;
+  --grid-cell-width: 154px;
+  --grid-cell-height: 96px;
+
+  --radius-0: 0;
+  --radius-sub: 2px;
+  --radius-pill: 14px;
+  --radius-badge: 10px;
+
+  --border-hairline: 1px solid var(--color-line);
+  --shadow-pill: 0 1px 2px rgb(20 33 43 / 4%);
+
+  --duration-ticker-interval: 3200ms;
+  --duration-ticker-crossfade: 550ms;
+  --duration-progress: 6000ms;
+  --ease-standard: cubic-bezier(.4, 0, .2, 1);
+
+  color: var(--color-ink);
+  background: var(--color-page);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-weight);
+  line-height: var(--text-body-leading);
+  letter-spacing: var(--text-body-tracking);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100svh;
+  margin: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+@keyframes ticker-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes field-tab-progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

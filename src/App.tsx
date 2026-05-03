@@ -1,0 +1,285 @@
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { ArticleListView } from './components/ArticleListView'
+import { Header } from './components/Header'
+import { NewsstandShell } from './components/NewsstandShell'
+import { NewsTicker } from './components/NewsTicker'
+import { Pagination } from './components/Pagination'
+import { PublisherGrid } from './components/PublisherGrid'
+import { ScopeTabs } from './components/ScopeTabs'
+import { ViewToggle } from './components/ViewToggle'
+import { PUBLISHER_GRID_PAGE_SIZE } from './constants/newsStand'
+import { CATEGORIES, PUBLISHERS, TICKER_ITEMS } from './data/newsStand'
+import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion'
+import { usePublisherSubscriptions } from './hooks/usePublisherSubscriptions'
+import type {
+  NewsstandViewMode,
+  Publisher,
+  PublisherCategory,
+  PublisherScope,
+} from './types/newsStand'
+
+type GridFocusTarget =
+  | { type: 'grid' }
+  | { type: 'publisher-action'; publisherId: Publisher['id'] }
+
+const OPENED_PROGRESS_DURATION_MS = 6000
+const CONTENT_TRANSITION_CLASS =
+  'motion-safe:animate-[content-enter_220ms_var(--ease-standard)] motion-reduce:animate-none'
+
+function App() {
+  const gridRegionRef = useRef<HTMLDivElement | null>(null)
+  const pendingGridFocusRef = useRef<GridFocusTarget | null>(null)
+  const prefersReducedMotion = usePrefersReducedMotion()
+  const [scope, setScope] = useState<PublisherScope>('all')
+  const [viewMode, setViewMode] = useState<NewsstandViewMode>('grid')
+  const [pageIndex, setPageIndex] = useState(0)
+  const [selectedPublisherId, setSelectedPublisherId] = useState<
+    Publisher['id'] | null
+  >(null)
+  const {
+    isPublisherSubscribed,
+    subscribedCount,
+    subscribedPublisherIds,
+    togglePublisherSubscription,
+  } = usePublisherSubscriptions()
+  const visiblePublishers =
+    scope === 'all'
+      ? PUBLISHERS
+      : PUBLISHERS.filter((publisher) => subscribedPublisherIds.has(publisher.id))
+  const pageCount = Math.ceil(visiblePublishers.length / PUBLISHER_GRID_PAGE_SIZE)
+  const lastPageIndex = Math.max(pageCount - 1, 0)
+  const currentPageIndex = Math.min(pageIndex, lastPageIndex)
+  const pageStartIndex = currentPageIndex * PUBLISHER_GRID_PAGE_SIZE
+  const pagePublishers = visiblePublishers.slice(
+    pageStartIndex,
+    pageStartIndex + PUBLISHER_GRID_PAGE_SIZE,
+  )
+  const selectedPublisher =
+    PUBLISHERS.find((publisher) => publisher.id === selectedPublisherId) ?? null
+  const selectedCategoryPublishers = selectedPublisher
+    ? PUBLISHERS.filter(
+        (publisher) => publisher.category === selectedPublisher.category,
+      )
+    : []
+  const categoryCounts = new Map(
+    CATEGORIES.map((category) => [
+      category.key,
+      PUBLISHERS.filter((publisher) => publisher.category === category.key).length,
+    ]),
+  )
+  const selectedCategoryIndex = selectedPublisher
+    ? selectedCategoryPublishers.findIndex(
+        (publisher) => publisher.id === selectedPublisher.id,
+      ) + 1
+    : 1
+  const gridLabel = scope === 'all' ? '전체 언론사 그리드' : '구독한 언론사 그리드'
+  const placeholderMessage =
+    scope === 'all'
+      ? '전체 언론사 목록 보기 영역입니다.'
+      : subscribedCount > 0
+        ? '구독한 언론사 목록 보기 영역입니다.'
+        : '아직 구독한 언론사가 없습니다.'
+
+  useLayoutEffect(() => {
+    const focusTarget = pendingGridFocusRef.current
+
+    if (!focusTarget) {
+      return
+    }
+
+    pendingGridFocusRef.current = null
+
+    if (focusTarget.type === 'publisher-action') {
+      const actionButton = Array.from(
+        gridRegionRef.current?.querySelectorAll<HTMLButtonElement>(
+          '[data-publisher-action-id]',
+        ) ?? [],
+      ).find(
+        (button) => button.dataset.publisherActionId === focusTarget.publisherId,
+      )
+
+      if (actionButton) {
+        actionButton.focus()
+        return
+      }
+    }
+
+    gridRegionRef.current?.focus()
+  })
+
+  useEffect(() => {
+    if (!selectedPublisher || prefersReducedMotion) {
+      return
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setSelectedPublisherId((currentPublisherId) =>
+        getNextOpenedPublisherId(currentPublisherId),
+      )
+    }, OPENED_PROGRESS_DURATION_MS)
+
+    return () => {
+      window.clearTimeout(timeoutId)
+    }
+  }, [prefersReducedMotion, selectedPublisher])
+
+  const handleScopeChange = (nextScope: PublisherScope) => {
+    pendingGridFocusRef.current = { type: 'grid' }
+    setScope(nextScope)
+    setPageIndex(0)
+    setSelectedPublisherId(null)
+  }
+
+  const handleViewModeChange = (nextViewMode: NewsstandViewMode) => {
+    setViewMode(nextViewMode)
+    setSelectedPublisherId(null)
+  }
+
+  const handleTogglePublisherSubscription = (publisherId: Publisher['id']) => {
+    if (scope === 'subscribed' && subscribedPublisherIds.has(publisherId)) {
+      const currentPublisherIndex = visiblePublishers.findIndex(
+        (publisher) => publisher.id === publisherId,
+      )
+      const nextFocusPublisher =
+        currentPublisherIndex >= 0
+          ? visiblePublishers[currentPublisherIndex + 1] ??
+            visiblePublishers[currentPublisherIndex - 1] ??
+            null
+          : null
+
+      pendingGridFocusRef.current = nextFocusPublisher
+        ? { type: 'publisher-action', publisherId: nextFocusPublisher.id }
+        : { type: 'grid' }
+    }
+
+    togglePublisherSubscription(publisherId)
+  }
+
+  const handleOpenPublisher = (publisherId: Publisher['id']) => {
+    setSelectedPublisherId(publisherId)
+  }
+
+  const handleCategorySelect = (category: PublisherCategory) => {
+    const nextPublisher = PUBLISHERS.find(
+      (publisher) => publisher.category === category,
+    )
+
+    if (nextPublisher) {
+      setSelectedPublisherId(nextPublisher.id)
+    }
+  }
+
+  const handleClosePublisher = () => {
+    pendingGridFocusRef.current = { type: 'grid' }
+    setSelectedPublisherId(null)
+  }
+
+  return (
+    <NewsstandShell
+      header={<Header />}
+      ticker={<NewsTicker items={TICKER_ITEMS} />}
+      toolbar={
+        <div className="flex h-full items-center justify-between">
+          <ScopeTabs
+            activeScope={scope}
+            onScopeChange={handleScopeChange}
+            subscribedCount={subscribedCount}
+          />
+          <ViewToggle activeMode={viewMode} onModeChange={handleViewModeChange} />
+        </div>
+      }
+    >
+      {selectedPublisher ? (
+        <div className={CONTENT_TRANSITION_CLASS} key={`opened-${selectedPublisher.id}`}>
+          <ArticleListView
+            activeCategory={selectedPublisher.category}
+            activeCategoryIndex={selectedCategoryIndex}
+            categories={CATEGORIES}
+            categoryCounts={categoryCounts}
+            isSubscribed={isPublisherSubscribed(selectedPublisher.id)}
+            onCategorySelect={handleCategorySelect}
+            onClose={handleClosePublisher}
+            onToggleSubscription={togglePublisherSubscription}
+            progressEnabled={!prefersReducedMotion}
+            publisher={selectedPublisher}
+          />
+        </div>
+      ) : viewMode === 'grid' ? (
+        <div
+          aria-label={`${gridLabel} 페이지 영역`}
+          className={`relative focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent ${CONTENT_TRANSITION_CLASS}`}
+          key="publisher-grid"
+          ref={gridRegionRef}
+          role="region"
+          tabIndex={-1}
+        >
+          <PublisherGrid
+            ariaLabel={gridLabel}
+            isPublisherSubscribed={isPublisherSubscribed}
+            onOpenPublisher={handleOpenPublisher}
+            onToggleSubscription={handleTogglePublisherSubscription}
+            publishers={pagePublishers}
+          />
+          <Pagination
+            onNext={() => {
+              pendingGridFocusRef.current = { type: 'grid' }
+              setPageIndex(Math.min(currentPageIndex + 1, lastPageIndex))
+            }}
+            onPrevious={() => {
+              pendingGridFocusRef.current = { type: 'grid' }
+              setPageIndex(Math.max(currentPageIndex - 1, 0))
+            }}
+            pageCount={pageCount}
+            pageIndex={currentPageIndex}
+          />
+        </div>
+      ) : (
+        <div
+          className={`flex min-h-[var(--layout-content-height)] items-center justify-center border border-dashed border-line bg-card px-6 text-center ${CONTENT_TRANSITION_CLASS}`}
+          key="publisher-list-placeholder"
+        >
+          <p className="text-[length:var(--text-caption-size)] font-medium leading-[var(--text-caption-leading)] text-sub">
+            930px 뉴스스탠드 콘텐츠 영역
+            <br />
+            {placeholderMessage}
+          </p>
+        </div>
+      )}
+    </NewsstandShell>
+  )
+}
+
+export default App
+
+function getNextOpenedPublisherId(currentPublisherId: Publisher['id'] | null) {
+  const currentPublisher = PUBLISHERS.find(
+    (publisher) => publisher.id === currentPublisherId,
+  )
+
+  if (!currentPublisher) {
+    return currentPublisherId
+  }
+
+  const categoryIndex = CATEGORIES.findIndex(
+    (category) => category.key === currentPublisher.category,
+  )
+  const currentCategoryPublishers = PUBLISHERS.filter(
+    (publisher) => publisher.category === currentPublisher.category,
+  )
+  const currentPublisherIndex = currentCategoryPublishers.findIndex(
+    (publisher) => publisher.id === currentPublisher.id,
+  )
+  const nextPublisher = currentCategoryPublishers[currentPublisherIndex + 1]
+
+  if (nextPublisher) {
+    return nextPublisher.id
+  }
+
+  const nextCategory =
+    CATEGORIES[(categoryIndex + 1) % CATEGORIES.length] ?? CATEGORIES[0]
+  const nextCategoryPublisher = PUBLISHERS.find(
+    (publisher) => publisher.category === nextCategory.key,
+  )
+
+  return nextCategoryPublisher?.id ?? currentPublisher.id
+}
