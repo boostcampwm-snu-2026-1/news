@@ -14,6 +14,7 @@ import {
 import { loadFromStorage, saveToStorage } from "../../hooks/useLocalStorage";
 import { useInterval } from "../../hooks/useInterval";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
+import { DEFAULT_CATEGORY_COUNT } from "../../data/dummyArticles";
 import { Header } from "../Header/Header";
 import { Ticker } from "../Ticker/Ticker";
 import { TabBar, type ViewerId } from "../TabBar/TabBar";
@@ -82,7 +83,7 @@ export function Newsstand() {
   const openedIdx = state.opened !== null ? visible.findIndex((p) => p.id === state.opened) : -1;
 
   const currentCategoryCount =
-    openedArticles?.byCategory[state.tabKey]?.count ?? 1;
+    openedArticles?.byCategory[state.tabKey]?.count ?? DEFAULT_CATEGORY_COUNT;
 
   useInterval(
     () => {
@@ -93,8 +94,21 @@ export function Newsstand() {
       }
       if (state.currentInTab + 1 > currentCategoryCount) {
         const idx = CATEGORY_ORDER.indexOf(state.tabKey);
-        const nextCat = CATEGORY_ORDER[(idx + 1) % CATEGORY_ORDER.length];
-        dispatch({ type: "field-tab/set", tabKey: nextCat });
+        const isLastCat = idx === CATEGORY_ORDER.length - 1;
+        if (!isLastCat) {
+          dispatch({ type: "field-tab/set", tabKey: CATEGORY_ORDER[idx + 1] });
+        } else {
+          const nextIdx =
+            openedIdx >= 0 && openedIdx < visible.length - 1 ? openedIdx + 1 : 0;
+          const nextPress = visible[nextIdx];
+          if (nextPress) {
+            dispatch({
+              type: "press/open",
+              pressId: nextPress.id,
+              primaryCategory: nextPress.primaryCategory,
+            });
+          }
+        }
       } else {
         dispatch({ type: "field-tab/advance-current" });
       }

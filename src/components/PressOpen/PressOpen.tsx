@@ -1,4 +1,5 @@
 import type { CategoryKey, Press, PressArticles } from "../../state/types";
+import { buildDummyCategoryArticles } from "../../data/dummyArticles";
 import { FieldTab } from "../FieldTab/FieldTab";
 import { PressWordmark } from "../PressWordmark/PressWordmark";
 import { SubscribePill } from "../SubscribePill/SubscribePill";
@@ -27,10 +28,10 @@ export function PressOpen({
   onSubscribe,
   onUnsubscribe,
 }: PressOpenProps) {
-  const cat = articles?.byCategory[tabKey];
-  const headlineTitle = cat?.headlineTitle ?? "편집된 헤드라인이 없습니다.";
-  const items = cat?.items ?? [];
-  const count = cat?.count ?? 1;
+  const cat =
+    articles?.byCategory[tabKey] ??
+    buildDummyCategoryArticles(press.wordmark.name, tabKey);
+  const { headlineTitle, items, count } = cat;
 
   return (
     <div className={styles.opened}>
