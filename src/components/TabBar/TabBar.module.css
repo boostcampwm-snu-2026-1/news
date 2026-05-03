@@ -1,0 +1,65 @@
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--t-heading-size);
+  line-height: var(--t-heading-lh);
+  cursor: pointer;
+}
+
+.tabActive {
+  font-weight: 700;
+  color: var(--c-ink);
+}
+
+.tabInactive {
+  font-weight: 500;
+  color: var(--c-mute);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--r-badge);
+  background: var(--c-accent);
+  color: var(--c-badge-ink);
+  font-size: var(--t-badge-size);
+  font-weight: var(--t-badge-weight);
+  line-height: var(--t-badge-lh);
+  font-variant-numeric: tabular-nums;
+}
+
+.viewer {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-mute);
+  cursor: pointer;
+}
+
+.viewerActive {
+  color: var(--c-ink);
+}

@@ -31,7 +31,7 @@
 - [x] **4. 레이아웃 셸** — 1280 캔버스, 175 거터, 930 콘텐츠 컬럼. `<Header>`(아이콘 + display + 날짜).
 - [x] **5. `<PressWordmark>`** — props 스키마(weight/family/italic/underline/accent/flag/chip 등) 풀 지원. 6 프레임의 wordmark 시각적 재현 검증.
 - [x] **6. `<Ticker>`** — 두 레인 비동기 회전(3.2s/0.55s 크로스페이드), hover-pause, `prefers-reduced-motion` 가드.
-- [ ] **7. `<TabBar>`** — `all`/`sub` 토글 + 카운트 배지 + grid/list 뷰 토글 아이콘. `role="tablist"`.
+- [x] **7. `<TabBar>`** — `all`/`sub` 토글 + 카운트 배지 + grid/list 뷰 토글 아이콘. `role="tablist"`.
 - [ ] **8. 그리드 + 구독 토글** — `<PressGrid>` 6×4 + `<GridCell>` hover-스왑 + `<SubscribePill>`. 리듀서로 `subscribed` Set 관리, `localStorage` 동기화 훅.
 - [ ] **9. 페이지네이션 + `<Chevron>`** — 좌/우, `opacity:0` + `disabled` 처리. 탭별 페이지 수 계산.
 - [ ] **10. 구독 탭 희소 그리드** — 빈 셀 흰색, hover 시 `−해지하기`.
