@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { Header } from './components/Header/Header';
 import { TabBar } from './components/TabBar/TabBar';
 import { NewsGrid } from './components/NewsGrid/NewsGrid';
+import { ListView } from './components/ListView/ListView';
+import { CategoryFilter } from './components/CategoryFilter/CategoryFilter';
 import { Pagination } from './components/Pagination/Pagination';
 import { SubscribeModal } from './components/SubscribeModal/SubscribeModal';
-import type { Publisher, TabType } from './types';
+import type { Publisher, TabType, Category } from './types';
 import publishersData from './data/publishers.json';
 
 const publishers = publishersData as Publisher[];
@@ -14,9 +16,9 @@ function App() {
   const [activeTab, setActiveTab] = useState<TabType>('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [selectedCategories, setSelectedCategories] = useState<Set<Category>>(new Set());
   const [pendingUnsubscribeId, setPendingUnsubscribeId] = useState<string | null>(null);
 
-  // localStorage로 구독 목록 초기화 및 유지 (#9)
   const [subscribedIds, setSubscribedIds] = useState<Set<string>>(() => {
     const stored = localStorage.getItem('news-subscribed');
     return stored ? new Set<string>(JSON.parse(stored) as string[]) : new Set<string>();
@@ -32,16 +34,18 @@ function App() {
     setCurrentPage(1);
   };
 
+  const handleCategoryChange = (next: Set<Category>) => {
+    setSelectedCategories(next);
+    setCurrentPage(1);
+  };
+
   const handleSubscribe = (id: string) => {
     const next = new Set(subscribedIds);
     next.add(id);
     saveSubscribed(next);
   };
 
-  // 해지 버튼 → 모달 열기 (#10)
-  const handleUnsubscribeRequest = (id: string) => {
-    setPendingUnsubscribeId(id);
-  };
+  const handleUnsubscribeRequest = (id: string) => setPendingUnsubscribeId(id);
 
   const handleUnsubscribeConfirm = () => {
     if (!pendingUnsubscribeId) return;
@@ -51,13 +55,20 @@ function App() {
     setPendingUnsubscribeId(null);
   };
 
-  const filtered =
+  // 탭 필터
+  const tabFiltered =
     activeTab === 'all'
       ? publishers
       : publishers.filter((p) => subscribedIds.has(p.id));
 
-  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
-  const paginated = filtered.slice(
+  // 카테고리 필터 (그리드뷰 전용)
+  const categoryFiltered =
+    selectedCategories.size === 0
+      ? tabFiltered
+      : tabFiltered.filter((p) => selectedCategories.has(p.category));
+
+  const totalPages = Math.ceil(categoryFiltered.length / ITEMS_PER_PAGE);
+  const paginated = categoryFiltered.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   );
@@ -76,7 +87,7 @@ function App() {
       />
 
       <main className="container-page py-6">
-        {/* 뷰 전환 토글 (#11) */}
+        {/* 뷰 전환 토글 */}
         <div className="flex justify-end mb-4 gap-1">
           <button
             onClick={() => setViewMode('grid')}
@@ -90,10 +101,10 @@ function App() {
             ].join(' ')}
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <rect x="0" y="0" width="6" height="6" rx="1" fill="currentColor"/>
-              <rect x="8" y="0" width="6" height="6" rx="1" fill="currentColor"/>
-              <rect x="0" y="8" width="6" height="6" rx="1" fill="currentColor"/>
-              <rect x="8" y="8" width="6" height="6" rx="1" fill="currentColor"/>
+              <rect x="0" y="0" width="6" height="6" rx="1" fill="currentColor" />
+              <rect x="8" y="0" width="6" height="6" rx="1" fill="currentColor" />
+              <rect x="0" y="8" width="6" height="6" rx="1" fill="currentColor" />
+              <rect x="8" y="8" width="6" height="6" rx="1" fill="currentColor" />
             </svg>
           </button>
           <button
@@ -108,30 +119,43 @@ function App() {
             ].join(' ')}
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <rect x="0" y="0" width="14" height="2.5" rx="1" fill="currentColor"/>
-              <rect x="0" y="5.5" width="14" height="2.5" rx="1" fill="currentColor"/>
-              <rect x="0" y="11" width="14" height="2.5" rx="1" fill="currentColor"/>
+              <rect x="0" y="0" width="14" height="2.5" rx="1" fill="currentColor" />
+              <rect x="0" y="5.5" width="14" height="2.5" rx="1" fill="currentColor" />
+              <rect x="0" y="11" width="14" height="2.5" rx="1" fill="currentColor" />
             </svg>
           </button>
         </div>
 
-        <NewsGrid
-          publishers={paginated}
-          subscribedIds={subscribedIds}
-          onSubscribe={handleSubscribe}
-          onUnsubscribeRequest={handleUnsubscribeRequest}
-          viewMode={viewMode}
-          emptyMessage="구독한 언론사가 없습니다. 관심 있는 언론사를 구독해 보세요."
-        />
-
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
+        {viewMode === 'grid' ? (
+          <>
+            <CategoryFilter
+              selected={selectedCategories}
+              onChange={handleCategoryChange}
+            />
+            <NewsGrid
+              publishers={paginated}
+              subscribedIds={subscribedIds}
+              onSubscribe={handleSubscribe}
+              onUnsubscribeRequest={handleUnsubscribeRequest}
+              viewMode="grid"
+              emptyMessage="조건에 맞는 언론사가 없습니다."
+            />
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
+          </>
+        ) : (
+          <ListView
+            publishers={tabFiltered}
+            subscribedIds={subscribedIds}
+            onSubscribe={handleSubscribe}
+            onUnsubscribeRequest={handleUnsubscribeRequest}
+          />
+        )}
       </main>
 
-      {/* 해지 확인 모달 (#10) */}
       {pendingPublisher && (
         <SubscribeModal
           publisher={pendingPublisher}
