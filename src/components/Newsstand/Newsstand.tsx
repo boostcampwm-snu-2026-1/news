@@ -3,6 +3,7 @@ import pressData from "../../data/press.json";
 import articlesData from "../../data/articles.json";
 import {
   CATEGORY_ORDER,
+  type CategoryKey,
   type Press,
   type PressArticles,
   type PressId,
@@ -14,7 +15,6 @@ import {
 import { loadFromStorage, saveToStorage } from "../../hooks/useLocalStorage";
 import { useInterval } from "../../hooks/useInterval";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
-import { DEFAULT_CATEGORY_COUNT } from "../../data/dummyArticles";
 import { Header } from "../Header/Header";
 import { Ticker } from "../Ticker/Ticker";
 import { TabBar, type ViewerId } from "../TabBar/TabBar";
@@ -38,6 +38,23 @@ function formatToday(d: Date = new Date()): string {
   const month = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
   return `${year}. ${month}. ${day}. ${DAY_NAMES[d.getDay()]}`;
+}
+
+/**
+ * Find the next category (in CATEGORY_ORDER) whose visible outlets list is
+ * non-empty, starting from `from` exclusive and wrapping around. Returns
+ * null when no category in `visible` has any outlets.
+ */
+function findNextCategoryWithOutlets(
+  visible: Press[],
+  from: CategoryKey,
+): CategoryKey | null {
+  const idx = CATEGORY_ORDER.indexOf(from);
+  for (let i = 1; i <= CATEGORY_ORDER.length; i++) {
+    const next = CATEGORY_ORDER[(idx + i) % CATEGORY_ORDER.length];
+    if (visible.some((p) => p.primaryCategory === next)) return next;
+  }
+  return null;
 }
 
 export function Newsstand() {
@@ -80,10 +97,31 @@ export function Newsstand() {
     state.opened !== null
       ? ALL_ARTICLES.find((a) => a.pressId === state.opened)
       : undefined;
-  const openedIdx = state.opened !== null ? visible.findIndex((p) => p.id === state.opened) : -1;
 
-  const currentCategoryCount =
-    openedArticles?.byCategory[state.tabKey]?.count ?? DEFAULT_CATEGORY_COUNT;
+  // 섹터(=카테고리) 안에서 visible 한 outlet 들. 한 카테고리 안에서만 자동
+  // 전환·페이지 이동·count 가 정의된다.
+  const catOutlets = useMemo(
+    () => visible.filter((p) => p.primaryCategory === state.tabKey),
+    [visible, state.tabKey],
+  );
+  const curIdxInCat =
+    state.opened !== null ? catOutlets.findIndex((p) => p.id === state.opened) : -1;
+  const currentInTab = curIdxInCat >= 0 ? curIdxInCat + 1 : 1;
+  const count = Math.max(1, catOutlets.length);
+
+  // 사용자가 섹터 탭을 클릭해 tabKey 만 바뀐 경우, 현재 opened 가 새 섹터에
+  // 없으면 그 섹터의 첫 outlet 으로 자동 이동한다.
+  useEffect(() => {
+    if (!isOpened) return;
+    if (curIdxInCat >= 0) return;
+    const target = catOutlets[0];
+    if (!target) return;
+    dispatch({
+      type: "press/open",
+      pressId: target.id,
+      primaryCategory: target.primaryCategory,
+    });
+  }, [isOpened, curIdxInCat, catOutlets]);
 
   useInterval(
     () => {
@@ -92,26 +130,25 @@ export function Newsstand() {
         dispatch({ type: "progress/set", progress: next });
         return;
       }
-      if (state.currentInTab + 1 > currentCategoryCount) {
-        const idx = CATEGORY_ORDER.indexOf(state.tabKey);
-        const isLastCat = idx === CATEGORY_ORDER.length - 1;
-        if (!isLastCat) {
-          dispatch({ type: "field-tab/set", tabKey: CATEGORY_ORDER[idx + 1] });
-        } else {
-          const nextIdx =
-            openedIdx >= 0 && openedIdx < visible.length - 1 ? openedIdx + 1 : 0;
-          const nextPress = visible[nextIdx];
-          if (nextPress) {
-            dispatch({
-              type: "press/open",
-              pressId: nextPress.id,
-              primaryCategory: nextPress.primaryCategory,
-            });
-          }
-        }
-      } else {
-        dispatch({ type: "field-tab/advance-current" });
+      // 같은 섹터 안에서 다음 outlet → 섹터 끝이면 다음 섹터의 첫 outlet (wrap).
+      if (curIdxInCat >= 0 && curIdxInCat + 1 < catOutlets.length) {
+        const nextOutlet = catOutlets[curIdxInCat + 1];
+        dispatch({
+          type: "press/open",
+          pressId: nextOutlet.id,
+          primaryCategory: nextOutlet.primaryCategory,
+        });
+        return;
       }
+      const nextCat = findNextCategoryWithOutlets(visible, state.tabKey);
+      if (!nextCat) return;
+      const first = visible.find((p) => p.primaryCategory === nextCat);
+      if (!first) return;
+      dispatch({
+        type: "press/open",
+        pressId: first.id,
+        primaryCategory: first.primaryCategory,
+      });
     },
     isOpened && !reduced ? PROGRESS_TICK_MS : null,
   );
@@ -121,15 +158,15 @@ export function Newsstand() {
     dispatch({ type: "tab/set", tab });
   };
 
-  const leftDisabled = isOpened ? openedIdx <= 0 : safePage <= 0;
+  const leftDisabled = isOpened ? curIdxInCat <= 0 : safePage <= 0;
   const rightDisabled = isOpened
-    ? openedIdx === -1 || openedIdx >= visible.length - 1
+    ? curIdxInCat === -1 || curIdxInCat >= catOutlets.length - 1
     : safePage >= lastPage;
 
   const onLeft = () => {
     if (isOpened) {
-      if (openedIdx > 0) {
-        const p = visible[openedIdx - 1];
+      if (curIdxInCat > 0) {
+        const p = catOutlets[curIdxInCat - 1];
         dispatch({ type: "press/open", pressId: p.id, primaryCategory: p.primaryCategory });
       }
     } else {
@@ -139,8 +176,8 @@ export function Newsstand() {
 
   const onRight = () => {
     if (isOpened) {
-      if (openedIdx !== -1 && openedIdx < visible.length - 1) {
-        const p = visible[openedIdx + 1];
+      if (curIdxInCat !== -1 && curIdxInCat < catOutlets.length - 1) {
+        const p = catOutlets[curIdxInCat + 1];
         dispatch({ type: "press/open", pressId: p.id, primaryCategory: p.primaryCategory });
       }
     } else {
@@ -165,7 +202,8 @@ export function Newsstand() {
             press={openedPress}
             articles={openedArticles}
             tabKey={state.tabKey}
-            currentInTab={state.currentInTab}
+            currentInTab={currentInTab}
+            count={count}
             progress={state.progress}
             subscribed={state.subscribed.includes(openedPress.id)}
             onTabKeyChange={(key) => dispatch({ type: "field-tab/set", tabKey: key })}

@@ -10,6 +10,8 @@ export interface PressOpenProps {
   articles: PressArticles | undefined;
   tabKey: CategoryKey;
   currentInTab: number;
+  /** Number of outlets in the current sector (= category). Owned by parent. */
+  count: number;
   progress: number;
   subscribed: boolean;
   onTabKeyChange: (key: CategoryKey) => void;
@@ -22,6 +24,7 @@ export function PressOpen({
   articles,
   tabKey,
   currentInTab,
+  count,
   progress,
   subscribed,
   onTabKeyChange,
@@ -31,7 +34,7 @@ export function PressOpen({
   const cat =
     articles?.byCategory[tabKey] ??
     buildDummyCategoryArticles(press.wordmark.name, tabKey);
-  const { headlineTitle, items, count } = cat;
+  const { headlineTitle, items } = cat;
 
   return (
     <div className={styles.opened}>

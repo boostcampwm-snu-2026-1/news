@@ -42,7 +42,7 @@
 - [x] **15. 날짜 동적 표시** — Header 날짜를 hard-coded "2026. 01. 14. 수요일" 에서 현재 시각 기반 한국어 포맷으로.
 - [x] **16. articles 더미 데이터 확장** — SBS Biz / 아시아경제 외 모든 outlet 에 카테고리별 fake 헤드라인 + 6 list items + count.
 - [x] **17. 리스트 뷰 자동 outlet 전환 + 카운트 정확** — count 가 articles 데이터의 실제 값으로 반영, tabs exhausted 시 같은 outlet loop 가 아니라 visible 배열의 다음 outlet 으로 자동 전환, 섹터(field-tab) 클릭 시 article list 와 헤드라인이 그 카테고리로 갱신.
-- [ ] **18. 리스트 뷰 섹터 = 카테고리 의미 재정의** — count = visible 중 그 카테고리 outlet 수, currentInTab = 그 카테고리 안 현재 outlet 인덱스, 타이머/섹터클릭/chevron 모두 같은 카테고리 안에서만 outlet 이동 (카테고리 끝 → 다음 카테고리의 첫 outlet, 마지막 카테고리 끝 → 첫 카테고리 loop). 구독 탭에서는 visible 이 구독 outlet 만이라 자동 일관.
+- [x] **18. 리스트 뷰 섹터 = 카테고리 의미 재정의** — count = visible 중 그 카테고리 outlet 수, currentInTab = 그 카테고리 안 현재 outlet 인덱스, 타이머/섹터클릭/chevron 모두 같은 카테고리 안에서만 outlet 이동 (카테고리 끝 → 다음 카테고리의 첫 outlet, 마지막 카테고리 끝 → 첫 카테고리 loop). 구독 탭에서는 visible 이 구독 outlet 만이라 자동 일관.
 
 ## 의존관계
 
