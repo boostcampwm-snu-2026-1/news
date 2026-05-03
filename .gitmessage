@@ -1,0 +1,14 @@
+# 제목 - #[feature list 번호] feature 내용
+
+# 본문
+- 확인내용: 
+- 막혔던 부분:
+
+## 커밋 타입
+# ✨ feat: 새 기능
+# 🐛 fix: 버그 수정
+# 💄 style: UI/스타일 변경
+# ♻️ refactor: 리팩토링
+# 🔧 chore: 설정/패키지/기타
+# 📝 docs: 문서 작업
+# ✅ test: 테스트
