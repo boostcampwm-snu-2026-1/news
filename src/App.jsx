@@ -4,7 +4,7 @@ import Ticker from './components/Ticker'
 import TabBar from './components/TabBar'
 import PressGrid from './components/PressGrid'
 import Chevron from './components/Chevron'
-import { PRESS_DATA } from './data/pressData'
+import { PRESS_DATA, PRESS_PAGE_SIZE, PRESS_TOTAL_PAGES } from './data/pressData'
 
 export default function App() {
   const [state, setState] = useState({
@@ -18,7 +18,10 @@ export default function App() {
   }
 
   const handlePageChange = (direction) => {
-    const maxPages = state.tab === 'all' ? 3 : Math.ceil(state.subscribed.size / 24) || 1
+    const maxPages = state.tab === 'all'
+      ? PRESS_TOTAL_PAGES
+      : Math.ceil(state.subscribed.size / PRESS_PAGE_SIZE) || 1
+
     setState(prev => ({
       ...prev,
       page: direction === 'next' 
@@ -41,12 +44,14 @@ export default function App() {
 
   const getPressItems = () => {
     let items = state.tab === 'all' ? PRESS_DATA : PRESS_DATA.filter(p => state.subscribed.has(p.id))
-    const startIdx = state.page * 24
-    return items.slice(startIdx, startIdx + 24)
+    const startIdx = state.page * PRESS_PAGE_SIZE
+    return items.slice(startIdx, startIdx + PRESS_PAGE_SIZE)
   }
 
   const pressItems = getPressItems()
-  const maxPages = state.tab === 'all' ? 3 : Math.ceil(state.subscribed.size / 24) || 1
+  const maxPages = state.tab === 'all'
+    ? PRESS_TOTAL_PAGES
+    : Math.ceil(state.subscribed.size / PRESS_PAGE_SIZE) || 1
 
   return (
     <div className="newsstand-container">
