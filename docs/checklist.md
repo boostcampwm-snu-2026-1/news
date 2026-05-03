@@ -13,7 +13,7 @@
 
 ### 그리드 레이아웃
 - [x] #6 PressGrid 컴포넌트 (6×4 그리드, 930×388px, 1px 구분선)
-- [ ] #7 GridCell + PressWordmark (호버 시 구독/해지 버튼, 스타일링된 워드마크)
+- [x] #7 GridCell + PressWordmark (호버 시 구독/해지 버튼, 스타일링된 워드마크)
 - [ ] #8 Subscribe Pill 컴포넌트 (+ 구독하기 / − 해지하기)
 
 ### 페이지네이션 및 상태 관리

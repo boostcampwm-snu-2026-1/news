@@ -2,10 +2,11 @@ export default function PressWordmark({ press }) {
   const wordmark = press.wordmark ?? press
   const family = wordmark.family === 'serif' ? 'var(--font-serif)' : 'var(--font-sans)'
   const fontSize = wordmark.compact ? '14px' : '16px'
+  const hasBackground = wordmark.background && wordmark.background !== 'transparent'
 
   return (
     <span
-      className="press-wordmark"
+      className={`press-wordmark ${hasBackground ? 'press-wordmark--boxed' : ''}`}
       style={{
         color: wordmark.color,
         background: wordmark.background,

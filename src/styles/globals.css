@@ -445,6 +445,24 @@ svg {
   background: var(--color-page);
 }
 
+.grid-cell__wordmark,
+.subscribe-pill {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+}
+
+.grid-cell__wordmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  transition:
+    opacity var(--motion-crossfade-duration) var(--motion-ease-standard),
+    transform var(--motion-crossfade-duration) var(--motion-ease-standard);
+}
+
 .press-wordmark {
   display: inline-flex;
   align-items: center;
@@ -458,8 +476,54 @@ svg {
   white-space: nowrap;
 }
 
+.press-wordmark--boxed {
+  min-width: 72px;
+}
+
 .subscribe-pill {
-  display: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 28px;
+  border: var(--stroke-width) solid var(--color-line);
+  border-radius: var(--radius-pill);
+  font-size: var(--type-caption-size);
+  font-weight: var(--type-caption-weight);
+  line-height: var(--type-caption-line);
+  color: var(--color-ink);
+  background: var(--color-card);
+  box-shadow: var(--shadow-pill);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition:
+    opacity var(--motion-crossfade-duration) var(--motion-ease-standard),
+    transform var(--motion-crossfade-duration) var(--motion-ease-standard);
+}
+
+.grid-cell:hover .grid-cell__wordmark,
+.grid-cell:focus-within .grid-cell__wordmark {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+.grid-cell:hover .subscribe-pill,
+.grid-cell:focus-within .subscribe-pill {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.grid-cell--subscribed::after {
+  position: absolute;
+  top: var(--space-8);
+  right: var(--space-8);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  content: '';
 }
 
 @media (prefers-reduced-motion: reduce) {
