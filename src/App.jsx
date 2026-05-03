@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import Header from './components/Header'
 import Ticker from './components/Ticker'
 import TabBar from './components/TabBar'
@@ -13,8 +13,12 @@ export default function App() {
     page: 0,
     subscribed: new Set()
   })
+  const [subscriptionNotice, setSubscriptionNotice] = useState('')
 
-  const subscribedItems = PRESS_DATA.filter(p => state.subscribed.has(p.id))
+  const subscribedItems = useMemo(
+    () => PRESS_DATA.filter(p => state.subscribed.has(p.id)),
+    [state.subscribed],
+  )
   const maxPages = state.tab === 'all'
     ? PRESS_TOTAL_PAGES
     : Math.ceil(subscribedItems.length / PRESS_PAGE_SIZE) || 1
@@ -37,6 +41,10 @@ export default function App() {
   }
 
   const handleSubscribe = (pressId, action = 'toggle') => {
+    const press = PRESS_DATA.find(item => item.id === pressId)
+    const pressName = press?.name ?? '선택한 언론사'
+    const wasSubscribed = state.subscribed.has(pressId)
+
     setState(prev => {
       const newSubscribed = new Set(prev.subscribed)
 
@@ -49,11 +57,29 @@ export default function App() {
           newSubscribed.delete(pressId)
         } else {
           newSubscribed.add(pressId)
+          didSubscribe = true
         }
       }
 
-      return { ...prev, subscribed: newSubscribed }
+      const nextSubscribedCount = newSubscribed.size
+      const nextMaxPages = prev.tab === 'all'
+        ? PRESS_TOTAL_PAGES
+        : Math.ceil(nextSubscribedCount / PRESS_PAGE_SIZE) || 1
+
+      return {
+        ...prev,
+        page: Math.min(prev.page, nextMaxPages - 1),
+        subscribed: newSubscribed,
+      }
     })
+
+    if (action === 'unsubscribe' || (action === 'toggle' && wasSubscribed)) {
+      setSubscriptionNotice(`${pressName} 구독을 해지했습니다.`)
+    } else if (wasSubscribed) {
+      setSubscriptionNotice(`${pressName}은 이미 구독 중입니다.`)
+    } else {
+      setSubscriptionNotice(`${pressName} 구독을 추가했습니다.`)
+    }
   }
 
   const currentPage = Math.min(state.page, maxPages - 1)
@@ -89,10 +115,14 @@ export default function App() {
           items={pressItems}
           subscribed={state.subscribed}
           mode={state.tab}
+          isEmpty={state.tab === 'sub' && subscribedItems.length === 0}
           onSubscribe={handleSubscribe}
         />
         <p className="visually-hidden" aria-live="polite">
           {currentPage + 1} / {maxPages} 페이지
+        </p>
+        <p className="visually-hidden" aria-live="polite">
+          {subscriptionNotice}
         </p>
         <Chevron 
           direction="right"

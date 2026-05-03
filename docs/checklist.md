@@ -18,7 +18,7 @@
 
 ### 페이지네이션 및 상태 관리
 - [x] checklist-9 Chevron + 페이지네이션 (좌우 화살표, 3페이지 × 24개 관리)
-- [ ] checklist-10 구독 상태 관리 (useState로 Set<pressId> 추적, 구독/해지 로직)
+- [x] checklist-10 구독 상태 관리 (useState로 Set<pressId> 추적, 구독/해지 로직)
 
 ### 스타일링 & 접근성
 - [ ] checklist-11 디자인 시스템 준수 (색상 토큰, 타이포그래피, 8px 스페이싱)
