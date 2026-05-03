@@ -1,0 +1,25 @@
+.cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card);
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.cell:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  z-index: 1;
+}
+
+.subscribedBadge {
+  position: absolute;
+  top: var(--sp-2);
+  right: var(--sp-2);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}

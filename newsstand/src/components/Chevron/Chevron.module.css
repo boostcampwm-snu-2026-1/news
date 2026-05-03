@@ -1,0 +1,35 @@
+.chevron {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--card);
+  cursor: pointer;
+  color: var(--mute);
+  transition: color 0.15s, border-color 0.15s, opacity 0.15s;
+  z-index: 1;
+}
+
+.chevron:hover:not(:disabled) {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.chevron:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.left {
+  left: -20px;
+}
+
+.right {
+  right: -20px;
+}

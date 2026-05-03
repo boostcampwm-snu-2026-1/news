@@ -1,0 +1,12 @@
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  user-select: none;
+}
+
+.char {
+  display: inline;
+}

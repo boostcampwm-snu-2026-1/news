@@ -1,0 +1,91 @@
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  padding: 0 var(--sp-8);
+  border-bottom: 1px solid var(--line);
+  background: var(--card);
+}
+
+.tabs {
+  display: flex;
+  gap: 0;
+}
+
+.tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  height: 48px;
+  padding: 0 var(--sp-4);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--mute);
+  letter-spacing: -0.01em;
+  transition: color 0.15s;
+}
+
+.tab::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: transparent;
+  transition: background 0.15s;
+}
+
+.tab[aria-selected='true'] {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.tab[aria-selected='true']::after {
+  background: var(--accent-deep);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0;
+}
+
+.viewToggle {
+  display: flex;
+  gap: var(--sp-1);
+}
+
+.viewBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  color: var(--mute);
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.viewBtn[aria-pressed='true'] {
+  color: var(--ink);
+  border-color: var(--ink);
+}
