@@ -32,12 +32,12 @@
 
 .cell:hover .face,
 .cell:focus-visible .face,
-.cell:focus-within .face {
+.cell:has(:focus-visible) .face {
   visibility: hidden;
 }
 
 .cell:hover .hover,
 .cell:focus-visible .hover,
-.cell:focus-within .hover {
+.cell:has(:focus-visible) .hover {
   display: flex;
 }

@@ -8,6 +8,7 @@ export type CellTab = "all" | "sub";
 
 export interface GridCellProps {
   press: Press;
+  /** Tab context — kept on the prop for caller compat though pill mode now derives from `subscribed`. */
   tab: CellTab;
   subscribed: boolean;
   onOpen: () => void;
@@ -17,13 +18,13 @@ export interface GridCellProps {
 
 export function GridCell({
   press,
-  tab,
+  subscribed,
   onOpen,
   onSubscribe,
   onUnsubscribe,
 }: GridCellProps) {
-  const pillMode = tab === "all" ? "subscribe" : "unsubscribe";
-  const onPill = tab === "all" ? onSubscribe : onUnsubscribe;
+  const pillMode = subscribed ? "unsubscribe" : "subscribe";
+  const onPill = subscribed ? onUnsubscribe : onSubscribe;
 
   const onKey = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter" || e.key === " ") {
