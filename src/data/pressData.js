@@ -1,0 +1,9 @@
+export const mockPressData = Array.from({ length: 72 }, (_, i) => ({
+  id: `press-${i + 1}`,
+  name: i % 2 === 0 ? `언론사 ${i + 1}` : `News ${i + 1}`,
+  style: { 
+    weight: i % 3 === 0 ? 700 : 500,
+    italic: i % 4 === 0,
+    color: i % 5 === 0 ? '#326295' : undefined
+  }
+}));

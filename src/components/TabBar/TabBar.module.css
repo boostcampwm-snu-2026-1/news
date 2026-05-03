@@ -1,0 +1,57 @@
+.tabBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: var(--content-width);
+  height: 24px;
+  margin-top: var(--spacing-48); /* Ticker와 여백 */
+}
+
+.tabSection {
+  display: flex;
+  gap: var(--spacing-24);
+}
+
+.tabItem {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-mute);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.tabItem.active {
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.countBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: var(--color-accent);
+  color: var(--color-badge-ink);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.toggleSection {
+  display: flex;
+  gap: var(--spacing-8);
+}
+
+.iconButton {
+  color: var(--color-mute);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconButton.activeIcon {
+  color: var(--color-ink);
+}
