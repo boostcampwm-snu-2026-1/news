@@ -38,6 +38,10 @@
 - [x] **11. 리스트 뷰** — `<PressOpen>` + `<FieldTab>`(6초 진행 바) + 헤드라인 이미지 placeholder + 6 항목 리스트. `progress→currentInTab→tabKey` 자동 전환.
 - [x] **12. 접근성 마감** — 키보드 focus parity, aria 라벨, `prefers-reduced-motion` 전역 적용 검증.
 - [x] **13. 테스트** — 리듀서 케이스(구독/해지/페이지네이션/탭 전환/progress 오버플로) + 핵심 hover-state 1~2건.
+- [ ] **14. 셀 hover 토글 버그 fix** — 구독 후 같은 셀 hover 시 `해지하기` 표시 + 마우스 떠나면 정상 복귀(`:focus-within` → `:focus-visible`).
+- [ ] **15. 날짜 동적 표시** — Header 날짜를 hard-coded "2026. 01. 14. 수요일" 에서 현재 시각 기반 한국어 포맷으로.
+- [ ] **16. articles 더미 데이터 확장** — SBS Biz / 아시아경제 외 모든 outlet 에 카테고리별 fake 헤드라인 + 6 list items + count.
+- [ ] **17. 리스트 뷰 자동 outlet 전환 + 카운트 정확** — count 가 articles 데이터의 실제 값으로 반영, tabs exhausted 시 같은 outlet loop 가 아니라 visible 배열의 다음 outlet 으로 자동 전환, 섹터(field-tab) 클릭 시 article list 와 헤드라인이 그 카테고리로 갱신.
 
 ## 의존관계
 
@@ -58,6 +62,10 @@
 | 11 | 리스트 뷰 | 8 | `src/components/{PressOpen,FieldTab}/*`, `src/components/Newsstand/*` (수정), `src/state/newsstandReducer.ts` (수정) |
 | 12 | 접근성 마감 | 6, 9, 10, 11 | 여러 컴포넌트 a11y 보강 (`src/components/**`) |
 | 13 | 테스트 | 8, 11 | `src/state/newsstandReducer.test.ts`, `src/components/**/*.test.tsx` |
+| 14 | hover 토글 fix | 8 | `src/components/GridCell/*` (수정) |
+| 15 | 날짜 동적 | 4 | `src/components/Newsstand/Newsstand.tsx` (수정) |
+| 16 | articles 더미 확장 | 3 | `src/data/articles.json` (수정) |
+| 17 | 자동 outlet 전환 + 카운트 | 11, 16 | `src/state/newsstandReducer.ts` (수정), `src/components/Newsstand/Newsstand.tsx` (수정), `src/components/PressOpen/*` (수정), `src/components/FieldTab/*` (수정 — 필요 시) |
 
 ## 병렬 그룹 (subagent wave)
 
@@ -72,6 +80,8 @@
 - **Wave 6**: `[11]` — 리스트 뷰. PressOpen/FieldTab + Newsstand 분기. Newsstand 와 reducer 를 다시 건드리니 단독.
 - **Wave 7**: `[12]` — 접근성 마감 (단독, 여러 컴포넌트 동시 수정).
 - **Wave 8**: `[13]` — 테스트 (단독).
+- **Wave 9**: `[14, 15, 16]` — hover fix / 날짜 동적 / articles 확장. 서로 다른 파일.
+- **Wave 10**: `[17]` — 자동 outlet 전환 + 카운트 (단독, Newsstand + reducer 동시 수정).
 
 > 파일 충돌 가드: 위 wave 분할은 "수정 파일" 컬럼 기준으로 wave 안에서 같은 파일이 둘 이상에 안 나타나도록 짠 결과. 새 항목 추가 시 같은 룰 따를 것.
 
