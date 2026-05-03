@@ -1,0 +1,62 @@
+.row {
+  display: flex;
+  height: var(--h-fieldtab);
+  background: var(--c-soft);
+  border: var(--bw) solid var(--c-line);
+  flex-shrink: 0;
+}
+
+.tab {
+  flex: 1;
+  position: relative;
+  padding: 0 var(--s-4);
+  font-family: var(--ff-sans);
+  font-size: var(--t-list-size);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--c-sub);
+  border-right: var(--bw) solid var(--c-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  cursor: pointer;
+  background: transparent;
+}
+
+.tab:last-child {
+  border-right: none;
+}
+
+.tabActive {
+  background: var(--c-accent);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.progress {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--c-accent-deep);
+  pointer-events: none;
+  transition: width 100ms linear;
+}
+
+.label {
+  position: relative;
+  z-index: 1;
+}
+
+.counter {
+  position: relative;
+  z-index: 1;
+  font-family: var(--ff-mono);
+  font-size: var(--t-mono-tab-size);
+  font-weight: 500;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+.counterDim {
+  opacity: 0.7;
+}
