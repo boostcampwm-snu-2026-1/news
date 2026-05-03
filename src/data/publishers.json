@@ -1,0 +1,142 @@
+[
+  {
+    "id": "chosun",
+    "name": "조선일보",
+    "logoUrl": "https://placehold.co/80x40/003399/ffffff?text=조선",
+    "category": "종합",
+    "description": "1920년 창간, 대한민국 대표 종합 일간지"
+  },
+  {
+    "id": "joongang",
+    "name": "중앙일보",
+    "logoUrl": "https://placehold.co/80x40/CC0000/ffffff?text=중앙",
+    "category": "종합",
+    "description": "깊이 있는 분석과 해설로 신뢰받는 종합 일간지"
+  },
+  {
+    "id": "donga",
+    "name": "동아일보",
+    "logoUrl": "https://placehold.co/80x40/00539C/ffffff?text=동아",
+    "category": "종합",
+    "description": "1920년 창간, 독립운동 정신을 이어온 언론"
+  },
+  {
+    "id": "hani",
+    "name": "한겨레",
+    "logoUrl": "https://placehold.co/80x40/004225/ffffff?text=한겨레",
+    "category": "종합",
+    "description": "시민이 만든 독립 언론, 진보적 관점의 종합 일간지"
+  },
+  {
+    "id": "kyunghyang",
+    "name": "경향신문",
+    "logoUrl": "https://placehold.co/80x40/1B4F72/ffffff?text=경향",
+    "category": "종합",
+    "description": "1946년 창간, 진보적 시각의 전통 있는 종합지"
+  },
+  {
+    "id": "munhwa",
+    "name": "문화일보",
+    "logoUrl": "https://placehold.co/80x40/6C3483/ffffff?text=문화",
+    "category": "종합",
+    "description": "문화·예술에 특화된 시각을 가진 종합 일간지"
+  },
+  {
+    "id": "hankyung",
+    "name": "한국경제",
+    "logoUrl": "https://placehold.co/80x40/D4380D/ffffff?text=한경",
+    "category": "경제",
+    "description": "국내 1위 경제 전문 일간지, 기업·시장 심층 보도"
+  },
+  {
+    "id": "maeil",
+    "name": "매일경제",
+    "logoUrl": "https://placehold.co/80x40/0066CC/ffffff?text=매경",
+    "category": "경제",
+    "description": "경제·금융·부동산 분야 깊이 있는 보도"
+  },
+  {
+    "id": "etnews",
+    "name": "전자신문",
+    "logoUrl": "https://placehold.co/80x40/005F73/ffffff?text=전자",
+    "category": "IT/과학",
+    "description": "ICT 산업 전문 미디어, 기술 트렌드 선도"
+  },
+  {
+    "id": "zdnet",
+    "name": "ZDNet Korea",
+    "logoUrl": "https://placehold.co/80x40/E63946/ffffff?text=ZD",
+    "category": "IT/과학",
+    "description": "글로벌 IT 미디어 ZDNet의 한국판, 기술 뉴스"
+  },
+  {
+    "id": "itchosun",
+    "name": "IT조선",
+    "logoUrl": "https://placehold.co/80x40/2C3E50/ffffff?text=IT조선",
+    "category": "IT/과학",
+    "description": "조선일보 계열 IT 전문 온라인 미디어"
+  },
+  {
+    "id": "techm",
+    "name": "테크M",
+    "logoUrl": "https://placehold.co/80x40/1ABC9C/ffffff?text=TechM",
+    "category": "IT/과학",
+    "description": "테크놀로지와 비즈니스를 잇는 전문 미디어"
+  },
+  {
+    "id": "spotvnews",
+    "name": "스포티비뉴스",
+    "logoUrl": "https://placehold.co/80x40/E74C3C/ffffff?text=SPOTV",
+    "category": "스포츠",
+    "description": "스포츠 전문 채널 SPOTV의 뉴스 서비스"
+  },
+  {
+    "id": "starnews",
+    "name": "스타뉴스",
+    "logoUrl": "https://placehold.co/80x40/F39C12/000000?text=Star",
+    "category": "스포츠",
+    "description": "스포츠·연예 전문 뉴스 미디어"
+  },
+  {
+    "id": "mbn",
+    "name": "MBN",
+    "logoUrl": "https://placehold.co/80x40/154360/ffffff?text=MBN",
+    "category": "방송/연예",
+    "description": "매일경제 계열 종합편성채널, 경제·시사 특화"
+  },
+  {
+    "id": "jtbc",
+    "name": "JTBC",
+    "logoUrl": "https://placehold.co/80x40/E8000D/ffffff?text=JTBC",
+    "category": "방송/연예",
+    "description": "중앙일보 계열 종합편성채널, 탐사보도 강점"
+  },
+  {
+    "id": "ytn",
+    "name": "YTN",
+    "logoUrl": "https://placehold.co/80x40/003580/ffffff?text=YTN",
+    "category": "방송/연예",
+    "description": "24시간 뉴스 전문 채널, 속보·현장 중심 보도"
+  },
+  {
+    "id": "busan",
+    "name": "부산일보",
+    "logoUrl": "https://placehold.co/80x40/0077B6/ffffff?text=부산",
+    "category": "지역",
+    "description": "부산·경남 지역 대표 종합 일간지"
+  },
+  {
+    "id": "daejeon",
+    "name": "대전일보",
+    "logoUrl": "https://placehold.co/80x40/2E86AB/ffffff?text=대전",
+    "category": "지역",
+    "description": "충청권 대표 지역 언론, 지역 밀착 보도"
+  },
+  {
+    "id": "gwangju",
+    "name": "광주일보",
+    "logoUrl": "https://placehold.co/80x40/457B9D/ffffff?text=광주",
+    "category": "지역",
+    "description": "광주·전남 지역을 대표하는 종합 일간지"
+  }
+]
