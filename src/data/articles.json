@@ -1,0 +1,32 @@
+[
+  {
+    "title": "가짜 기사 제목 1: 뉴스스탠드 상단 구조와 카드 배치를 먼저 고정한다",
+    "summary": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus blandit, orci sed pulvinar tincidunt, sem mauris vulputate nunc, sed luctus arcu eros in justo.",
+    "time": "2분 전"
+  },
+  {
+    "title": "가짜 기사 제목 2: 언론사 그리드는 6열 기준으로 밀도 있게 채운다",
+    "summary": "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+    "time": "11분 전"
+  },
+  {
+    "title": "가짜 기사 제목 3: 목록 영역은 대표 기사와 보조 기사로 명확히 분리한다",
+    "summary": "curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit.",
+    "time": "24분 전"
+  },
+  {
+    "title": "가짜 기사 제목 4: 진행 상태와 탭 선택은 이후 단계에서 애니메이션을 붙인다",
+    "summary": "integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit.",
+    "time": "37분 전"
+  },
+  {
+    "title": "가짜 기사 제목 5: 구독한 언론사 전환 시에는 같은 정보 구조를 유지한다",
+    "summary": "morbi malesuada ullamcorper dui. Sed blandit aliquet dui, nec placerat sapien bibendum a. Vestibulum ante ipsum primis in faucibus.",
+    "time": "55분 전"
+  },
+  {
+    "title": "가짜 기사 제목 6: 긴 기사 문장도 두 줄 이상 자연스럽게 흘러가게 만든다",
+    "summary": "praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat.",
+    "time": "1시간 전"
+  }
+]
