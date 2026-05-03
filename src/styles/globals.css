@@ -1,0 +1,158 @@
+/* ====== CSS 변수 정의 (Gemini.md 섹션 5 참고) ====== */
+:root {
+  /* Color Tokens */
+  --color-ink: #14212B;
+  --color-ink-alt: #14202B;
+  --color-sub: #5F6E76;
+  --color-mute: #879298;
+  --color-line: #D2DAE0;
+  --color-soft: #F5F7F9;
+  --color-soft-alt: #F7F7FC;
+  --color-card: #FFFFFF;
+  --color-page: #FEFEFE;
+  --color-accent: #7890E7;
+  --color-accent-deep: #4362D0;
+  --color-badge-ink: rgba(255, 255, 255, 0.7);
+
+  /* Typography */
+  --font-primary: 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Noto Serif KR', serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Typography Tokens */
+  --display: 24px;
+  --display-weight: 700;
+  --display-leading: 1;
+  --display-tracking: -0.02em;
+
+  --heading: 16px;
+  --heading-weight: 700;
+  --heading-leading: 1;
+
+  --body: 16px;
+  --body-weight: 500;
+  --body-leading: 1.375; /* 22px */
+  --body-tracking: -0.01em;
+
+  --list-item: 14px;
+  --list-item-weight: 500;
+  --list-item-leading: 1.5;
+
+  --caption: 12px;
+  --caption-weight: 500;
+  --caption-leading: 1;
+
+  --badge: 12px;
+  --badge-weight: 500;
+  --badge-leading: 1;
+
+  --mono-tab: 12px;
+  --mono-tab-weight: 500;
+  --mono-tab-leading: 1;
+
+  --mono-label: 10px;
+  --mono-label-weight: 500;
+  --mono-label-leading: 1;
+
+  /* Spacing (8px 단위) */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-base: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 40px;
+  --spacing-3xl: 48px;
+  --spacing-4xl: 64px;
+
+  /* Border Radius */
+  --radius-0: 0;
+  --radius-sub: 2px;
+  --radius-pill: 14px;
+  --radius-badge: 10px;
+
+  /* Layout */
+  --viewport-width: 1280px;
+  --content-width: 930px;
+  --gutter-horizontal: 175px;
+
+  /* Z-index */
+  --z-base: 1;
+  --z-dropdown: 10;
+  --z-modal: 100;
+}
+
+/* ====== Reset & Base Styles ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--color-page);
+  color: var(--color-ink);
+  line-height: 1.5;
+}
+
+/* ====== Main Container ====== */
+.newsstand-container {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: var(--color-page);
+  padding: 0;
+}
+
+/* ====== Content Area (Header + Ticker + TabBar + Grid) ====== */
+.content-area {
+  position: relative;
+  width: var(--viewport-width);
+  margin: 0 auto;
+  display: flex;
+  gap: var(--spacing-base);
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* ====== Utility Classes ====== */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ====== Accessibility: Reduced Motion ====== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ====== Responsive: 1280px 이하 ====== */
+@media (max-width: 1280px) {
+  .newsstand-container {
+    width: 100vw;
+    overflow-x: hidden;
+  }
+
+  .content-area {
+    width: 100%;
+    padding: 0 var(--gutter-horizontal);
+  }
+}
