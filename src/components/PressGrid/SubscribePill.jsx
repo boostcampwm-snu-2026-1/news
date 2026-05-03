@@ -1,11 +1,6 @@
 import styles from './SubscribePill.module.css';
 
-interface SubscribePillProps {
-  isSubscribed: boolean;
-  onClick: (e: React.MouseEvent) => void;
-}
-
-const SubscribePill = ({ isSubscribed, onClick }: SubscribePillProps) => {
+const SubscribePill = ({ isSubscribed, onClick }) => {
   return (
     <button className={styles.pill} onClick={onClick}>
       <span className={styles.icon}>{isSubscribed ? '−' : '+'}</span>

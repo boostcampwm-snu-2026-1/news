@@ -1,23 +1,16 @@
 import { useState } from 'react';
-import { Press } from '../../data/pressData';
 import PressWordmark from './PressWordmark';
 import SubscribePill from './SubscribePill';
 import styles from './GridCell.module.css';
 
-interface GridCellProps {
-  press: Press | null;
-  isSubscribed: boolean;
-  onToggleSubscription: (id: string) => void;
-}
-
-const GridCell = ({ press, isSubscribed, onToggleSubscription }: GridCellProps) => {
+const GridCell = ({ press, isSubscribed, onToggleSubscription }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   if (!press) {
     return <div className={styles.emptyCell} />;
   }
 
-  const handleSubscribeClick = (e: React.MouseEvent) => {
+  const handleSubscribeClick = (e) => {
     e.stopPropagation();
     onToggleSubscription(press.id);
   };

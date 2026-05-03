@@ -1,15 +1,6 @@
-import { TabType, ViewMode } from '../../App';
 import styles from './TabBar.module.css';
 
-interface TabBarProps {
-  activeTab: TabType;
-  onTabChange: (tab: TabType) => void;
-  viewMode: ViewMode;
-  onViewModeChange: (mode: ViewMode) => void;
-  subscribedCount: number;
-}
-
-const TabBar = ({ activeTab, onTabChange, viewMode, onViewModeChange, subscribedCount }: TabBarProps) => {
+const TabBar = ({ activeTab, onTabChange, viewMode, onViewModeChange, subscribedCount }) => {
   return (
     <div className={styles.tabBar}>
       <div className={styles.tabSection}>
@@ -32,9 +23,7 @@ const TabBar = ({ activeTab, onTabChange, viewMode, onViewModeChange, subscribed
         <button 
           className={`${styles.iconButton} ${viewMode === 'list' ? styles.activeIcon : ''}`}
           onClick={() => onViewModeChange('list')}
-          aria-label="리스트 보기"
         >
-          {/* List View Icon */}
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="8" y1="6" x2="21" y2="6" />
             <line x1="8" y1="12" x2="21" y2="12" />
@@ -47,9 +36,7 @@ const TabBar = ({ activeTab, onTabChange, viewMode, onViewModeChange, subscribed
         <button 
           className={`${styles.iconButton} ${viewMode === 'grid' ? styles.activeIcon : ''}`}
           onClick={() => onViewModeChange('grid')}
-          aria-label="그리드 보기"
         >
-          {/* Grid View Icon */}
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <rect x="3" y="3" width="7" height="7" />
             <rect x="14" y="3" width="7" height="7" />
