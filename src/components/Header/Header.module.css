@@ -1,0 +1,29 @@
+.header {
+  max-width: var(--layout-canvas-width);
+  margin: 0 auto;
+  padding: 0 var(--layout-gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--height-header);
+  border-bottom: 1px solid var(--line);
+  background: var(--page);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.date {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--sub);
+  letter-spacing: -0.01em;
+}
