@@ -3,26 +3,26 @@
 ## 📌 1주차 목표: 전체 언론사 그리드 + 기본 UI 완성
 
 ### 기초 세팅
-- [x] #1 프로젝트 초기 환경 설정 (React, Vite, 폴더 구조)
-- [x] #2 CSS 변수 및 글로벌 스타일 정의 (:root 컬러 토큰, 타이포그래피)
-- [x] #3 언론사 데이터 구조 정의 (72개 언론사 배열, wordmark props)
+- [x] checklist-1 프로젝트 초기 환경 설정 (React, Vite, 폴더 구조)
+- [x] checklist-2 CSS 변수 및 글로벌 스타일 정의 (:root 컬러 토큰, 타이포그래피)
+- [x] checklist-3 언론사 데이터 구조 정의 (72개 언론사 배열, wordmark props)
 
 ### 상단 UI 컴포넌트
-- [x] #4 Header + Ticker 컴포넌트 (로고+날짜, 2레인 회전 3.2s, 크로스페이드)
-- [x] #5 TabBar 컴포넌트 (전체/구독 탭, 뷰 토글, 구독 수 배지)
+- [x] checklist-4 Header + Ticker 컴포넌트 (로고+날짜, 2레인 회전 3.2s, 크로스페이드)
+- [x] checklist-5 TabBar 컴포넌트 (전체/구독 탭, 뷰 토글, 구독 수 배지)
 
 ### 그리드 레이아웃
-- [x] #6 PressGrid 컴포넌트 (6×4 그리드, 930×388px, 1px 구분선)
-- [x] #7 GridCell + PressWordmark (호버 시 구독/해지 버튼, 스타일링된 워드마크)
-- [x] #8 Subscribe Pill 컴포넌트 (+ 구독하기 / − 해지하기)
+- [x] checklist-6 PressGrid 컴포넌트 (6×4 그리드, 930×388px, 1px 구분선)
+- [x] checklist-7 GridCell + PressWordmark (호버 시 구독/해지 버튼, 스타일링된 워드마크)
+- [x] checklist-8 Subscribe Pill 컴포넌트 (+ 구독하기 / − 해지하기)
 
 ### 페이지네이션 및 상태 관리
-- [x] #9 Chevron + 페이지네이션 (좌우 화살표, 3페이지 × 24개 관리)
-- [ ] #10 구독 상태 관리 (useState로 Set<pressId> 추적, 구독/해지 로직)
+- [x] checklist-9 Chevron + 페이지네이션 (좌우 화살표, 3페이지 × 24개 관리)
+- [ ] checklist-10 구독 상태 관리 (useState로 Set<pressId> 추적, 구독/해지 로직)
 
 ### 스타일링 & 접근성
-- [ ] #11 디자인 시스템 준수 (색상 토큰, 타이포그래피, 8px 스페이싱)
-- [ ] #12 접근성 + 반응형 (role="tablist", aria-selected, 1280px 콘텐츠 폭)
+- [ ] checklist-11 디자인 시스템 준수 (색상 토큰, 타이포그래피, 8px 스페이싱)
+- [ ] checklist-12 접근성 + 반응형 (role="tablist", aria-selected, 1280px 콘텐츠 폭)
 
 ---
 
@@ -44,20 +44,20 @@
 
 4. 커밋 단계
    - Windows cmd에 바로 붙여넣을 수 있는 한 줄 명령어 형식 사용
-   - 형식: git commit -m "feat: #[번호] [기능명]" -m "확인내용: ..." -m "이해 안 됐던 부분: ..."
+   - 형식: git commit -m "feat: checklist-[번호] [기능명]" -m "확인내용: ..." -m "이해 안 됐던 부분: ..."
    - 확인내용 + 이해 안 됐던 부분을 각각 별도 -m 옵션에 기록
 ```
 
 ### 커밋 메시지 예시
 ```
-git commit -m "feat: #4 Header + Ticker 컴포넌트" -m "확인내용: 헤더 레이아웃 완성, 티커 2레인 회전 애니메이션 구현" -m "이해 안 됐던 부분: cubic-bezier(.4,0,.2,1) 타이밍 함수 이유 확인"
+git commit -m "feat: checklist-4 Header + Ticker 컴포넌트" -m "확인내용: 헤더 레이아웃 완성, 티커 2레인 회전 애니메이션 구현" -m "이해 안 됐던 부분: cubic-bezier(.4,0,.2,1) 타이밍 함수 이유 확인"
 ```
 
 ---
 
 ## 🎯 1주차 완료 조건
 
-✅ #1 ~ #12 모두 완료
+✅ checklist-1 ~ checklist-12 모두 완료
 ✅ PR 작성 (학습 목표, 개발 과정, 어려웠던 점 기록)
 ✅ 전체 언론사 그리드 페이지 정상 렌더링
 
