@@ -75,7 +75,8 @@
   - 이탤릭 영문: *Insight*
   - 한자 혼용: 朝鮮日報
   - 영문: Korea JoongAng Daily, BUSINESS POST
-- 각 로고는 `src/components/logos/` 아래 개별 컴포넌트로 분리 (`SeoulEconomyLogo.tsx` 등)
+- 로고 구현은 불필요한 파일 분리를 피하고 `src/data/logos.tsx` 한 파일에서 관리
+- `src/data/logos.tsx`는 언론사 id별 SVG/JSX 정의와 재사용 가능한 `PressLogo` 컴포넌트를 함께 제공
 - 셀 중앙에 배치, 셀 너비/높이에 맞게 크기 조절
 
 ### 페이지네이션
@@ -147,7 +148,7 @@
 
 ## 목업 데이터
 
-실제 데이터는 없으므로 디자인 이미지와 spec을 보고 Claude가 직접 생성한다. `src/data/mockData.ts` 에 작성.
+실제 데이터는 없으므로 디자인 이미지와 spec을 보고 직접 생성한다. `src/data/mockData.ts` 에 작성.
 
 ### 언론사 목록 (`Press[]`)
 
