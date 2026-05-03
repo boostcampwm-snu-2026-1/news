@@ -38,6 +38,7 @@ export type TickerItem = {
 export type Article = {
   id: string;
   pressId: string;
+  name: string;
   categoryKey: CategoryKey;
   title: string;
   editedAt: string;
