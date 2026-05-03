@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Header from './components/Header/Header';
 import Ticker from './components/Ticker/Ticker';
 import TabBar from './components/TabBar/TabBar';
+import PressGrid from './components/PressGrid/PressGrid';
 
 export type TabType = 'all' | 'sub';
 export type ViewMode = 'grid' | 'list';
@@ -20,7 +21,7 @@ function App() {
         viewMode={viewMode}
         onViewModeChange={setViewMode}
       />
-      {/* 1주차 개발 예정 컴포넌트들이 위치할 곳입니다. */}
+      {viewMode === 'grid' && <PressGrid />}
     </div>
   )
 }
