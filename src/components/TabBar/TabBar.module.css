@@ -1,0 +1,67 @@
+.tabBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 930px;
+  height: 24px;
+  margin: 32px auto 0;
+}
+
+.tabs {
+  display: flex;
+  gap: 24px;
+}
+
+.tabs button,
+.viewerToggle button {
+  border: 0;
+  background: transparent;
+  color: var(--color-mute);
+  cursor: pointer;
+}
+
+.tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  font-size: var(--text-heading-size);
+  font-weight: 500;
+  line-height: var(--text-heading-line);
+}
+
+.tabs button[aria-selected="true"] {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-badge);
+  background: var(--color-accent);
+  color: var(--color-badge-ink);
+  font-size: var(--text-caption-size);
+  line-height: 1;
+}
+
+.viewerToggle {
+  display: flex;
+  gap: 8px;
+}
+
+.viewerToggle button {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--color-line);
+  color: var(--color-mute);
+}
+
+.viewerToggle button[aria-pressed="true"] {
+  color: var(--color-ink);
+  background: var(--color-soft);
+}

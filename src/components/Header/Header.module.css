@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 930px;
+  height: 29px;
+  margin: 0 auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand h1 {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: var(--text-display-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-display-line);
+  letter-spacing: -0.02em;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.header time {
+  color: var(--color-sub);
+  font-size: var(--text-body-size);
+  font-weight: var(--text-body-weight);
+  line-height: var(--text-body-line);
+}

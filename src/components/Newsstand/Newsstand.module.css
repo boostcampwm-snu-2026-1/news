@@ -1,0 +1,13 @@
+.newsstand {
+  position: relative;
+  width: 1280px;
+  min-height: 720px;
+  margin: 0 auto;
+  padding-top: 58px;
+}
+
+.contentArea {
+  width: 930px;
+  min-height: 388px;
+  margin: 32px auto 0;
+}
