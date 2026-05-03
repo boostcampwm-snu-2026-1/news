@@ -2,8 +2,9 @@
 
 Auto-captured permanent directives from session feedback. Edit freely.
 
-- 작업할 때마다 변경 사항을 적절한 논리 단위로 나누어 커밋한다.
-- 커밋을 할 때마다 사용자에게 허가를 구하지 말고, 논리적 단위로 판단하여 독립적으로 진행한다.
+- 주차 작업(plan.md 체크리스트 항목)은 `/work` 스킬을 통해 진행한다. 스킬이 한 항목당 단일 commit 까지 책임진다.
+- 스킬 바깥의 변경(셋업·메타·긴급 수정 등)은 명백한 논리 boundary 가 있을 때만 commit. **단순히 세션이 끝났다는 이유로 commit 하지 않는다.** 변경이 작거나 미완성이면 working tree 에 둔 채 사용자 지시를 기다린다.
+- commit 자체에는 사용자 허가를 다시 구하지 않는다 — 위 두 조건(스킬 안 / 명백한 boundary)에 부합하면 자율 진행.
 
 ---
 
@@ -121,15 +122,22 @@ src/
 
 ## 개발 워크플로
 
-체크리스트 항목 하나당 다음 사이클을 돈다:
+체크리스트 항목 하나당 두 스킬이 차례로:
 
-1. **설계** — `plan.md` 항목을 펼쳐 무엇을 어떻게 만들지 결정. 필요 시 인터페이스/타입을 먼저 박는다. (AI)
-2. **구현** — 코드 작성. (AI)
-3. **리뷰 노트 생성** — AI가 `works/weekN/review/commit<N>.md`를 작성. Hash는 `pending`으로 두고, 점검 결과(스펙 합치 / 규칙 준수 / 회귀 / 테스트 / 추상화)를 기록. 발견된 수정은 같은 커밋에 포함. (AI)
-4. **커밋** — 코드 + `commit<N>.md` 를 한 commit에 포함. 위 형식으로. 확인내용·이해 안 됐던 부분은 placeholder. (AI)
-5. **사용자 리뷰 + amend** — 사용자가 코드와 리뷰 노트를 검토하고 `/commit-review <N> <입력>`으로 amend. 스킬이 commit message의 placeholder 두 줄을 채우고, `commit<N>.md`의 `Hash: pending`도 그 시점 hash로 동기화. (User)
+1. **`/work [N]`** — 스킬이 한 사이클을 책임진다 (AI 자율):
+   - 의존성 체크 (선행 항목 모두 `[x]` 인지)
+   - 설계
+   - 구현 (`src/`)
+   - `works/weekN/review/commit<N>.md` 작성 (Hash: pending + 점검 노트 5섹션)
+   - `plan.md` 체크박스 `[ ]` → `[x]`
+   - 단일 commit (코드 + commit<N>.md + plan.md). placeholder 2줄 포함.
+2. **`/commit-review <N> <입력>`** — 사용자가 코드+리뷰 노트 검토 후 호출:
+   - commit message 의 placeholder 두 줄을 입력으로 갈아끼워 amend
+   - `commit<N>.md` 의 `Hash: pending` 도 그 시점 hash 로 동기화
 
-AI는 1~4까지 자율적으로 진행한다. 5는 사용자가 직접 한다.
+`/work` 는 한 호출 = 한 항목. 다음 항목/wave 로 자동 진행하지 않는다 — 사용자가 다시 호출.
+
+병렬 wave 처리는 `/work` SKILL.md 의 "병렬 작업" 절 참고.
 
 ## 병렬 작업 (subagent)
 
