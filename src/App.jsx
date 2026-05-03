@@ -1,4 +1,3 @@
-jsx
 import { useState } from 'react'
 import Header from './components/Header'
 import Ticker from './components/Ticker'
@@ -9,9 +8,9 @@ import { PRESS_DATA } from './data/pressData'
 
 export default function App() {
   const [state, setState] = useState({
-    tab: 'all',           // 'all' | 'sub'
-    page: 0,              // 현재 페이지 (0, 1, 2)
-    subscribed: new Set() // 구독한 언론사 ID
+    tab: 'all',
+    page: 0,
+    subscribed: new Set()
   })
 
   const handleTabChange = (newTab) => {
@@ -40,7 +39,6 @@ export default function App() {
     })
   }
 
-  // 현재 페이지에 표시할 언론사 필터링
   const getPressItems = () => {
     let items = state.tab === 'all' ? PRESS_DATA : PRESS_DATA.filter(p => state.subscribed.has(p.id))
     const startIdx = state.page * 24
@@ -68,6 +66,7 @@ export default function App() {
         <PressGrid 
           items={pressItems}
           subscribed={state.subscribed}
+          mode={state.tab}
           onSubscribe={handleSubscribe}
         />
         <Chevron 
