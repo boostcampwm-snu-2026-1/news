@@ -1,0 +1,14 @@
+.chevron {
+  width: 24px;
+  height: 40px;
+  color: var(--c-mute);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.disabled {
+  opacity: 0;
+  pointer-events: none;
+}

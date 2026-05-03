@@ -10,6 +10,7 @@ import { Header } from "../Header/Header";
 import { Ticker } from "../Ticker/Ticker";
 import { TabBar, type ViewerId } from "../TabBar/TabBar";
 import { PressGrid } from "../PressGrid/PressGrid";
+import { Chevron } from "../Chevron/Chevron";
 
 const STORAGE_KEY = "newsstand:subscribed";
 const PER_PAGE = 24;
@@ -33,9 +34,15 @@ export function Newsstand() {
     return ALL_PRESS.filter((p) => set.has(p.id));
   }, [state.tab, state.subscribed]);
 
+  const lastPage = Math.max(0, Math.ceil(visible.length / PER_PAGE) - 1);
+  const safePage = Math.min(state.page, lastPage);
+  useEffect(() => {
+    if (state.page > lastPage) dispatch({ type: "page/set", page: lastPage });
+  }, [state.page, lastPage]);
+
   const pageItems = useMemo(
-    () => visible.slice(state.page * PER_PAGE, (state.page + 1) * PER_PAGE),
-    [visible, state.page],
+    () => visible.slice(safePage * PER_PAGE, (safePage + 1) * PER_PAGE),
+    [visible, safePage],
   );
 
   return (
@@ -65,6 +72,16 @@ export function Newsstand() {
           onUnsubscribe={(id) => dispatch({ type: "unsubscribe", pressId: id })}
         />
       </div>
+      <Chevron
+        dir="left"
+        disabled={safePage <= 0}
+        onClick={() => dispatch({ type: "page/prev" })}
+      />
+      <Chevron
+        dir="right"
+        disabled={safePage >= lastPage}
+        onClick={() => dispatch({ type: "page/next" })}
+      />
     </div>
   );
 }
