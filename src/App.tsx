@@ -8,9 +8,14 @@ import { PublisherGrid } from './components/PublisherGrid'
 import { ScopeTabs } from './components/ScopeTabs'
 import { ViewToggle } from './components/ViewToggle'
 import { PUBLISHER_GRID_PAGE_SIZE } from './constants/newsStand'
-import { PUBLISHERS, TICKER_ITEMS } from './data/newsStand'
+import { CATEGORIES, PUBLISHERS, TICKER_ITEMS } from './data/newsStand'
 import { usePublisherSubscriptions } from './hooks/usePublisherSubscriptions'
-import type { NewsstandViewMode, Publisher, PublisherScope } from './types/newsStand'
+import type {
+  NewsstandViewMode,
+  Publisher,
+  PublisherCategory,
+  PublisherScope,
+} from './types/newsStand'
 
 type GridFocusTarget =
   | { type: 'grid' }
@@ -45,6 +50,17 @@ function App() {
   )
   const selectedPublisher =
     PUBLISHERS.find((publisher) => publisher.id === selectedPublisherId) ?? null
+  const categoryCounts = new Map(
+    CATEGORIES.map((category) => [
+      category.key,
+      PUBLISHERS.filter((publisher) => publisher.category === category.key).length,
+    ]),
+  )
+  const selectedCategoryIndex = selectedPublisher
+    ? PUBLISHERS.filter(
+        (publisher) => publisher.category === selectedPublisher.category,
+      ).findIndex((publisher) => publisher.id === selectedPublisher.id) + 1
+    : 1
   const gridLabel = scope === 'all' ? '전체 언론사 그리드' : '구독한 언론사 그리드'
   const placeholderMessage =
     scope === 'all'
@@ -116,6 +132,16 @@ function App() {
     setSelectedPublisherId(publisherId)
   }
 
+  const handleCategorySelect = (category: PublisherCategory) => {
+    const nextPublisher = PUBLISHERS.find(
+      (publisher) => publisher.category === category,
+    )
+
+    if (nextPublisher) {
+      setSelectedPublisherId(nextPublisher.id)
+    }
+  }
+
   const handleClosePublisher = () => {
     pendingGridFocusRef.current = { type: 'grid' }
     setSelectedPublisherId(null)
@@ -138,7 +164,14 @@ function App() {
     >
       {selectedPublisher ? (
         <ArticleListView
+          activeCategory={selectedPublisher.category}
+          activeCategoryIndex={selectedCategoryIndex}
+          categories={CATEGORIES}
+          categoryCounts={categoryCounts}
+          isSubscribed={isPublisherSubscribed(selectedPublisher.id)}
+          onCategorySelect={handleCategorySelect}
           onClose={handleClosePublisher}
+          onToggleSubscription={togglePublisherSubscription}
           publisher={selectedPublisher}
         />
       ) : viewMode === 'grid' ? (
