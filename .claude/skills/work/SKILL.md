@@ -159,7 +159,6 @@ e. 다음 wave 로.
 ```markdown
 # Commit <N> — feat: #<N> <항목 제목>
 
-- Hash: pending
 - Feature: #<N> <항목 제목>
 - Type: feat
 
@@ -218,7 +217,7 @@ amend 하지 않는다. pre-commit 훅 실패 시 원인 수정 후 새 commit (
 
 ## 비목표
 
-- /commit-review 영역(placeholder 채우기, Hash 동기화) 침범 금지
+- /commit-review 영역(placeholder 채우기) 침범 금지
 - amend / force-push 금지
 - chore/refactor/docs 등 #N 없는 셋업 작업은 이 스킬 범위 밖 (예외: plan 모드의 plan commit)
 - 새 주차 `spec/weekN/` 디렉터리 생성·PDF 배치는 사용자가 한다 (스킬은 그것을 읽기만)

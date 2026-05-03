@@ -13,7 +13,6 @@
 ```markdown
 # Commit <N> — <feat 커밋 subject>
 
-- Hash: pending  <!-- /commit-review 첫 호출 시 그 시점 HEAD hash로 갱신 -->
 - Feature: #<N> <plan.md 항목 제목>
 - Type: feat | fix | ...
 
@@ -38,14 +37,8 @@ spec/ 의 PDF와 일치하는가.
 (자유)
 ```
 
-## Hash 필드의 의미
-
-- 처음 작성 시점에는 `Hash: pending`. 사용자의 `/commit-review N` 첫 호출 시 스킬이 그 시점의 commit hash를 기록한다.
-- 이후 amend로 hash가 다시 바뀌더라도 파일에 적힌 값은 갱신하지 않는다 — "사용자가 처음 리뷰를 적용한 시점의 hash"라는 fingerprint.
-- 즉 파일의 Hash 필드 = **사용자 리뷰 amend 직전의 commit hash**.
-
 ## 사용자 워크플로
 
-1. AI가 `commit<N>.md`를 작성 (Hash: pending) + 같은 commit에 포함하여 `feat: #N` 커밋.
+1. AI가 `commit<N>.md`를 작성 + 같은 commit에 포함하여 `feat: #N` 커밋.
 2. 사용자가 코드 + 리뷰 노트를 검토.
-3. `/commit-review N <확인내용/이해 안 됐던 부분>` — 스킬이 commit subject(`#N`)로 대상 커밋을 찾아 hash 채우고, 메시지의 placeholder 두 줄을 사용자 입력으로 갈아끼운 뒤 amend.
+3. `/commit-review N <확인내용/이해 안 됐던 부분>` — 스킬이 commit subject(`#N`)로 대상 커밋을 찾아 메시지의 placeholder 두 줄을 사용자 입력으로 갈아끼운 뒤 amend.

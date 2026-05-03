@@ -116,7 +116,7 @@ src/
 `feat: #N` 커밋마다 그에 대응하는 리뷰 파일을 같은 commit 안에 포함한다:
 
 - 경로: `works/weekN/review/commit<N>.md`
-- 내용: 대상 commit hash 레퍼런스(`Hash: pending` 으로 시작 → 첫 `/commit-review` 호출 시 동기화) + AI의 점검 노트(스펙 합치 / CLAUDE.md 규칙 / 회귀 / 테스트 / 추상화)
+- 내용: AI의 점검 노트(스펙 합치 / CLAUDE.md 규칙 / 회귀 / 테스트 / 추상화)
 - 템플릿은 `works/weekN/review/README.md`
 - chore/refactor/docs 같은 셋업/메타 커밋은 #N이 없으므로 review 파일도 없다.
 
@@ -128,10 +128,9 @@ src/
    - **plan 모드** (해당 주차 plan.md 가 없거나 `/work plan` 호출): `spec/weekN/` 흡수 → plan 초안 → 사용자 확인 → `chore: weekN 작업 계획 초안` commit → **그 즉시 항목 모드로 모든 미완 항목 wave 단위 자동 진행**. 한 호출 = plan commit (1) + 항목 commit (N). plan 만 보고 멈추려면 `/work plan-only`.
    - **항목 모드 자동** (`/work` 호출, plan.md 존재): plan.md 의 모든 미완 항목을 wave 정의에 따라 끝까지 자동 진행.
    - **항목 모드 단독** (`/work N`): 그 항목 N 하나만 처리 후 종료.
-   - 각 항목마다: 의존성 체크 → 설계 → 구현 (`src/`) → `works/weekN/review/commit<N>.md` (Hash: pending + 점검 노트 5섹션) → 체크박스 `[ ]` → `[x]` → 단일 commit (placeholder 2줄 포함).
+   - 각 항목마다: 의존성 체크 → 설계 → 구현 (`src/`) → `works/weekN/review/commit<N>.md` (점검 노트 5섹션) → 체크박스 `[ ]` → `[x]` → 단일 commit (placeholder 2줄 포함).
 2. **`/commit-review <N> <입력>`** — 사용자가 코드+리뷰 노트 검토 후 호출:
    - commit message 의 placeholder 두 줄을 입력으로 갈아끼워 amend
-   - `commit<N>.md` 의 `Hash: pending` 도 그 시점 hash 로 동기화
 
 병렬 wave 처리는 `/work` SKILL.md 의 "Wave 루프" 절 참고. 한 항목이라도 build/test/lint, pre-commit 훅 실패 시 자동 진행 즉시 중단.
 
