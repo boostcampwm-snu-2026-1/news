@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;700&display=swap');
+
+:root {
+  /* Color tokens */
+  --ink:        #14212B;
+  --ink-alt:    #14202B;
+  --sub:        #5F6E76;
+  --mute:       #879298;
+  --line:       #D2DAE0;
+  --soft:       #F5F7F9;
+  --soft-alt:   #F7F7FC;
+  --card:       #FFFFFF;
+  --page:       #FEFEFE;
+  --accent:     #7890E7;
+  --accent-deep:#4362D0;
+  --badge-ink:  rgba(255, 255, 255, 0.7);
+  --danger:     #FFD1CF;
+
+  /* Typography scale */
+  --font-sans:  'Noto Sans KR', system-ui, sans-serif;
+  --font-serif: 'Noto Serif KR', serif;
+  --font-mono:  'IBM Plex Mono', monospace;
+
+  /* Spacing (8px base) */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* Radius tokens */
+  --r-0:    0px;
+  --r-sub:  2px;
+  --r-pill: 14px;
+  --r-badge:10px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.375;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}

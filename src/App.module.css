@@ -1,0 +1,28 @@
+.page {
+  min-height: 100vh;
+  background: var(--page);
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  width: 930px;
+  padding: 58px 0 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tickerWrap {
+  margin-top: 69px;
+}
+
+.tabWrap {
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.gridWrap {
+  display: flex;
+  justify-content: center;
+}

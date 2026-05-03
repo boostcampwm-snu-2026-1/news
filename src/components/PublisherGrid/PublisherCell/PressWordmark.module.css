@@ -1,0 +1,35 @@
+.wordmark {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  max-width: 88%;
+  word-break: keep-all;
+  line-height: 1.15;
+  gap: 2px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 6px;
+  border-radius: var(--r-sub);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+.flag {
+  margin-left: 2px;
+  vertical-align: super;
+  flex-shrink: 0;
+}
+
+.underlineMark {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  margin-top: 1px;
+}

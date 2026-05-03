@@ -1,0 +1,58 @@
+.tabbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 24px;
+}
+
+.tabs {
+  display: flex;
+  gap: 24px;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--mute);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  letter-spacing: -0.01em;
+}
+
+.tab.active {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--r-badge);
+  background: var(--accent);
+  color: var(--badge-ink);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.viewerToggle {
+  display: flex;
+  gap: 8px;
+}
+
+.viewBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
