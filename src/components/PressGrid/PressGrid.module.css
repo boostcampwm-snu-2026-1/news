@@ -1,0 +1,74 @@
+.grid,
+.empty {
+  width: 930px;
+  height: 388px;
+  border: 1px solid var(--color-line);
+  background: var(--color-line);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 1px;
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  border: 0;
+  background: var(--color-card);
+  cursor: pointer;
+}
+
+.cell:hover,
+.cell:focus-within {
+  background: var(--color-soft);
+}
+
+.control {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cell:hover .control,
+.cell:focus-within .control {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cell:hover :global(.wordmark),
+.cell:focus-within :global(.wordmark) {
+  opacity: 0;
+}
+
+.pill {
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  background: var(--color-card);
+  box-shadow: var(--shadow-pill);
+  color: var(--color-sub);
+  cursor: pointer;
+  font-size: var(--text-caption-size);
+  font-weight: 500;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-mute);
+  font-size: var(--text-list-size);
+  background: var(--color-card);
+}

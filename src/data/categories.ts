@@ -7,4 +7,5 @@ export const categoryLabels: Record<CategoryKey, string> = {
   culture: "생활/문화",
   world: "세계",
   tech: "IT/과학",
+  sports: "스포츠",
 };

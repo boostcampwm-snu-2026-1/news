@@ -2,7 +2,7 @@ export type NewsstandTab = "all" | "sub";
 
 export type ViewerMode = "grid" | "list";
 
-export type CategoryKey = "politics" | "economy" | "society" | "culture" | "world" | "tech";
+export type CategoryKey = "politics" | "economy" | "society" | "culture" | "world" | "tech" | "sports";
 
 export type PressWordmark = {
   name: string;
