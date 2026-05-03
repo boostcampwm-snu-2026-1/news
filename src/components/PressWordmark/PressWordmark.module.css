@@ -1,0 +1,16 @@
+.wordmark {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  max-width: 88%;
+  word-break: keep-all;
+  line-height: 1.15;
+  text-align: center;
+  user-select: none;
+}
+
+.flag {
+  margin-left: 2px;
+  vertical-align: middle;
+}
