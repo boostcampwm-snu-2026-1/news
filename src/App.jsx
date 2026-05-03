@@ -14,6 +14,11 @@ export default function App() {
     subscribed: new Set()
   })
 
+  const subscribedItems = PRESS_DATA.filter(p => state.subscribed.has(p.id))
+  const maxPages = state.tab === 'all'
+    ? PRESS_TOTAL_PAGES
+    : Math.ceil(subscribedItems.length / PRESS_PAGE_SIZE) || 1
+
   const handleTabChange = (newTab) => {
     setState(prev => ({ ...prev, tab: newTab, page: 0 }))
   }
@@ -23,10 +28,6 @@ export default function App() {
   }
 
   const handlePageChange = (direction) => {
-    const maxPages = state.tab === 'all'
-      ? PRESS_TOTAL_PAGES
-      : Math.ceil(state.subscribed.size / PRESS_PAGE_SIZE) || 1
-
     setState(prev => ({
       ...prev,
       page: direction === 'next' 
@@ -55,16 +56,15 @@ export default function App() {
     })
   }
 
+  const currentPage = Math.min(state.page, maxPages - 1)
+
   const getPressItems = () => {
-    let items = state.tab === 'all' ? PRESS_DATA : PRESS_DATA.filter(p => state.subscribed.has(p.id))
-    const startIdx = state.page * PRESS_PAGE_SIZE
+    let items = state.tab === 'all' ? PRESS_DATA : subscribedItems
+    const startIdx = currentPage * PRESS_PAGE_SIZE
     return items.slice(startIdx, startIdx + PRESS_PAGE_SIZE)
   }
 
   const pressItems = getPressItems()
-  const maxPages = state.tab === 'all'
-    ? PRESS_TOTAL_PAGES
-    : Math.ceil(state.subscribed.size / PRESS_PAGE_SIZE) || 1
 
   return (
     <div className="newsstand-container">
@@ -80,7 +80,9 @@ export default function App() {
       <div className="content-area">
         <Chevron 
           direction="left" 
-          disabled={state.page === 0}
+          disabled={currentPage === 0}
+          currentPage={currentPage + 1}
+          totalPages={maxPages}
           onClick={() => handlePageChange('prev')}
         />
         <PressGrid 
@@ -89,9 +91,14 @@ export default function App() {
           mode={state.tab}
           onSubscribe={handleSubscribe}
         />
+        <p className="visually-hidden" aria-live="polite">
+          {currentPage + 1} / {maxPages} 페이지
+        </p>
         <Chevron 
           direction="right"
-          disabled={state.page === maxPages - 1}
+          disabled={currentPage === maxPages - 1}
+          currentPage={currentPage + 1}
+          totalPages={maxPages}
           onClick={() => handlePageChange('next')}
         />
       </div>
