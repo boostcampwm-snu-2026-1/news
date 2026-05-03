@@ -1,12 +1,13 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { Header } from './components/Header'
 import { NewsstandShell } from './components/NewsstandShell'
+import { NewsTicker } from './components/NewsTicker'
 import { Pagination } from './components/Pagination'
 import { PublisherGrid } from './components/PublisherGrid'
 import { ScopeTabs } from './components/ScopeTabs'
 import { ViewToggle } from './components/ViewToggle'
 import { PUBLISHER_GRID_PAGE_SIZE } from './constants/newsStand'
-import { PUBLISHERS } from './data/newsStand'
+import { PUBLISHERS, TICKER_ITEMS } from './data/newsStand'
 import { usePublisherSubscriptions } from './hooks/usePublisherSubscriptions'
 import type { NewsstandViewMode, Publisher, PublisherScope } from './types/newsStand'
 
@@ -102,6 +103,7 @@ function App() {
   return (
     <NewsstandShell
       header={<Header />}
+      ticker={<NewsTicker items={TICKER_ITEMS} />}
       toolbar={
         <div className="flex h-full items-center justify-between">
           <ScopeTabs

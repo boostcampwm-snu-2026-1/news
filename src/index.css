@@ -142,3 +142,13 @@ textarea,
 select {
   font: inherit;
 }
+
+@keyframes ticker-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

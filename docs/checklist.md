@@ -17,7 +17,7 @@ Use this as the first-pass implementation order. The current priority is to make
 - [x] Implement subscribed-only mode that filters to subscribed publishers and keeps pagination consistent.
 - [x] Add focus management for tab switches, pagination, and subscription removal from subscribed mode.
 - [x] Implement the header with newspaper icon, `뉴스스탠드` title, and formatted date.
-- [ ] Implement the two-lane auto-rolling ticker with pause on hover/focus and reduced-motion handling.
+- [x] Implement the two-lane auto-rolling ticker with pause on hover/focus and reduced-motion handling.
 - [ ] Implement press-cell click behavior that opens the selected publisher's article list view.
 - [ ] Implement opened-press layout with category field tabs, edit time, subscribe pill, headline block, article list, and footnote.
 - [ ] Implement the 6-second field-tab progress bar and automatic advancement across publishers/categories.
