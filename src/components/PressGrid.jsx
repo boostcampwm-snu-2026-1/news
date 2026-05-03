@@ -1,7 +1,7 @@
 import PressCell from './PressCell';
 import styles from './PressGrid.module.css';
 
-export default function PressGrid({ items, currentPage, totalPages, onPageChange, direction, isEmpty }) {
+export default function PressGrid({ items, currentPage, totalPages, onPageChange, direction, isEmpty, subscribedIds, onSubscribe, onUnsubscribe }) {
   if (isEmpty) {
     return <div className={styles.empty}>구독한 언론사가 없습니다.</div>;
   }
@@ -27,7 +27,13 @@ export default function PressGrid({ items, currentPage, totalPages, onPageChange
         <div className={styles.gridWrap}>
           <div key={currentPage} className={`${styles.grid} ${slideClass}`}>
             {items.map((press) => (
-              <PressCell key={press.id} press={press} />
+              <PressCell
+                key={press.id}
+                press={press}
+                isSubscribed={subscribedIds.has(press.id)}
+                onSubscribe={onSubscribe}
+                onUnsubscribe={onUnsubscribe}
+              />
             ))}
           </div>
         </div>
