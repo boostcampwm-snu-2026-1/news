@@ -5,112 +5,93 @@
 
 ---
 
-## 1주차 — 기초 뼈대 & 정적 UI
+## 1주차 — 기초 뼈대 & 핵심 기능
 
-### P0 · 환경 설정
+### 환경 설정
 
 - [x] **1. 프로젝트 초기화**
-  - Vite + React + **TypeScript** 템플릿으로 프로젝트 생성
-  - **Tailwind CSS v4** + `@tailwindcss/vite` 플러그인 설치
-  - `vite.config.ts`, `tsconfig.app.json`, `tsconfig.node.json` 구성
-  - `docs/CLAUDE.md` 작성 완료 확인
-  - 의존성: 없음
+  - Vite 6 + React 19 + TypeScript 5.8 스캐폴딩
+  - Tailwind CSS v4 (`@tailwindcss/vite`) 설치 및 `vite.config.ts` 연결
+  - `tsconfig.app.json`, `tsconfig.node.json`, `.gitignore` 구성
 
-- [x] **2. 글로벌 스타일 & CSS 변수 설정**
-  - `src/index.css`에 `@import "tailwindcss"` + `@theme` 블록으로 디자인 토큰 정의
-  - 색상(`--color-primary`, `--color-bg` 등), 폰트, 그림자 변수 등록
-  - `@layer components`에 `.card`, `.btn-subscribe` 공통 클래스 정의
-  - 기본 reset CSS 적용 (`box-sizing`, body 마진)
-  - 의존성: #1
+- [x] **2. 글로벌 스타일 & 디자인 토큰 설정**
+  - `src/index.css` — `@import "tailwindcss"` + `@theme` 블록으로 색상·폰트·그림자 변수 정의
+  - `@layer components`에 `.card`, `.btn-subscribe` 공통 클래스 등록
+  - `src/types/index.ts` — `Publisher`, `Category`, `CATEGORIES`, `TabType` 타입 정의
 
-### P1 · 핵심 컴포넌트 구현
+### 컴포넌트 구현
 
-- [x] **3. 헤더(Header) 컴포넌트**
-  - 서비스 로고/타이틀 좌측 배치
-  - 현재 날짜·요일 우측 표시 (`new Date()` 활용)
-  - 반응형: 모바일 768px 이하에서 레이아웃 조정
-  - 의존성: #2
+- [x] **3. Header 컴포넌트**
+  - 서비스 로고 좌측, 현재 날짜·요일 우측 표시
 
-- [x] **4. 탭바(TabBar) 컴포넌트 — UI 레이아웃만**
-  - "전체 언론사" / "구독한 언론사" 탭 2개 UI 구현
-  - 활성 탭 스타일 구분 (밑줄 + 색상)
-  - `TabType` 유니온 타입으로 탭 상태 타입 안전하게 관리
-  - 의존성: #2
+- [x] **4. TabBar 컴포넌트**
+  - "전체 언론사" / "구독한 언론사" 탭, 구독 수 뱃지 표시
 
-- [x] **5. 언론사 데이터 JSON 파일 구성**
-  - `src/data/publishers.json` 생성 — 20개 언론사 수록
-  - 필드: `id`, `name`, `logoUrl`, `category`, `description`
-  - `src/types/index.ts`에 `Publisher`, `Category`, `TabType` 타입 정의
-  - 의존성: #1
+- [x] **5. 언론사 데이터 구성**
+  - `src/data/publishers.json` — 49개 언론사 (종합·경제·IT·스포츠·방송·지역)
+  - `src/data/mockArticles.ts` — 카테고리별 기사 제목 풀, `getMockArticles()` 유틸
 
-- [x] **6. 뉴스 카드(NewsCard) 컴포넌트**
-  - 언론사 로고, 이름, 카테고리 배지, 설명 표시
-  - 구독 여부에 따라 버튼 텍스트 변경 ("+ 구독" / "✓ 구독중")
-  - 카테고리별 배지 색상 구분 (종합/경제/IT/스포츠 등)
-  - `aria-pressed`로 접근성 처리
-  - Props: `publisher`, `isSubscribed`, `onToggle`
-  - 의존성: #2, #5
+- [x] **6. NewsCard 컴포넌트**
+  - 로고 영역 호버 시 초록 오버레이 + "구독" / "기사보기" 버튼 좌우 배치
+  - 구독 중: 카드 하단 초록 바 표시
+  - 그리드형 / 리스트형 두 가지 `viewMode` 지원
 
-- [x] **7. 뉴스 그리드(NewsGrid) 컴포넌트 — 카드형 레이아웃**
-  - CSS Grid (`grid-cols-2 ~ lg:grid-cols-5`) 반응형 배치
-  - publishers 배열을 받아 NewsCard 렌더링, 빈 상태 메시지 처리
-  - NewsCard 재디자인: 로고 호버 시 오버레이("+ 구독" / "기사보기") 표시
-  - Props: `publishers`, `subscribedIds`, `onToggle`, `emptyMessage`
-  - 의존성: #5, #6
+- [x] **7. NewsGrid 컴포넌트**
+  - `grid-cols-2 md:grid-cols-4` — 데스크탑 4열 × 6행(24개)
+  - 빈 상태 메시지 처리
 
-### P1 · 상태 관리 & 인터랙션
+### 상태 관리 & 인터랙션
 
-- [x] **8. 탭 전환 상태 로직 연결**
-  - `App.tsx`에서 `activeTab` state 관리
-  - "전체 언론사": 전체 publishers 표시
-  - "구독한 언론사": subscribedIds 기반 필터링
-  - TabBar에 구독 수 뱃지 표시 (구독 언론사 탭 옆 숫자)
-  - TabBar ↔ NewsGrid 연결 완료
-  - 의존성: #4, #7
+- [x] **8. 탭 전환 로직**
+  - `activeTab` state — "전체" / "구독한 언론사" 필터링
+  - TabBar ↔ NewsGrid 연결
 
-- [x] **9. 구독/해지 상태 관리**
-  - `subscribedIds` state를 `App.tsx`에서 `useState` lazy initializer로 관리
-  - `localStorage('news-subscribed')`에 저장·복원 — 새로고침 후에도 유지
-  - 구독(`handleSubscribe`)과 해지(`handleUnsubscribeRequest`) 핸들러 분리
-  - 의존성: #6, #8
+- [x] **9. 구독 상태 관리 + localStorage**
+  - `subscribedIds: Set<string>` — lazy initializer로 `localStorage` 복원
+  - 구독·해지 시 자동 저장 (새로고침 후 유지)
+
+- [x] **10. 구독 해지 확인 모달 (SubscribeModal)**
+  - 해지 버튼 → 모달 → 확인/취소
+  - ESC 키·오버레이 클릭으로 닫힘, `role="dialog"` 접근성 처리
+
+- [x] **11. 카드형 ↔ 리스트형 뷰 전환**
+  - 우상단 그리드/리스트 아이콘 토글
+  - 리스트뷰: 좌측 분야 사이드바 + 우측 언론사 기사 패널
+
+- [x] **12. 페이지네이션**
+  - 그리드뷰 24개씩, ‹ › 화살표 + `n / total` 표시
+  - 탭·카테고리 변경 시 1페이지 리셋
+
+- [x] **13. 카테고리 필터**
+  - 그리드뷰: 상단 알약 필터 (다중 선택)
+  - 리스트뷰: 좌측 사이드바 단일 선택 + 우측 언론사·기사 탐색 (‹ › )
 
 ---
 
-## 2주차 — 인터랙션 심화 & 데이터 바인딩
+## 2주차 — 완성도 & 사용성 개선
 
-### P2 · 구독 확인 모달
+- [ ] **14. 언론사 검색 기능**
+  - 헤더 또는 그리드 상단 검색창
+  - 실시간 언론사명 필터링 (debounce 300ms)
+  - 검색어 없을 시 전체 목록 복원
 
-- [x] **10. 구독 해지 확인 모달(SubscribeModal) 구현**
-  - 해지 버튼 클릭 → `pendingUnsubscribeId` 설정 → 모달 표시
-  - ESC 키 / 오버레이 클릭으로 취소, 확인 버튼으로 실제 해지
-  - `role="dialog"`, `aria-modal="true"`, `aria-labelledby` 접근성 처리
-  - 의존성: #9
+- [ ] **15. 구독 언론사 순서 변경**
+  - "구독한 언론사" 탭에서 카드 드래그 앤 드롭으로 순서 재배치
+  - 변경 순서 `localStorage`에 저장
 
-- [x] **11. 카드형 ↔ 리스트형 뷰 전환**
-  - 콘텐츠 우상단 그리드/리스트 아이콘 토글 버튼
-  - 리스트형: 로고 + 이름·카테고리·설명 + 버튼 한 줄 배치
-  - `viewMode: 'grid' | 'list'` state, NewsGrid/NewsCard 양쪽에 전파
-  - 의존성: #7
+- [ ] **16. 빈 구독 상태 온보딩 UI**
+  - "구독한 언론사" 탭이 비어 있을 때 안내 배너 표시
+  - "전체 언론사 보러 가기" CTA 버튼으로 탭 전환
 
-### P1 · 페이지네이션 / 무한 스크롤
+- [ ] **17. 모바일 반응형 최적화**
+  - 768px 이하: 리스트뷰 사이드바 → 수평 스크롤 탭으로 전환
+  - 터치 친화적 버튼 크기 (최소 44px)
+  - 모달 하단 시트(bottom sheet)로 변경
 
-- [x] **12. 언론사 목록 페이지 단위 표시**
-  - 그리드뷰: 24개씩 페이지네이션, ‹ › 화살표 + n/total 표시
-  - 카테고리 변경·탭 전환 시 자동으로 1페이지로 리셋
-  - 의존성: #7
-
-### P3 · 선택 기능
-
-- [x] **13. 언론사 카테고리 필터**
-  - 그리드뷰: 상단 알약형 필터 (전체 + 6개 카테고리), 다중 선택 가능
-  - 리스트뷰: 좌측 사이드바 단일 선택 — 우측에 해당 카테고리 언론사 기사 표시
-  - 리스트뷰 우측: 언론사 ‹ › 탐색, 각 언론사별 랜덤 기사 6개 표시
-  - 의존성: #8
-
-- [ ] **14. 뉴스 요약 기능 (AI 활용)**
-  - 카드 클릭 시 해당 언론사 최신 기사 목록 표시 (mock 데이터)
-  - Claude API 또는 로컬 요약 로직으로 3줄 요약 제공
-  - 의존성: #6
+- [ ] **18. 접근성 & UX 마무리**
+  - 키보드 포커스 링 스타일 통일
+  - 구독/해지 후 토스트 알림 (2초 후 자동 닫힘)
+  - `<img>` alt 텍스트, `<button>` aria-label 전수 점검
 
 ---
 
@@ -118,7 +99,7 @@
 
 | 항목 | 기준 |
 |------|------|
-| 반응형 | 모바일(375px), 태블릿(768px), 데스크탑(1200px) 레이아웃 깨지지 않음 |
+| 그리드 레이아웃 | 데스크탑 4열 × 6행 = 24개 정확히 표시 |
 | 구독 상태 | 새로고침 후에도 구독 목록 유지 (`localStorage`) |
 | 탭 전환 | 전체/구독 탭 전환 시 목록 즉시 반영 |
 | 모달 | ESC 키 또는 오버레이 클릭으로 닫힘 |
@@ -130,7 +111,7 @@
 
 | 주차 | 완료 항목 | 진행 중 | 남은 항목 |
 |------|----------|--------|----------|
-| 1주차 | 9 / 9 | - | 완료 |
-| 2주차 | 4 / 5 | - | 14 |
+| 1주차 | 13 / 13 | - | 완료 |
+| 2주차 | 0 / 5 | - | 14~18 |
 
 > 이 표는 작업 완료 시마다 수동으로 업데이트할 것.
