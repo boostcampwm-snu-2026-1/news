@@ -125,8 +125,8 @@ src/
 체크리스트 항목 하나당 두 스킬이 차례로:
 
 1. **`/work [N]`** — 스킬이 한 사이클을 책임진다 (AI 자율).
-   - **plan 모드** (해당 주차 plan.md 가 없는 경우 또는 `/work plan` 호출): `spec/weekN/` 흡수 → plan 초안 작성 → 사용자 확인 → `chore: weekN 작업 계획 초안` commit. 항목 모드로 자동 진행하지 않음.
-   - **항목 모드** (plan.md 가 있는 경우 또는 `/work N` 호출):
+   - **plan 모드** (해당 주차 plan.md 가 없거나 `/work plan` 호출): `spec/weekN/` 흡수 → plan 초안 → 사용자 확인 → `chore: weekN 작업 계획 초안` commit → **자동으로 항목 모드 #1 진입**. 즉 한 호출 = plan commit + 항목 commit 두 개. plan 만 보고 멈추고 싶으면 `/work plan-only`.
+   - **항목 모드** (plan.md 가 있거나 `/work N` 호출):
      - 의존성 체크 (선행 항목 모두 `[x]` 인지)
      - 설계 → 구현 (`src/`)
      - `works/weekN/review/commit<N>.md` 작성 (Hash: pending + 점검 노트 5섹션)

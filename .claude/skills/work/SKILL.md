@@ -1,21 +1,22 @@
 ---
 name: work
-description: 주차 단위 작업 진입점. plan.md 가 없는 주차면 spec/weekN/ 을 흡수해 plan 초안을 먼저 작성(plan 모드), 있으면 체크리스트 항목 한 개를 (의존성 → 설계 → 구현 → commit<N>.md → 체크박스 → 단일 commit) 한 사이클로 처리(항목 모드). 인자로 항목 번호 N 또는 weekN 또는 `plan` 키워드. commit message 의 placeholder 는 사용자가 /commit-review 로 채운다.
+description: 주차 단위 작업 진입점. plan.md 가 없으면 spec/weekN/ 을 흡수해 plan 초안을 먼저 작성하고 사용자 동의 후 commit, 그 즉시 항목 모드로 이어가 첫 미완 항목(#1)까지 처리(한 호출 = plan + 첫 항목 두 commit). plan.md 가 이미 있으면 체크리스트 항목 한 개를 (의존성 → 설계 → 구현 → commit<N>.md → 체크박스 → 단일 commit) 처리(항목 모드). 인자로 항목 번호 N 또는 weekN 또는 `plan` 키워드. commit message 의 placeholder 는 사용자가 /commit-review 로 채운다.
 ---
 
-# /work [N | plan] [weekN]
+# /work [N | plan | plan-only] [weekN]
 
-주차 plan.md 가 있으면 한 항목 처리, 없으면 plan 초안 먼저 작성.
+plan.md 가 없으면 plan 작성 + 첫 항목까지 한 호출에 처리. plan.md 가 있으면 한 항목.
 
 ## 호출 형식
 
 | 호출 | 동작 |
 |---|---|
-| `/work` | 자동: 대상 주차의 plan.md 가 없으면 plan 모드, 있으면 첫 미완 항목 |
+| `/work` | 자동: plan.md 없으면 **plan 모드 + 항목 모드 #1** 연속 처리, 있으면 첫 미완 항목 |
 | `/work 3` | 항목 모드, #3 |
 | `/work 3 week2` | week2 의 #3 |
-| `/work plan` | 강제 plan 모드 (plan.md 가 이미 있어도 갱신 모드 진입; 사용자 확인 필수) |
-| `/work plan week2` | week2 의 plan 모드 |
+| `/work plan` | 강제 plan 모드 (이미 있어도 갱신). plan commit 후 자동으로 항목 모드 진입. |
+| `/work plan-only` | plan 모드만, 항목 모드로 이어가지 않음. 사용자가 plan 만 점검하고 싶을 때. |
+| `/work plan week2` | week2 의 plan 모드 + 항목 모드 #1 |
 
 ## 모드 결정
 
@@ -104,9 +105,12 @@ chore: <주차> 작업 계획 초안
 
 `#N` 은 plan commit 에 붙이지 않는다 (체크리스트 항목이 아니므로).
 
-### P6. 종료
-- "plan 작성 완료. `/work` 또는 `/work 1` 로 첫 항목 시작" 안내
-- 항목 모드로 자동 진행하지 않는다.
+### P6. 항목 모드로 진입
+- 호출이 `plan-only` 였으면 여기서 종료. "plan 작성 완료. `/work 1` 로 첫 항목 시작" 안내.
+- 그 외(`/work`, `/work plan`)에서는 plan commit 직후 **자동으로 항목 모드 #1 진입**. 사용자에게 한 줄 ("plan 완료, 이어서 #1 시작합니다") 알리고 아래 절차로 이어감.
+- 즉 한 호출 = plan commit (1개) + 항목 commit (1개) = 두 commit.
+
+> P3 사용자 확인 단계에서 plan 자체가 거절되거나 큰 수정이 필요하면 #1 진입은 보류된다 (plan 합의가 우선).
 
 ---
 
