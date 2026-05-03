@@ -1,101 +1,111 @@
 ---
 name: commit-review
-description: HEAD 커밋의 "확인내용"/"이해 안 됐던 부분" 라벨 줄을 사용자가 입력한 리뷰 노트로 갈아끼워 amend 한다. 과제 워크플로(설계 → 구현 → 사용자 리뷰 → 커밋 메시지에 리뷰 반영)의 마지막 단계. 사용자가 코드 리뷰 후 자신의 확인 내용·이해 안 됐던 부분을 직접 commit message에 기록할 때 사용.
+description: Feature 번호 N에 해당하는 commit의 message placeholder 라벨 줄(확인내용/이해 안 됐던 부분)을 사용자 입력으로 갈아끼워 amend. works/weekX/review/commit<N>.md 의 Hash 필드도 첫 호출 시 동기화. 과제 워크플로(설계 → 구현 → AI 리뷰노트 → AI 커밋 → 사용자 리뷰 → /commit-review)의 마지막 단계. 코드 변경은 하지 않는다.
 ---
 
-# /commit-review
+# /commit-review \<N\> [\<리뷰 입력\>]
 
-사용자가 작업 결과를 리뷰한 뒤, HEAD 커밋 메시지의 `- 확인내용:` / `- 이해 안 됐던 부분:` 두 줄을 사용자 입력으로 갈아끼우고 `git commit --amend`로 메시지를 갱신한다.
+사용자가 feature `#N`에 해당하는 커밋을 amend.
 
-코드 변경은 **하지 않는다**. 커밋 메시지의 두 라벨 줄만 수정한다.
+- 대상 커밋 식별: `works/*/review/commit<N>.md`의 Hash 필드 → 없으면 `git log` subject `#N` 매치
+- amend 작업 두 가지를 동시에:
+  1. 메시지의 `- 확인내용:` / `- 이해 안 됐던 부분:` 라벨 줄을 사용자 입력으로 교체
+  2. `commit<N>.md`의 `Hash: pending` 을 amend 직전의 hash로 채워서 staged
 
 ## 호출 형식
 
-다음 중 어느 형태로도 호출 가능. 어떤 형태든 두 필드를 추출해야 한다.
-
-1. **인자 없음** — `/commit-review`
-   AskUserQuestion으로 두 필드를 차례로 묻는다.
-
-2. **라벨 형태** — `/commit-review 확인내용: <a> 이해 안 됐던 부분: <b>`
-   라벨로 분리해 추출. 라벨은 한 줄에 있을 수도, 줄바꿈 뒤에 있을 수도 있음.
-
-3. **자유 텍스트 1단락** — `/commit-review 컴포넌트 분리 적절했음`
-   단일 텍스트만 들어왔으면 → 확인내용으로 처리, 이해 안 됐던 부분은 "없음"으로.
-
-4. **두 단락(빈 줄 분리)** — 빈 줄로 나뉜 두 단락이면 첫 단락=확인내용, 둘째=이해 안 됐던 부분.
-
-애매하면 사용자에게 한 번 더 확인.
+| 호출 | 동작 |
+|---|---|
+| `/commit-review` | 번호도 모름 → 사용자에게 N 묻고, 두 필드 묻고 진행 |
+| `/commit-review 3` | N만 있음 → 두 필드를 AskUserQuestion |
+| `/commit-review 3 확인내용: <a> 이해 안 됐던 부분: <b>` | 라벨로 분리 |
+| `/commit-review 3 <자유텍스트>` | 단일 텍스트 → 확인내용으로, 이해 안 됐던 부분은 "없음" |
+| 빈 줄로 분리된 두 단락 | 첫째=확인내용, 둘째=이해 안 됐던 부분 |
 
 ## 절차
 
-1. **HEAD 커밋 메시지 읽기**
-   ```bash
-   git log -1 --pretty=%B
-   ```
-   메시지에 `- 확인내용:` 줄과 `- 이해 안 됐던 부분:` 줄이 모두 존재하는지 확인.
-   둘 중 하나라도 없으면 사용자에게 알린 뒤 종료 (해당 커밋이 placeholder를 가진 적절한 대상이 아닐 수 있음).
+### 1. 입력 파싱
+- 첫 토큰이 숫자면 N. 아니면 사용자에게 묻는다.
+- 나머지 텍스트에서 두 필드 추출 (위 표대로). 빠진 게 있으면 AskUserQuestion으로만 보충.
 
-2. **푸시 여부 확인**
-   ```bash
-   git rev-list @{u}..HEAD --count 2>/dev/null
-   ```
-   값이 0이면(이미 원격에 푸시됨), "이 커밋은 이미 원격에 푸시되어 있어 amend는 force-push가 필요하다. 진행할까?"를 사용자에게 확인. 원격 트래킹 브랜치가 없으면 무시.
+### 2. commit\<N\>.md 위치 찾기
+```bash
+ls works/*/review/commit<N>.md 2>/dev/null
+```
+- 정확히 1개 → 사용
+- 2개 이상 → 어느 주차인지 사용자에게 물음
+- 0개 → "feature #N 의 review 파일이 없다"고 알리고 종료
 
-3. **스테이지 점검**
-   ```bash
-   git diff --cached --quiet
-   ```
-   exit !=0이면(스테이지된 변경 있음) "스테이지된 변경이 amend에 포함된다. 계속할까?" 확인.
+### 3. Hash / 대상 커밋 식별
 
-4. **사용자 입력 파싱**
-   호출 인자에서 위 4 형태 중 하나로 두 필드(`확인내용`, `이해 안 됐던 부분`)를 추출.
-   둘 중 하나가 빠졌고 인자 없음 형태가 아니라면 그 빠진 필드만 AskUserQuestion으로 보충.
+```bash
+HASH=$(grep -E '^- Hash:' <commit<N>.md path> | head -1 | sed -E 's/^- Hash:[[:space:]]*//')
+```
 
-5. **메시지 재구성**
-   기존 메시지에서 라벨 줄만 갈아끼운다. 다른 줄(제목, 본문 단락, Co-Authored-By 등)은 모두 그대로 보존.
-   - `^- 확인내용:.*` → `- 확인내용: <사용자 입력>`
-   - `^- 이해 안 됐던 부분:.*` → `- 이해 안 됐던 부분: <사용자 입력>`
-   각 사용자 입력에 줄바꿈이 포함되면 그대로 본문에 풀어 쓴다 (라벨 줄 자체는 유지하고 그 뒤 들여쓴 추가 줄로 표현).
+- `HASH=="pending"` → subject 매치로 식별:
+  ```bash
+  git log --all --format='%H %s' | grep -E ' #'<N>'( |$)' | head -5
+  ```
+  결과 1개면 그 hash. 여러 개면 사용자에게 list 보여주고 선택. 0개면 종료.
+- `HASH!="pending"` → `git rev-parse --verify "$HASH"`로 존재 확인. 없으면 (이미 amend됨) 위 subject 매치 fallback.
 
-6. **amend 실행**
-   HEREDOC으로 새 메시지를 그대로 전달:
-   ```bash
-   git commit --amend -m "$(cat <<'MSG_EOF'
-   <재구성된 전체 메시지>
-   MSG_EOF
-   )"
-   ```
+### 4. 푸시 / 스테이지 사전 점검
+- 푸시 여부:
+  ```bash
+  if git rev-parse '@{u}' >/dev/null 2>&1; then
+    git merge-base --is-ancestor "$HASH" '@{u}' && echo "이미 푸시됨"
+  fi
+  ```
+  푸시되어 있으면 force-push 필요 사실 확인. 사용자가 거절하면 종료.
+- 스테이지된 변경: `git diff --cached --quiet` exit≠0이면 amend에 포함됨 사실을 알리고 진행 여부 확인.
 
-7. **결과 보고**
-   - amend 후 새 커밋 hash (`git log -1 --format='%h %s'`)를 보여주고,
-   - 사용자가 입력한 두 필드를 그대로 인용해 확인.
+### 5. 새 메시지 구성
+- `git log -1 --format=%B "$HASH"` 로 기존 메시지를 가져와서:
+  - `^- 확인내용:.*` → `- 확인내용: <user 입력>`
+  - `^- 이해 안 됐던 부분:.*` → `- 이해 안 됐던 부분: <user 입력>`
+- 그 외 줄(제목, 본문, Co-Authored-By 등)은 손대지 않음.
+- 입력에 줄바꿈이 포함되면 라벨 줄 다음에 들여쓴 추가 줄로 풀어 쓴다.
+
+### 6. commit\<N\>.md Hash 필드 동기화
+- 파일의 `- Hash: pending` 줄을 `- Hash: <대상 HASH>`로 치환. (이미 채워져 있으면 그대로 둠.)
+- 변경된 파일을 `git add <path>` 로 스테이지.
+
+### 7. 메시지 amend / rebase reword
+
+**HEAD인 경우:**
+```bash
+git commit --amend -m "$(cat <<'MSG_EOF'
+<재구성된 메시지>
+MSG_EOF
+)"
+```
+
+**HEAD~K (older)인 경우 — rebase reword:**
+```bash
+SHORT=$(git rev-parse --short=7 "$HASH")
+NEW_MSG_FILE=$(mktemp)
+cat > "$NEW_MSG_FILE" <<'MSG_EOF'
+<재구성된 메시지>
+MSG_EOF
+
+GIT_SEQUENCE_EDITOR="sed -i.bak \"s/^pick $SHORT/reword $SHORT/\"" \
+GIT_EDITOR="cp \"$NEW_MSG_FILE\"" \
+git rebase -i "${HASH}^"
+
+rm -f "$NEW_MSG_FILE"
+```
+- `GIT_SEQUENCE_EDITOR`로 시퀀스 파일에서 해당 커밋만 `pick`→`reword`로 바꿈
+- `GIT_EDITOR`는 commit message 편집기 — `cp <pre-prepared file>`로 호출돼 메시지 파일을 통째로 덮어씀
+- 같은 rebase에서 6번에서 staged한 파일 변경(Hash 동기화)도 함께 반영됨
+
+### 8. 결과 보고
+- 새 commit hash (`git log --all --format='%H' | head -1` 또는 amend 후 `git rev-parse HEAD`나 rebase 후 해당 위치) 출력
+- 사용자가 입력한 두 필드를 그대로 인용해 확인
+- 만약 원래 푸시되어 있었으면 force-push 필요 사실 한 번 더 알림
 
 ## 비목표 / 제약
 
-- HEAD 커밋만 다룬다. `HEAD~N`이나 SHA 지정은 지원하지 않음 (`git rebase -i`로 reword가 필요한데 스코프 밖). 더 이전 커밋을 고치고 싶으면 별도로 알린다.
-- 코드 변경은 절대 하지 않는다.
-- 라벨 줄이 없는 커밋이면 새로 추가하지 말고 종료 (사용자 의도가 모호한 케이스).
-- amend로 인한 force-push 결정은 사용자에게 위임 — 스킬은 push 자체를 수행하지 않는다.
-
-## 예시
-
-호출:
-```
-/commit-review 확인내용: GridCell hover 스왑이 키보드 :focus-within에서도 동일하게 동작 확인. 이해 안 됐던 부분: useReducer dispatch가 stale closure 위험 없는 이유 — React 보장 문서로 확인함.
-```
-
-기존 메시지:
-```
-feat: #8 그리드 + 구독 토글
-
-- 확인내용: (리뷰 시 작성)
-- 이해 안 됐던 부분: (리뷰 시 작성)
-```
-
-amend 후:
-```
-feat: #8 그리드 + 구독 토글
-
-- 확인내용: GridCell hover 스왑이 키보드 :focus-within에서도 동일하게 동작 확인.
-- 이해 안 됐던 부분: useReducer dispatch가 stale closure 위험 없는 이유 — React 보장 문서로 확인함.
-```
+- **코드 변경 안 함.** commit<N>.md의 Hash 필드 동기화만 한다.
+- 한 번에 한 커밋만. `/commit-review 1 2 3` 같은 다중 지정은 지원하지 않음.
+- review 파일이 없으면 자동 생성하지 않는다 (AI가 만든 파일을 보호 — 의도치 않은 새 파일 생성 방지).
+- push는 절대 자동 실행하지 않는다.

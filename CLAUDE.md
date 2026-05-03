@@ -108,7 +108,16 @@ src/
 
 - `<type>`: feat / fix / refactor / docs / chore / test
 - `#<feature 번호>`: 해당 주차 `works/weekN/plan.md` 체크리스트 항목 번호. 체크리스트와 무관한 셋업/메타 작업은 # 생략 가능.
-- `확인내용` / `이해 안 됐던 부분`: 둘 다 필수 줄. **AI는 이 두 줄을 placeholder(`(리뷰 시 작성)`)로 두고 커밋한다.** 사용자가 코드를 리뷰한 뒤 `/commit-review` 스킬로 자신의 입력을 채워 amend.
+- `확인내용` / `이해 안 됐던 부분`: 둘 다 필수 줄. **AI는 이 두 줄을 placeholder(`(리뷰 시 작성)`)로 두고 커밋한다.** 사용자가 코드를 리뷰한 뒤 `/commit-review <N>` 스킬로 자신의 입력을 채워 amend.
+
+## 커밋별 리뷰 파일
+
+`feat: #N` 커밋마다 그에 대응하는 리뷰 파일을 같은 commit 안에 포함한다:
+
+- 경로: `works/weekN/review/commit<N>.md`
+- 내용: 대상 commit hash 레퍼런스(`Hash: pending` 으로 시작 → 첫 `/commit-review` 호출 시 동기화) + AI의 점검 노트(스펙 합치 / CLAUDE.md 규칙 / 회귀 / 테스트 / 추상화)
+- 템플릿은 `works/weekN/review/README.md`
+- chore/refactor/docs 같은 셋업/메타 커밋은 #N이 없으므로 review 파일도 없다.
 
 ## 개발 워크플로
 
@@ -116,9 +125,9 @@ src/
 
 1. **설계** — `plan.md` 항목을 펼쳐 무엇을 어떻게 만들지 결정. 필요 시 인터페이스/타입을 먼저 박는다. (AI)
 2. **구현** — 코드 작성. (AI)
-3. **리뷰 노트 생성** — AI가 `works/weekN/review.md`에 점검 결과(스펙 합치 / 규칙 준수 / 회귀 / 테스트 / 추상화)를 기록. 발견된 수정은 같은 커밋에 포함. (AI)
-4. **커밋** — 위 형식으로 하나. 확인내용·이해 안 됐던 부분은 placeholder. (AI)
-5. **사용자 리뷰 + amend** — 사용자가 코드를 검토하고 `/commit-review` 스킬로 자신의 확인내용·이해 안 됐던 부분을 입력. 스킬이 HEAD 커밋 메시지를 amend. (User)
+3. **리뷰 노트 생성** — AI가 `works/weekN/review/commit<N>.md`를 작성. Hash는 `pending`으로 두고, 점검 결과(스펙 합치 / 규칙 준수 / 회귀 / 테스트 / 추상화)를 기록. 발견된 수정은 같은 커밋에 포함. (AI)
+4. **커밋** — 코드 + `commit<N>.md` 를 한 commit에 포함. 위 형식으로. 확인내용·이해 안 됐던 부분은 placeholder. (AI)
+5. **사용자 리뷰 + amend** — 사용자가 코드와 리뷰 노트를 검토하고 `/commit-review <N> <입력>`으로 amend. 스킬이 commit message의 placeholder 두 줄을 채우고, `commit<N>.md`의 `Hash: pending`도 그 시점 hash로 동기화. (User)
 
 AI는 1~4까지 자율적으로 진행한다. 5는 사용자가 직접 한다.
 
