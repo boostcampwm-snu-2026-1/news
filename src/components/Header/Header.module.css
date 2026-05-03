@@ -1,0 +1,42 @@
+/*
+ * Header (디자인 시스템 §6.1)
+ * Left: newspaper-icon (24×24) + "뉴스스탠드" display 24/700
+ * Right: 오늘 날짜, body 16/500 color sub
+ * Layout: flex space-between, height 29
+ */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-h);
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.brand {
+  font-size: var(--type-display-size);
+  font-weight: var(--type-display-weight);
+  line-height: var(--type-display-leading);
+  letter-spacing: var(--track-kr-display);
+  color: var(--ink);
+}
+
+.date {
+  font-size: var(--type-body-size);
+  font-weight: var(--type-body-weight);
+  line-height: 1;
+  color: var(--sub);
+  font-variant-numeric: tabular-nums;
+}

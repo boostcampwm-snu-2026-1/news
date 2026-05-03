@@ -1,0 +1,33 @@
+/*
+ * 6×4 Grid (디자인 시스템 §6.4)
+ * 930 × 388, bg --line, border 1px --line
+ * grid 6 cols × 4 rows, gap 1 (creates divider lines)
+ * 각 셀: bg --card, 콘텐츠 가운데 정렬, ~154 × ~96
+ */
+
+.grid {
+  width: var(--content-w);
+  height: var(--content-h);
+  background: var(--line);
+  border: var(--border-line);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 1px;
+}
+
+.cell {
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1);
+  overflow: hidden;
+  position: relative;
+}
+
+/* 빈 셀 (구독 탭 sparse grid에서 등장) */
+.cellEmpty {
+  background: var(--card);
+}

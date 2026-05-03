@@ -1,0 +1,78 @@
+/*
+ * TabBar + viewer toggle (디자인 시스템 §6.3)
+ * Row space-between, height 24
+ * Left cluster gap 24: "전체 언론사" / "내가 구독한 언론사" + badge
+ * Right cluster gap 8: list-view / grid-view icons
+ */
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--tabbar-h);
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--mute);
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+.tabActive {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--r-badge);
+  background: var(--accent);
+  color: var(--badge-ink);
+  font-size: var(--type-badge-size);
+  font-weight: var(--type-badge-weight);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.viewerButton {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mute);
+  cursor: pointer;
+}
+
+.viewerButtonActive {
+  color: var(--ink);
+}
+
+.viewerIcon {
+  width: 24px;
+  height: 24px;
+}

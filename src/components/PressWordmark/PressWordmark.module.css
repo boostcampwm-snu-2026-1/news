@@ -1,0 +1,80 @@
+/*
+ * PressWordmark (디자인 시스템 §6.5)
+ * 각 outlet은 이미지가 아니라 typographic artifact.
+ * Render rules:
+ *   display: inline-flex, flex-wrap: wrap, align/justify: center
+ *   max-width: 88% of cell, word-break: keep-all
+ *   line-height: 1.15, 긴 이름은 2줄로 wrap
+ */
+
+.wordmark {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  max-width: 88%;
+  line-height: 1.15;
+  word-break: keep-all;
+  text-align: center;
+  /* 체이닝되는 letter-spacing — 한글 -0.01em이 기본, latin/tracking으로 override */
+  letter-spacing: var(--track-kr-body);
+}
+
+/* 전체 단어를 chip으로 감쌀 때 (KBS WORLD, 이데일리) */
+.chip {
+  border-radius: var(--r-sub);
+  padding: 2px 6px;
+}
+
+.serif {
+  font-family: var(--font-serif);
+}
+
+.sans {
+  font-family: var(--font-sans);
+}
+
+.italic {
+  font-style: italic;
+}
+
+.underline {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.small {
+  font-size: 14px;
+}
+
+.size16 {
+  font-size: 16px;
+}
+
+/* per-char accent: 색만 */
+.accentChar {
+  /* color는 inline style로 (per-instance) */
+}
+
+/* per-char accent: chip background */
+.accentBg {
+  border-radius: var(--r-sub);
+  padding: 0 4px;
+  color: #ffffff;
+}
+
+/* accentUnder 인덱스 — accent 색 + 밑줄 */
+.accentUnder {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* 빨간 깃발 glyph (아시아경제, 아주경제) */
+.flag {
+  display: inline-block;
+  width: 9px;
+  height: 11px;
+  margin-left: 2px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}

@@ -1,0 +1,57 @@
+/*
+ * 캔버스 레이아웃 (디자인 시스템 §4)
+ * 1280 × 720 고정, 좌/우 gutter 175, content-w 930
+ * 각 컴포넌트는 시스템에 명시된 y 좌표로 절대 배치 (header 58, ticker 127, tab bar 208, content 256)
+ * Chevrons는 content column 바깥에 위치 (left 103 / right 1153)
+ */
+
+.canvas {
+  position: relative;
+  width: var(--canvas-w);
+  height: var(--canvas-h);
+  margin: 0 auto;
+  background: var(--page);
+  overflow: hidden;
+}
+
+.header,
+.ticker,
+.tabbar,
+.content {
+  position: absolute;
+  left: var(--gutter);
+  width: var(--content-w);
+}
+
+.header {
+  top: var(--header-y);
+  height: var(--header-h);
+}
+
+.ticker {
+  top: var(--ticker-y);
+  height: var(--ticker-h);
+}
+
+.tabbar {
+  top: var(--tabbar-y);
+  height: var(--tabbar-h);
+}
+
+.content {
+  top: var(--content-y);
+  height: var(--content-h);
+}
+
+.chevron {
+  position: absolute;
+  top: var(--chevron-y);
+}
+
+.chevronLeft {
+  left: var(--chevron-left);
+}
+
+.chevronRight {
+  left: var(--chevron-right);
+}

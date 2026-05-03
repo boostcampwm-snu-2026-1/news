@@ -1,0 +1,145 @@
+/*
+ * 뉴스스탠드 디자인 토큰
+ * 출처: week9_design_system.pdf §2-5
+ * 모든 픽셀/색/타입 수치는 디자인 시스템 그대로. 수정 시 시스템 문서 우선.
+ */
+
+:root {
+  /* ─────────────────────────────────────────────────────────
+   * Colors (§2)
+   * ─────────────────────────────────────────────────────── */
+  --ink: #14212b;            /* body text, bold labels */
+  --ink-alt: #14202b;        /* swap interchangeable with ink */
+  --sub: #5f6e76;            /* secondary text (dates, captions) */
+  --mute: #879298;           /* inactive tab labels, empty chevron */
+  --line: #d2dae0;           /* 1px dividers, card borders, grid strokes */
+  --soft: #f5f7f9;           /* ticker bg, field-tab bg */
+  --soft-alt: #f7f7fc;       /* reserved secondary surface */
+  --card: #ffffff;           /* grid cell, opened-press body, pill */
+  --page: #fefefe;           /* page background */
+  --accent: #7890e7;         /* subscribed badge, active tab fill */
+  --accent-deep: #4362d0;    /* progress fill inside active tab */
+  --badge-ink: rgba(255, 255, 255, 0.7); /* numeric on accent surface */
+  --danger: #ffd1cf;         /* reserved destructive (currently unused) */
+
+  /* ─────────────────────────────────────────────────────────
+   * Typography (§3)
+   * ─────────────────────────────────────────────────────── */
+  --font-sans:
+    'Pretendard Variable', Pretendard, 'Noto Sans KR',
+    -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+    'Helvetica Neue', Arial, sans-serif;
+  --font-mono:
+    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-serif:
+    'Noto Serif KR', 'Nanum Myeongjo', serif;
+
+  /* type scale: size / weight / leading */
+  --type-display-size: 24px;
+  --type-display-weight: 700;
+  --type-display-leading: 100%;
+
+  --type-heading-size: 16px;
+  --type-heading-weight: 700;
+  --type-heading-leading: 100%;
+
+  --type-body-size: 16px;
+  --type-body-weight: 500;
+  --type-body-leading: 22px;
+
+  --type-list-size: 14px;
+  --type-list-weight: 500;
+  --type-list-leading: 1.5;
+
+  --type-caption-size: 12px;
+  --type-caption-weight: 500;
+  --type-caption-leading: 1;
+
+  --type-badge-size: 12px;
+  --type-badge-weight: 500;
+  --type-badge-leading: 1;
+
+  --type-mono-tab-size: 12px;
+  --type-mono-tab-weight: 500;
+  --type-mono-tab-leading: 1;
+
+  --type-mono-label-size: 10px;
+  --type-mono-label-weight: 500;
+  --type-mono-label-leading: 1;
+
+  /* tracking (letter-spacing) */
+  --track-kr-body: -0.01em;
+  --track-kr-display: -0.02em;
+  --track-latin: 0;
+
+  /* ─────────────────────────────────────────────────────────
+   * Spacing (§4) — 8px base
+   * ─────────────────────────────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 48px;
+  --space-9: 64px;
+
+  /* ─────────────────────────────────────────────────────────
+   * Layout (§4 Canvas 1280 × 720)
+   * ─────────────────────────────────────────────────────── */
+  --canvas-w: 1280px;
+  --canvas-h: 720px;
+  --gutter: 175px;
+  --content-w: 930px;       /* 1280 - 175 - 175 */
+
+  --header-y: 58px;
+  --header-h: 29px;
+  --ticker-y: 127px;
+  --ticker-h: 49px;
+  --tabbar-y: 208px;
+  --tabbar-h: 24px;
+  --content-y: 256px;
+  --content-h: 388px;       /* grid + opened-press both 930×388 */
+
+  --chevron-y: 430px;
+  --chevron-w: 24px;
+  --chevron-h: 40px;
+  --chevron-left: 103px;    /* outside content column */
+  --chevron-right: 1153px;
+
+  /* ─────────────────────────────────────────────────────────
+   * Radii (§5)
+   * ─────────────────────────────────────────────────────── */
+  --r-0: 0;
+  --r-sub: 2px;             /* press logo chip (KBS WORLD, BBS NEWS) */
+  --r-pill: 14px;           /* subscribe/unsubscribe pill, height 28 */
+  --r-badge: 10px;          /* subscribed-count badge, 20×20 */
+
+  /* ─────────────────────────────────────────────────────────
+   * Strokes (§5) — always 1px line
+   * ─────────────────────────────────────────────────────── */
+  --stroke: 1px;
+  --stroke-color: var(--line);
+  --border-line: var(--stroke) solid var(--stroke-color);
+
+  /* ─────────────────────────────────────────────────────────
+   * Shadows (§5) — system has only one
+   * ─────────────────────────────────────────────────────── */
+  --shadow-pill: 0 1px 2px rgba(20, 33, 43, 0.04);
+
+  /* ─────────────────────────────────────────────────────────
+   * Motion
+   * ─────────────────────────────────────────────────────── */
+  --motion-ticker-interval: 3200ms;
+  --motion-ticker-fade: 550ms;
+  --motion-progress-duration: 6000ms;
+  --motion-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* prefers-reduced-motion: 시스템에서 모션 끄기 (§8 Accessibility) */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-ticker-fade: 0ms;
+  }
+}

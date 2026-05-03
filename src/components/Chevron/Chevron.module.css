@@ -1,0 +1,32 @@
+/*
+ * Chevron 페이지 nav (디자인 시스템 §6.7)
+ * 24 × 40 outlined, stroke #879298 1.4, right-pointing chevron
+ * 위치는 App.module.css에서 left 103 / right 1153, top 430
+ * disabled: opacity 0 (layout은 유지, 시각만 제거)
+ */
+
+.button {
+  width: var(--chevron-w);
+  height: var(--chevron-h);
+  background: none;
+  border: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--mute);
+  transition: opacity 150ms var(--motion-ease);
+}
+
+.button:disabled {
+  opacity: 0;
+  cursor: default;
+  pointer-events: none;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+  display: block;
+}

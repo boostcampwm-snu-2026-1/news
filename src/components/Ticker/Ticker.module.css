@@ -1,0 +1,61 @@
+/*
+ * 자동 롤링 티커 (디자인 시스템 §6.2)
+ * - 2 lanes side by side, gap 8
+ * - 각 lane: 49 height, bg --soft, padding 0 24
+ * - row: gap 16, align center
+ * - press name: 14/700 ink, width 56 fixed
+ * - title: 14/500 ink, ellipsis, flex 1
+ * - 회전 3.2s, crossfade 0.55s cubic-bezier(.4,0,.2,1)
+ */
+
+.ticker {
+  display: flex;
+  gap: var(--space-2);
+  height: var(--ticker-h);
+}
+
+.lane {
+  flex: 1;
+  position: relative;
+  height: var(--ticker-h);
+  background: var(--soft);
+  overflow: hidden;
+}
+
+.item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 0 var(--space-5);
+  opacity: 0;
+  transition: opacity var(--motion-ticker-fade) var(--motion-ease);
+  pointer-events: none;
+}
+
+.itemVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pressName {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+  width: 56px;
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--ink);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
