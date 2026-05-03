@@ -11,6 +11,17 @@ const VIEW_OPTIONS = [
   },
 ]
 
+const TAB_OPTIONS = [
+  {
+    id: 'all',
+    label: '전체 언론사',
+  },
+  {
+    id: 'sub',
+    label: '내가 구독한 언론사',
+  },
+]
+
 export default function TabBar({
   activeTab,
   activeView,
@@ -18,30 +29,59 @@ export default function TabBar({
   onTabChange,
   onViewChange,
 }) {
+  const handleTabKeyDown = (event) => {
+    const currentIndex = TAB_OPTIONS.findIndex((option) => option.id === activeTab)
+    let nextIndex = currentIndex
+
+    if (event.key === 'ArrowRight') {
+      nextIndex = (currentIndex + 1) % TAB_OPTIONS.length
+    } else if (event.key === 'ArrowLeft') {
+      nextIndex = (currentIndex - 1 + TAB_OPTIONS.length) % TAB_OPTIONS.length
+    } else if (event.key === 'Home') {
+      nextIndex = 0
+    } else if (event.key === 'End') {
+      nextIndex = TAB_OPTIONS.length - 1
+    } else {
+      return
+    }
+
+    const nextTabId = TAB_OPTIONS[nextIndex].id
+
+    event.preventDefault()
+    onTabChange(nextTabId)
+    requestAnimationFrame(() => {
+      document.getElementById(`tab-${nextTabId}`)?.focus()
+    })
+  }
+
   return (
     <div className="tabbar">
       <div className="tabbar__tabs" role="tablist" aria-label="언론사 범위">
-        <button
-          className="tabbar__tab"
-          type="button"
-          role="tab"
-          aria-selected={activeTab === 'all'}
-          onClick={() => onTabChange('all')}
-        >
-          전체 언론사
-        </button>
-        <button
-          className="tabbar__tab"
-          type="button"
-          role="tab"
-          aria-selected={activeTab === 'sub'}
-          onClick={() => onTabChange('sub')}
-        >
-          내가 구독한 언론사
-          <span className="tabbar__badge" aria-label={`구독 중인 언론사 ${subscribedCount}곳`}>
-            {subscribedCount}
-          </span>
-        </button>
+        {TAB_OPTIONS.map((option) => {
+          const isActive = activeTab === option.id
+
+          return (
+            <button
+              className="tabbar__tab"
+              id={`tab-${option.id}`}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              aria-controls="press-panel"
+              tabIndex={isActive ? 0 : -1}
+              key={option.id}
+              onClick={() => onTabChange(option.id)}
+              onKeyDown={handleTabKeyDown}
+            >
+              {option.label}
+              {option.id === 'sub' && (
+                <span className="tabbar__badge" aria-label={`구독 중인 언론사 ${subscribedCount}곳`}>
+                  {subscribedCount}
+                </span>
+              )}
+            </button>
+          )
+        })}
       </div>
 
       <div className="tabbar__views" role="group" aria-label="보기 방식">

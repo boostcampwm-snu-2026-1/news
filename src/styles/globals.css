@@ -97,6 +97,7 @@ html {
 body {
   min-width: var(--canvas-width);
   min-height: 100vh;
+  overflow-x: auto;
   font-family: var(--font-sans);
   font-size: var(--type-body-size);
   font-weight: var(--type-body-weight);

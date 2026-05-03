@@ -57,7 +57,6 @@ export default function App() {
           newSubscribed.delete(pressId)
         } else {
           newSubscribed.add(pressId)
-          didSubscribe = true
         }
       }
 
@@ -93,7 +92,7 @@ export default function App() {
   const pressItems = getPressItems()
 
   return (
-    <div className="newsstand-container">
+    <main className="newsstand-container">
       <Header />
       <Ticker />
       <TabBar 
@@ -103,7 +102,13 @@ export default function App() {
         onTabChange={handleTabChange}
         onViewChange={handleViewChange}
       />
-      <div className="content-area">
+      <div
+        className="content-area"
+        id="press-panel"
+        role="tabpanel"
+        tabIndex="0"
+        aria-labelledby={`tab-${state.tab}`}
+      >
         <Chevron 
           direction="left" 
           disabled={currentPage === 0}
@@ -132,6 +137,6 @@ export default function App() {
           onClick={() => handlePageChange('next')}
         />
       </div>
-    </div>
+    </main>
   )
 }

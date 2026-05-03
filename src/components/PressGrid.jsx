@@ -3,9 +3,10 @@ import { PRESS_PAGE_SIZE } from '../data/pressData'
 
 export default function PressGrid({ items, subscribed, mode, isEmpty, onSubscribe }) {
   const slots = Array.from({ length: PRESS_PAGE_SIZE }, (_, index) => items[index] ?? null)
+  const gridLabel = mode === 'sub' ? '내가 구독한 언론사 목록' : '전체 언론사 목록'
 
   return (
-    <section className="press-grid" role="grid" aria-label="언론사 목록">
+    <section className="press-grid" role="grid" aria-label={gridLabel}>
       {isEmpty && (
         <p className="press-grid__empty" role="status">
           구독한 언론사가 없습니다
