@@ -6,9 +6,10 @@ interface TabBarProps {
   onTabChange: (tab: TabType) => void;
   viewMode: ViewMode;
   onViewModeChange: (mode: ViewMode) => void;
+  subscribedCount: number;
 }
 
-const TabBar = ({ activeTab, onTabChange, viewMode, onViewModeChange }: TabBarProps) => {
+const TabBar = ({ activeTab, onTabChange, viewMode, onViewModeChange, subscribedCount }: TabBarProps) => {
   return (
     <div className={styles.tabBar}>
       <div className={styles.tabSection}>
@@ -23,7 +24,7 @@ const TabBar = ({ activeTab, onTabChange, viewMode, onViewModeChange }: TabBarPr
           onClick={() => onTabChange('sub')}
         >
           내가 구독한 언론사
-          <span className={styles.countBadge}>0</span>
+          <span className={styles.countBadge}>{subscribedCount}</span>
         </button>
       </div>
 

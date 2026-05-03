@@ -2,14 +2,24 @@ import { mockPressData } from '../../data/pressData';
 import GridCell from './GridCell';
 import styles from './PressGrid.module.css';
 
-const PressGrid = () => {
+interface PressGridProps {
+  subscribedIds: Set<string>;
+  onToggleSubscription: (id: string) => void;
+}
+
+const PressGrid = ({ subscribedIds, onToggleSubscription }: PressGridProps) => {
   const cells = Array.from({ length: 24 }, (_, i) => mockPressData[i] || null);
 
   return (
     <main className={styles.gridContainer}>
       <div className={styles.grid}>
         {cells.map((press, index) => (
-          <GridCell key={index} press={press} />
+          <GridCell 
+            key={index} 
+            press={press} 
+            isSubscribed={press ? subscribedIds.has(press.id) : false}
+            onToggleSubscription={onToggleSubscription}
+          />
         ))}
       </div>
       

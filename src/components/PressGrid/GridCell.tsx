@@ -6,20 +6,20 @@ import styles from './GridCell.module.css';
 
 interface GridCellProps {
   press: Press | null;
+  isSubscribed: boolean;
+  onToggleSubscription: (id: string) => void;
 }
 
-const GridCell = ({ press }: GridCellProps) => {
+const GridCell = ({ press, isSubscribed, onToggleSubscription }: GridCellProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  // 임시 구독 상태 (8번 항목에서 중앙 관리로 바꿀 예정)
-  const [isSubscribed, setIsSubscribed] = useState(false);
 
   if (!press) {
     return <div className={styles.emptyCell} />;
   }
 
   const handleSubscribeClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // 셀 클릭 이벤트와 겹치지 않게 방지
-    setIsSubscribed(!isSubscribed);
+    e.stopPropagation();
+    onToggleSubscription(press.id);
   };
 
   return (
