@@ -1,0 +1,20 @@
+{
+  "lanes": [
+    [
+      { "pressId": "yna",          "pressName": "연합뉴스",   "title": "[속보] 도심 공원 '조용한 독서존' 시범 운영… 시민 호응 ↑" },
+      { "pressId": "yna",          "pressName": "연합뉴스",   "title": "도시철도 무인 운영 확대… 안전 인력은 그대로 배치" },
+      { "pressId": "kookmin-ilbo", "pressName": "국민일보",   "title": "초중고 등굣길 안전 캠페인, 자원봉사자 참여 늘어" },
+      { "pressId": "newsis",       "pressName": "뉴시스",     "title": "주말 박물관 '느린 관람' 프로그램 인기" },
+      { "pressId": "kyunghyang",   "pressName": "경향신문",   "title": "도서관 야간 개방 시범 사업, 시민 만족도 조사" },
+      { "pressId": "donga",        "pressName": "동아일보",   "title": "지역 기업, 청년 인턴 정규직 전환 지원 확대" }
+    ],
+    [
+      { "pressId": "wow-tv",       "pressName": "한국경제",   "title": "중소기업 ESG 전담 인력 채용 확대… 지속 가능성 주목" },
+      { "pressId": "wow-tv",       "pressName": "한국경제",   "title": "물가 안정세 속, 가계 소비 심리 점진적 회복" },
+      { "pressId": "maeil-economy","pressName": "매일경제",   "title": "국내 스타트업, 그린 테크 분야 투자 유치 활발" },
+      { "pressId": "seoul-economy","pressName": "서울경제",   "title": "유통업계, 반품·교환 정책 간소화 시행" },
+      { "pressId": "edaily",       "pressName": "이데일리",   "title": "은행권 디지털 창구 확대… 비대면 노년층 교육 병행" },
+      { "pressId": "moneys",       "pressName": "머니S",      "title": "공정거래위, 가맹점 보호 가이드라인 개정안 공개" }
+    ]
+  ]
+}
