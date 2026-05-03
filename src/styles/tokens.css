@@ -1,0 +1,88 @@
+:root {
+  /* ── Colors ── */
+  --color-ink: #14212B;
+  --color-ink-alt: #14202B;
+  --color-sub: #5F6E76;
+  --color-mute: #879298;
+  --color-line: #D2DAE0;
+  --color-soft: #F5F7F9;
+  --color-soft-alt: #F7F7FC;
+  --color-card: #FFFFFF;
+  --color-page: #FEFEFE;
+  --color-accent: #7890E7;
+  --color-accent-deep: #4362D0;
+  --color-badge-ink: rgba(255, 255, 255, 0.7);
+  --color-danger: #FFD1CF;
+
+  /* ── Typography ── */
+  --font-sans: 'Pretendard Variable', Pretendard, 'Noto Sans KR', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-serif: 'Noto Serif KR', serif;
+
+  /* display: 24/700/100% */
+  --fs-display: 24px;
+  --fw-display: 700;
+  --lh-display: 1;
+  --ls-display: -0.02em;
+
+  /* heading: 16/700/100% */
+  --fs-heading: 16px;
+  --fw-heading: 700;
+  --lh-heading: 1;
+
+  /* body: 16/500/22px */
+  --fs-body: 16px;
+  --fw-body: 500;
+  --lh-body: 22px;
+  --ls-body: -0.01em;
+
+  /* list-item: 14/500/1.5 */
+  --fs-list-item: 14px;
+  --fw-list-item: 500;
+  --lh-list-item: 1.5;
+
+  /* caption: 12/500/1 */
+  --fs-caption: 12px;
+  --fw-caption: 500;
+  --lh-caption: 1;
+
+  /* badge: 12/500/1 */
+  --fs-badge: 12px;
+  --fw-badge: 500;
+  --lh-badge: 1;
+
+  /* mono-tab: 12/500/1 (IBM Plex Mono) */
+  --fs-mono-tab: 12px;
+  --fw-mono-tab: 500;
+  --lh-mono-tab: 1;
+
+  /* mono-label: 10/500/1 */
+  --fs-mono-label: 10px;
+  --fw-mono-label: 500;
+  --lh-mono-label: 1;
+
+  /* ── Spacing ── */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* ── Radii ── */
+  --r-0: 0px;
+  --r-sub: 2px;
+  --r-pill: 14px;
+  --r-badge: 10px;
+
+  /* ── Layout ── */
+  --layout-width: 1280px;
+  --layout-gutter: 175px;
+  --content-width: 930px;
+
+  /* ── Shadows ── */
+  --shadow-pill: 0 1px 2px rgba(20, 33, 43, 0.04);
+}

@@ -1,0 +1,10 @@
+.press-grid {
+  width: var(--content-width);
+  height: 388px;
+  background: var(--color-line);
+  border: 1px solid var(--color-line);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 1px;
+}

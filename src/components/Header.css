@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 29px;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.header__icon {
+  color: var(--color-ink);
+}
+
+.header__title {
+  font-size: var(--fs-display);
+  font-weight: var(--fw-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  color: var(--color-ink);
+}
+
+.header__date {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+  color: var(--color-sub);
+}

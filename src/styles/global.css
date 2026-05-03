@@ -1,0 +1,63 @@
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  color: var(--color-ink);
+  background-color: var(--color-page);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.newsstand-wrap {
+  width: var(--layout-width);
+  margin: 0 auto;
+  padding: 0 var(--layout-gutter);
+  position: relative;
+}
+
+@media (max-width: 1280px) {
+  .newsstand-wrap {
+    transform-origin: top center;
+    transform: scale(calc(100vw / 1280));
+  }
+}
