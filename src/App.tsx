@@ -23,6 +23,8 @@ type GridFocusTarget =
   | { type: 'publisher-action'; publisherId: Publisher['id'] }
 
 const OPENED_PROGRESS_DURATION_MS = 6000
+const CONTENT_TRANSITION_CLASS =
+  'motion-safe:animate-[content-enter_220ms_var(--ease-standard)] motion-reduce:animate-none'
 
 function App() {
   const gridRegionRef = useRef<HTMLDivElement | null>(null)
@@ -188,22 +190,25 @@ function App() {
       }
     >
       {selectedPublisher ? (
-        <ArticleListView
-          activeCategory={selectedPublisher.category}
-          activeCategoryIndex={selectedCategoryIndex}
-          categories={CATEGORIES}
-          categoryCounts={categoryCounts}
-          isSubscribed={isPublisherSubscribed(selectedPublisher.id)}
-          onCategorySelect={handleCategorySelect}
-          onClose={handleClosePublisher}
-          onToggleSubscription={togglePublisherSubscription}
-          progressEnabled={!prefersReducedMotion}
-          publisher={selectedPublisher}
-        />
+        <div className={CONTENT_TRANSITION_CLASS} key={`opened-${selectedPublisher.id}`}>
+          <ArticleListView
+            activeCategory={selectedPublisher.category}
+            activeCategoryIndex={selectedCategoryIndex}
+            categories={CATEGORIES}
+            categoryCounts={categoryCounts}
+            isSubscribed={isPublisherSubscribed(selectedPublisher.id)}
+            onCategorySelect={handleCategorySelect}
+            onClose={handleClosePublisher}
+            onToggleSubscription={togglePublisherSubscription}
+            progressEnabled={!prefersReducedMotion}
+            publisher={selectedPublisher}
+          />
+        </div>
       ) : viewMode === 'grid' ? (
         <div
           aria-label={`${gridLabel} 페이지 영역`}
-          className="relative focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+          className={`relative focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent ${CONTENT_TRANSITION_CLASS}`}
+          key="publisher-grid"
           ref={gridRegionRef}
           role="region"
           tabIndex={-1}
@@ -229,7 +234,10 @@ function App() {
           />
         </div>
       ) : (
-        <div className="flex min-h-[var(--layout-content-height)] items-center justify-center border border-dashed border-line bg-card px-6 text-center">
+        <div
+          className={`flex min-h-[var(--layout-content-height)] items-center justify-center border border-dashed border-line bg-card px-6 text-center ${CONTENT_TRANSITION_CLASS}`}
+          key="publisher-list-placeholder"
+        >
           <p className="text-[length:var(--text-caption-size)] font-medium leading-[var(--text-caption-leading)] text-sub">
             930px 뉴스스탠드 콘텐츠 영역
             <br />

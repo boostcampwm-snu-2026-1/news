@@ -21,7 +21,7 @@ Use this as the first-pass implementation order. The current priority is to make
 - [x] Implement press-cell click behavior that opens the selected publisher's article list view.
 - [x] Implement opened-press layout with category field tabs, edit time, subscribe pill, headline block, article list, and footnote.
 - [x] Implement the 6-second field-tab progress bar and automatic advancement across publishers/categories.
-- [ ] Implement smooth transitions for ticker changes, grid/list switching, hover pills, and progress changes while respecting `prefers-reduced-motion`.
+- [x] Implement smooth transitions for ticker changes, grid/list switching, hover pills, and progress changes while respecting `prefers-reduced-motion`.
 
 ## Verification
 

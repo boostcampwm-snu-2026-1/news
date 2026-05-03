@@ -111,7 +111,7 @@ function TickerLane({ item }: TickerLaneProps) {
   return (
     <div className="min-w-0 flex-1 overflow-hidden">
       <div
-        className="flex min-w-0 items-center gap-4 motion-safe:animate-[ticker-fade_var(--duration-ticker-crossfade)_var(--ease-standard)]"
+        className="flex min-w-0 items-center gap-4 motion-safe:animate-[ticker-fade_var(--duration-ticker-crossfade)_var(--ease-standard)] motion-reduce:animate-none"
         key={item.id}
       >
         <span className="w-14 shrink-0 truncate text-[14px] font-bold leading-none text-ink">
