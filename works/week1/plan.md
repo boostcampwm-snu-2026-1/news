@@ -41,37 +41,39 @@
 
 ## 의존관계
 
-각 항목이 시작되기 전에 끝나 있어야 하는 선행 항목:
+각 항목이 시작되기 전에 끝나 있어야 하는 선행 항목 + 수정 파일 (병렬 충돌 점검용):
 
-| # | 항목 | 선행 |
-|---|---|---|
-| 1 | 부트스트랩 | (없음) |
-| 2 | 토큰+폰트 | 1 |
-| 3 | 타입+픽스처 | 1 |
-| 4 | 레이아웃 셸 | 2 |
-| 5 | PressWordmark | 2, 3 |
-| 6 | Ticker | 2, 3 |
-| 7 | TabBar | 2 |
-| 8 | 그리드+구독 | 5, 7 |
-| 9 | 페이지네이션 | 4, 8 |
-| 10 | 구독 탭 희소 그리드 | 7, 8 |
-| 11 | 리스트 뷰 | 4, 5 |
-| 12 | 접근성 마감 | 6, 8, 9, 10, 11 |
-| 13 | 테스트 | 8, 11 (리듀서 테스트는 8 직후, UI 테스트는 11 이후) |
+| # | 항목 | 선행 | 수정 파일 |
+|---|---|---|---|
+| 1 | 부트스트랩 | (없음) | `package.json`, `vite.config.ts`, `tsconfig*.json`, `.eslintrc.cjs`, `.prettierrc.json`, `index.html`, `src/{main.tsx,App.tsx,setupTests.ts}`, `src/*/.gitkeep`, `.gitignore` |
+| 2 | 토큰+폰트 | 1 | `src/styles/{tokens.css,fonts.css,reset.css}` |
+| 3 | 타입+픽스처 | 1 | `src/state/types.ts`, `src/data/{press.json,ticker.json,articles.json}` |
+| 4 | 레이아웃 셸 | 2 | `src/components/Header/*`, `src/App.tsx` (수정), `src/styles/layout.css` |
+| 5 | PressWordmark | 2, 3 | `src/components/PressWordmark/*` |
+| 6 | Ticker | 2, 3 | `src/components/Ticker/*`, `src/hooks/{useInterval.ts,useReducedMotion.ts}` |
+| 7 | TabBar | 2 | `src/components/TabBar/*` |
+| 8 | 그리드+구독 | 4, 5, 6, 7 | `src/components/{Newsstand,PressGrid,GridCell,SubscribePill}/*`, `src/state/newsstandReducer.ts`, `src/hooks/useLocalStorage.ts`, `src/App.tsx` (수정) |
+| 9 | 페이지네이션 | 8 | `src/components/Chevron/*`, `src/components/PressGrid/*` (수정), `src/state/newsstandReducer.ts` (수정) |
+| 10 | 구독 탭 희소 그리드 | 9 | `src/components/PressGrid/*` (수정), `src/components/GridCell/*` (수정) |
+| 11 | 리스트 뷰 | 8 | `src/components/{PressOpen,FieldTab}/*`, `src/components/Newsstand/*` (수정), `src/state/newsstandReducer.ts` (수정) |
+| 12 | 접근성 마감 | 6, 9, 10, 11 | 여러 컴포넌트 a11y 보강 (`src/components/**`) |
+| 13 | 테스트 | 8, 11 | `src/state/newsstandReducer.test.ts`, `src/components/**/*.test.tsx` |
 
 ## 병렬 그룹 (subagent wave)
 
 같은 wave 안의 항목은 subagent 병렬 실행 가능. 다음 wave는 이전 wave가 모두 끝난 뒤 시작.
 
 - **Wave 0**: `[1]` — 단독 (모든 작업의 토대)
-- **Wave 1**: `[2, 3]` — 토큰과 타입은 서로 독립
-- **Wave 2**: `[4, 5, 6, 7]` — 레이아웃 셸 / wordmark / 티커 / 탭바 — 서로 파일이 겹치지 않음
-- **Wave 3**: `[8, 11]` — 그리드(8)는 5+7 의존, 리스트뷰(11)는 4+5 의존. 둘은 독립적이라 병렬
-- **Wave 4**: `[9, 10]` — 모두 8 의존, 서로 독립
-- **Wave 5**: `[12]` — 단독 (모든 인터랙션 컴포넌트가 모인 뒤)
-- **Wave 6**: `[13]` — 단독 (혹은 Wave 3 종료 시점에 13의 리듀서 부분만 일부 선행 가능)
+- **Wave 1**: `[2, 3]` — 토큰과 타입은 서로 독립 (다른 디렉터리)
+- **Wave 2**: `[4, 5, 6, 7]` — 레이아웃 셸 / wordmark / 티커 / 탭바 — 서로 파일이 겹치지 않음 (4가 App.tsx 수정하지만 다른 셋은 별도 컴포넌트만)
+- **Wave 3**: `[8]` — Newsstand 컨테이너 + reducer + 그리드/셀/구독 pill 일괄 mount. App.tsx 와 reducer 의 단일 진입점 commit 이라 단독.
+- **Wave 4**: `[9]` — Chevron + 페이지네이션 reducer 확장. PressGrid 와 reducer 둘 다 수정해야 하니 #10 과 직렬 (둘 다 PressGrid 수정).
+- **Wave 5**: `[10]` — 구독 탭 희소 그리드. PressGrid/GridCell 추가 수정.
+- **Wave 6**: `[11]` — 리스트 뷰. PressOpen/FieldTab + Newsstand 분기. Newsstand 와 reducer 를 다시 건드리니 단독.
+- **Wave 7**: `[12]` — 접근성 마감 (단독, 여러 컴포넌트 동시 수정).
+- **Wave 8**: `[13]` — 테스트 (단독).
 
-> 파일 충돌 가드: Wave 안에서 두 항목이 같은 파일을 수정해야 한다면 그 wave를 더 잘게 쪼갠다.
+> 파일 충돌 가드: 위 wave 분할은 "수정 파일" 컬럼 기준으로 wave 안에서 같은 파일이 둘 이상에 안 나타나도록 짠 결과. 새 항목 추가 시 같은 룰 따를 것.
 
 ## 검증
 
