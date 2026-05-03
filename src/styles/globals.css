@@ -484,6 +484,7 @@ svg {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: var(--space-4);
   width: 88px;
   height: 28px;
   border: var(--stroke-width) solid var(--color-line);
@@ -498,8 +499,43 @@ svg {
   pointer-events: none;
   transform: translateY(4px);
   transition:
+    border-color var(--motion-crossfade-duration) var(--motion-ease-standard),
+    background-color var(--motion-crossfade-duration) var(--motion-ease-standard),
+    color var(--motion-crossfade-duration) var(--motion-ease-standard),
     opacity var(--motion-crossfade-duration) var(--motion-ease-standard),
     transform var(--motion-crossfade-duration) var(--motion-ease-standard);
+}
+
+.subscribe-pill:hover {
+  border-color: var(--color-ink);
+}
+
+.subscribe-pill:active {
+  transform: translateY(1px);
+}
+
+.subscribe-pill--subscribe[aria-pressed='true'] {
+  color: var(--color-sub);
+  background: var(--color-soft);
+}
+
+.subscribe-pill--unsubscribe {
+  color: var(--color-sub);
+}
+
+.subscribe-pill--unsubscribe:hover {
+  color: var(--color-ink);
+}
+
+.subscribe-pill__symbol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 8px;
+  font-family: var(--font-mono);
+  font-size: var(--type-caption-size);
+  font-weight: var(--type-caption-weight);
+  line-height: var(--type-caption-line);
 }
 
 .grid-cell:hover .grid-cell__wordmark,
@@ -513,6 +549,11 @@ svg {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
+}
+
+.grid-cell:hover .subscribe-pill:active,
+.grid-cell:focus-within .subscribe-pill:active {
+  transform: translateY(1px);
 }
 
 .grid-cell--subscribed::after {

@@ -19,7 +19,7 @@ export default function GridCell({ press, isSubscribed, mode, onSubscribe }) {
         isSubscribed={isSubscribed}
         mode={mode}
         pressName={press.name}
-        onClick={() => onSubscribe(press.id)}
+        onClick={(action) => onSubscribe(press.id, action)}
       />
     </article>
   )

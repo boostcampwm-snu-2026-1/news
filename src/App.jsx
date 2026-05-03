@@ -35,14 +35,22 @@ export default function App() {
     }))
   }
 
-  const handleSubscribe = (pressId) => {
+  const handleSubscribe = (pressId, action = 'toggle') => {
     setState(prev => {
       const newSubscribed = new Set(prev.subscribed)
-      if (newSubscribed.has(pressId)) {
+
+      if (action === 'subscribe') {
+        newSubscribed.add(pressId)
+      } else if (action === 'unsubscribe') {
         newSubscribed.delete(pressId)
       } else {
-        newSubscribed.add(pressId)
+        if (newSubscribed.has(pressId)) {
+          newSubscribed.delete(pressId)
+        } else {
+          newSubscribed.add(pressId)
+        }
       }
+
       return { ...prev, subscribed: newSubscribed }
     })
   }
