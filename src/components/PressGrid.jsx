@@ -1,16 +1,57 @@
+import { useState, useLayoutEffect, useEffect, useRef } from 'react';
 import PressCell from './PressCell';
 import styles from './PressGrid.module.css';
 
+function Grid({ items, className, isExiting, subscribedIds, onSubscribe, onUnsubscribe }) {
+  return (
+    <div className={`${isExiting ? styles.exitLayer : ''} ${styles.grid} ${className || ''}`}>
+      {items.map((press) => (
+        <PressCell
+          key={press.id}
+          press={press}
+          isSubscribed={subscribedIds.has(press.id)}
+          onSubscribe={onSubscribe}
+          onUnsubscribe={onUnsubscribe}
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function PressGrid({ items, currentPage, totalPages, onPageChange, direction, isEmpty, subscribedIds, onSubscribe, onUnsubscribe }) {
+  const prevPageRef = useRef(currentPage);
+  const prevItemsRef = useRef(items);
+  const [snapshot, setSnapshot] = useState(null);
+
+  useLayoutEffect(() => {
+    if (currentPage === prevPageRef.current || !direction) {
+      prevPageRef.current = currentPage;
+      prevItemsRef.current = items;
+      return;
+    }
+
+    const oldItems = prevItemsRef.current;
+    const isNext = currentPage > prevPageRef.current;
+
+    prevPageRef.current = currentPage;
+    prevItemsRef.current = items;
+
+    setSnapshot({
+      items: oldItems,
+      exitClass: isNext ? styles.exitToLeft : styles.exitToRight,
+      enterClass: isNext ? styles.slideFromRight : styles.slideFromLeft,
+    });
+  }, [currentPage, items, direction]);
+
+  useEffect(() => {
+    if (!snapshot) return;
+    const t = setTimeout(() => setSnapshot(null), 300);
+    return () => clearTimeout(t);
+  }, [snapshot]);
+
   if (isEmpty) {
     return <div className={styles.empty}>구독한 언론사가 없습니다.</div>;
   }
-
-  const slideClass = direction === 'next'
-    ? styles.slideFromRight
-    : direction === 'prev'
-    ? styles.slideFromLeft
-    : '';
 
   return (
     <div className={styles.wrapper}>
@@ -25,17 +66,23 @@ export default function PressGrid({ items, currentPage, totalPages, onPageChange
         </button>
 
         <div className={styles.gridWrap}>
-          <div key={currentPage} className={`${styles.grid} ${slideClass}`}>
-            {items.map((press) => (
-              <PressCell
-                key={press.id}
-                press={press}
-                isSubscribed={subscribedIds.has(press.id)}
-                onSubscribe={onSubscribe}
-                onUnsubscribe={onUnsubscribe}
-              />
-            ))}
-          </div>
+          {snapshot && (
+            <Grid
+              items={snapshot.items}
+              className={snapshot.exitClass}
+              isExiting
+              subscribedIds={subscribedIds}
+              onSubscribe={onSubscribe}
+              onUnsubscribe={onUnsubscribe}
+            />
+          )}
+          <Grid
+            items={items}
+            className={snapshot ? snapshot.enterClass : ''}
+            subscribedIds={subscribedIds}
+            onSubscribe={onSubscribe}
+            onUnsubscribe={onUnsubscribe}
+          />
         </div>
 
         <button

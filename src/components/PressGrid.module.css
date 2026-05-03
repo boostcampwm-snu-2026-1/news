@@ -11,6 +11,7 @@
 .gridWrap {
   flex: 1;
   overflow: hidden;
+  position: relative;
 }
 
 .grid {
@@ -21,12 +22,25 @@
   border-left: 1px solid var(--ns-border);
 }
 
+.exitLayer {
+  position: absolute;
+  inset: 0;
+}
+
 .slideFromRight {
   animation: slideFromRight 0.3s ease;
 }
 
 .slideFromLeft {
   animation: slideFromLeft 0.3s ease;
+}
+
+.exitToLeft {
+  animation: exitToLeft 0.3s ease forwards;
+}
+
+.exitToRight {
+  animation: exitToRight 0.3s ease forwards;
 }
 
 @keyframes slideFromRight {
@@ -39,15 +53,25 @@
   to   { transform: translateX(0); }
 }
 
+@keyframes exitToLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+@keyframes exitToRight {
+  from { transform: translateX(0); }
+  to   { transform: translateX(100%); }
+}
+
 .arrow {
-  width: 32px;
+  width: 48px;
   flex-shrink: 0;
   background: none;
   border: none;
-  font-size: 30px;
+  font-size: 42px;
   color: var(--ns-text-muted);
   cursor: pointer;
-  padding: 0;
+  padding: 0 12px;
   line-height: 1;
   transition: color 0.15s;
 }
