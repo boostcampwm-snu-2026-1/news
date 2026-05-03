@@ -1,7 +1,7 @@
 # Week 01 — 뉴스스탠드 데스크톱 웹 (그리드 + 구독 + 리스트 뷰)
 
 - Status: in-progress
-- Spec: `spec/1776841621755_뉴스스탠드-기획디자인.pdf`, `spec/1776841629381_뉴스스탠드-디자인시스템.pdf`
+- Spec: `spec/week1/` (기획디자인 PDF + 디자인시스템 PDF)
 - Started: 2026-05-03
 - Completed: —
 
