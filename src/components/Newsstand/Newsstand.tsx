@@ -30,6 +30,15 @@ const PROGRESS_DELTA = PROGRESS_TICK_MS / PROGRESS_TOTAL_MS;
 const ALL_PRESS = pressData as Press[];
 const ALL_ARTICLES = articlesData as PressArticles[];
 
+const DAY_NAMES = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"] as const;
+
+function formatToday(d: Date = new Date()): string {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}. ${month}. ${day}. ${DAY_NAMES[d.getDay()]}`;
+}
+
 export function Newsstand() {
   const [state, dispatch] = useReducer(
     newsstandReducer,
@@ -38,6 +47,7 @@ export function Newsstand() {
   );
   const [viewer, setViewer] = useState<ViewerId>("grid");
   const reduced = useReducedMotion();
+  const today = useMemo(() => formatToday(), []);
 
   useEffect(() => {
     saveToStorage(STORAGE_KEY, state.subscribed);
@@ -126,7 +136,7 @@ export function Newsstand() {
 
   return (
     <main className="canvas" aria-label="뉴스스탠드">
-      <Header date="2026. 01. 14. 수요일" />
+      <Header date={today} />
       <Ticker />
       <TabBar
         activeTab={state.tab}

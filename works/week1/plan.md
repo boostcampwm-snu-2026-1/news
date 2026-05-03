@@ -39,7 +39,7 @@
 - [x] **12. 접근성 마감** — 키보드 focus parity, aria 라벨, `prefers-reduced-motion` 전역 적용 검증.
 - [x] **13. 테스트** — 리듀서 케이스(구독/해지/페이지네이션/탭 전환/progress 오버플로) + 핵심 hover-state 1~2건.
 - [x] **14. 셀 hover 토글 버그 fix** — 구독 후 같은 셀 hover 시 `해지하기` 표시 + 마우스 떠나면 정상 복귀(`:focus-within` → `:focus-visible`).
-- [ ] **15. 날짜 동적 표시** — Header 날짜를 hard-coded "2026. 01. 14. 수요일" 에서 현재 시각 기반 한국어 포맷으로.
+- [x] **15. 날짜 동적 표시** — Header 날짜를 hard-coded "2026. 01. 14. 수요일" 에서 현재 시각 기반 한국어 포맷으로.
 - [ ] **16. articles 더미 데이터 확장** — SBS Biz / 아시아경제 외 모든 outlet 에 카테고리별 fake 헤드라인 + 6 list items + count.
 - [ ] **17. 리스트 뷰 자동 outlet 전환 + 카운트 정확** — count 가 articles 데이터의 실제 값으로 반영, tabs exhausted 시 같은 outlet loop 가 아니라 visible 배열의 다음 outlet 으로 자동 전환, 섹터(field-tab) 클릭 시 article list 와 헤드라인이 그 카테고리로 갱신.
 
