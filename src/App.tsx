@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react'
+import { ArticleListView } from './components/ArticleListView'
 import { Header } from './components/Header'
 import { NewsstandShell } from './components/NewsstandShell'
 import { NewsTicker } from './components/NewsTicker'
@@ -21,6 +22,9 @@ function App() {
   const [scope, setScope] = useState<PublisherScope>('all')
   const [viewMode, setViewMode] = useState<NewsstandViewMode>('grid')
   const [pageIndex, setPageIndex] = useState(0)
+  const [selectedPublisherId, setSelectedPublisherId] = useState<
+    Publisher['id'] | null
+  >(null)
   const {
     isPublisherSubscribed,
     subscribedCount,
@@ -39,6 +43,8 @@ function App() {
     pageStartIndex,
     pageStartIndex + PUBLISHER_GRID_PAGE_SIZE,
   )
+  const selectedPublisher =
+    PUBLISHERS.find((publisher) => publisher.id === selectedPublisherId) ?? null
   const gridLabel = scope === 'all' ? '전체 언론사 그리드' : '구독한 언론사 그리드'
   const placeholderMessage =
     scope === 'all'
@@ -78,6 +84,12 @@ function App() {
     pendingGridFocusRef.current = { type: 'grid' }
     setScope(nextScope)
     setPageIndex(0)
+    setSelectedPublisherId(null)
+  }
+
+  const handleViewModeChange = (nextViewMode: NewsstandViewMode) => {
+    setViewMode(nextViewMode)
+    setSelectedPublisherId(null)
   }
 
   const handleTogglePublisherSubscription = (publisherId: Publisher['id']) => {
@@ -100,6 +112,15 @@ function App() {
     togglePublisherSubscription(publisherId)
   }
 
+  const handleOpenPublisher = (publisherId: Publisher['id']) => {
+    setSelectedPublisherId(publisherId)
+  }
+
+  const handleClosePublisher = () => {
+    pendingGridFocusRef.current = { type: 'grid' }
+    setSelectedPublisherId(null)
+  }
+
   return (
     <NewsstandShell
       header={<Header />}
@@ -111,11 +132,16 @@ function App() {
             onScopeChange={handleScopeChange}
             subscribedCount={subscribedCount}
           />
-          <ViewToggle activeMode={viewMode} onModeChange={setViewMode} />
+          <ViewToggle activeMode={viewMode} onModeChange={handleViewModeChange} />
         </div>
       }
     >
-      {viewMode === 'grid' ? (
+      {selectedPublisher ? (
+        <ArticleListView
+          onClose={handleClosePublisher}
+          publisher={selectedPublisher}
+        />
+      ) : viewMode === 'grid' ? (
         <div
           aria-label={`${gridLabel} 페이지 영역`}
           className="relative focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
@@ -126,6 +152,7 @@ function App() {
           <PublisherGrid
             ariaLabel={gridLabel}
             isPublisherSubscribed={isPublisherSubscribed}
+            onOpenPublisher={handleOpenPublisher}
             onToggleSubscription={handleTogglePublisherSubscription}
             publishers={pagePublishers}
           />

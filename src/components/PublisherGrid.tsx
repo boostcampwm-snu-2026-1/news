@@ -6,6 +6,7 @@ interface PublisherGridProps {
   publishers?: readonly Publisher[]
   ariaLabel?: string
   isPublisherSubscribed: (publisherId: Publisher['id']) => boolean
+  onOpenPublisher: (publisherId: Publisher['id']) => void
   onToggleSubscription: (publisherId: Publisher['id']) => void
 }
 
@@ -13,6 +14,7 @@ export function PublisherGrid({
   publishers = [],
   ariaLabel = '언론사 그리드',
   isPublisherSubscribed,
+  onOpenPublisher,
   onToggleSubscription,
 }: PublisherGridProps) {
   const gridSlots = Array.from(
@@ -35,6 +37,7 @@ export function PublisherGrid({
             {publisher ? (
               <PublisherCell
                 isSubscribed={isPublisherSubscribed(publisher.id)}
+                onOpenPublisher={onOpenPublisher}
                 onToggleSubscription={onToggleSubscription}
                 publisher={publisher}
               />
