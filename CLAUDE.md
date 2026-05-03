@@ -124,13 +124,14 @@ src/
 
 체크리스트 항목 하나당 두 스킬이 차례로:
 
-1. **`/work [N]`** — 스킬이 한 사이클을 책임진다 (AI 자율):
-   - 의존성 체크 (선행 항목 모두 `[x]` 인지)
-   - 설계
-   - 구현 (`src/`)
-   - `works/weekN/review/commit<N>.md` 작성 (Hash: pending + 점검 노트 5섹션)
-   - `plan.md` 체크박스 `[ ]` → `[x]`
-   - 단일 commit (코드 + commit<N>.md + plan.md). placeholder 2줄 포함.
+1. **`/work [N]`** — 스킬이 한 사이클을 책임진다 (AI 자율).
+   - **plan 모드** (해당 주차 plan.md 가 없는 경우 또는 `/work plan` 호출): `spec/weekN/` 흡수 → plan 초안 작성 → 사용자 확인 → `chore: weekN 작업 계획 초안` commit. 항목 모드로 자동 진행하지 않음.
+   - **항목 모드** (plan.md 가 있는 경우 또는 `/work N` 호출):
+     - 의존성 체크 (선행 항목 모두 `[x]` 인지)
+     - 설계 → 구현 (`src/`)
+     - `works/weekN/review/commit<N>.md` 작성 (Hash: pending + 점검 노트 5섹션)
+     - `plan.md` 체크박스 `[ ]` → `[x]`
+     - 단일 commit (코드 + commit<N>.md + plan.md). placeholder 2줄 포함.
 2. **`/commit-review <N> <입력>`** — 사용자가 코드+리뷰 노트 검토 후 호출:
    - commit message 의 placeholder 두 줄을 입력으로 갈아끼워 amend
    - `commit<N>.md` 의 `Hash: pending` 도 그 시점 hash 로 동기화
