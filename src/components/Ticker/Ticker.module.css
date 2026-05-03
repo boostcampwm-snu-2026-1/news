@@ -1,0 +1,64 @@
+.ticker {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 8px;
+  width: 930px;
+  height: 49px;
+  margin: 40px auto 0;
+}
+
+.lane {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 0 16px;
+  color: var(--color-ink);
+  text-decoration: none;
+  background: var(--color-soft);
+}
+
+.lane:focus-visible {
+  outline: 1px solid var(--color-accent);
+  outline-offset: -1px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+  animation: tickerCrossfade 0.9s cubic-bezier(.22, 1, .36, 1);
+}
+
+.content strong {
+  flex: 0 0 auto;
+  margin-right: 12px;
+  font-size: var(--text-list-size);
+  font-weight: 700;
+}
+
+.content span {
+  overflow: hidden;
+  color: var(--color-sub);
+  font-size: var(--text-list-size);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@keyframes tickerCrossfade {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content {
+    animation: none;
+  }
+}
