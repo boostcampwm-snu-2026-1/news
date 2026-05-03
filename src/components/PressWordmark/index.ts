@@ -1,0 +1,1 @@
+export { PressWordmark } from './PressWordmark'

@@ -1,4 +1,5 @@
 import type { Press, PressId, Tab } from '../../types'
+import { PressWordmark } from '../PressWordmark'
 
 interface GridCellProps {
   press: Press | null
@@ -11,10 +12,8 @@ interface GridCellProps {
 
 export function GridCell({ press }: GridCellProps) {
   return (
-    <div className="bg-white flex items-center justify-center">
-      {press && (
-        <span className="text-sm text-[#14212B]">{press.wordmark.name}</span>
-      )}
+    <div className="bg-white flex items-center justify-center overflow-hidden">
+      {press && <PressWordmark wordmark={press.wordmark} />}
     </div>
   )
 }
