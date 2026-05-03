@@ -9,12 +9,17 @@ import { PRESS_DATA, PRESS_PAGE_SIZE, PRESS_TOTAL_PAGES } from './data/pressData
 export default function App() {
   const [state, setState] = useState({
     tab: 'all',
+    viewMode: 'grid',
     page: 0,
     subscribed: new Set()
   })
 
   const handleTabChange = (newTab) => {
     setState(prev => ({ ...prev, tab: newTab, page: 0 }))
+  }
+
+  const handleViewChange = (newViewMode) => {
+    setState(prev => ({ ...prev, viewMode: newViewMode }))
   }
 
   const handlePageChange = (direction) => {
@@ -59,8 +64,10 @@ export default function App() {
       <Ticker />
       <TabBar 
         activeTab={state.tab}
+        activeView={state.viewMode}
         subscribedCount={state.subscribed.size}
         onTabChange={handleTabChange}
+        onViewChange={handleViewChange}
       />
       <div className="content-area">
         <Chevron 
