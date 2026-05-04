@@ -1,0 +1,39 @@
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  line-height: 1;
+  user-select: none;
+}
+
+.sans {
+  font-family: var(--font-main);
+}
+
+.serif {
+  font-family: var(--font-serif);
+}
+
+.italic {
+  font-style: italic;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.flag {
+  font-size: 0.5em;
+  font-weight: bold;
+  padding: 2px 4px;
+  margin-left: 4px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-style: normal;
+  text-decoration: none;
+  /* 플래그는 기본적으로 sans-serif 사용 */
+  font-family: var(--font-main);
+  display: inline-block;
+  vertical-align: middle;
+}

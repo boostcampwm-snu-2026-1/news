@@ -1,0 +1,36 @@
+:root {
+  /* Color Tokens */
+  --color-ink: #14212B;
+  --color-sub: #5F6E76;
+  --color-mute: #879298;
+  --color-line: #D2DAE0;
+  --color-soft: #F5F7F9;
+  --color-card: #FFFFFF;
+  --color-accent: #7890E7;
+  --color-accent-deep: #4362D0;
+
+  /* Typography Specs */
+  --font-main: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-serif: 'Noto Serif KR', serif;
+
+  /* Spacing */
+  --base-unit: 8px;
+  --max-width: 1280px;
+  --content-width: 930px;
+
+  /* Animation */
+  --ticker-transition-duration: 0.55s;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--color-soft);
+  color: var(--color-ink);
+}

@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 48px 0; /* 8px * 6 */
+}
+
+.logoArea {
+  display: flex;
+  align-items: center;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 로고 아이콘과 텍스트 사이 간격 */
+  text-decoration: none;
+  color: inherit;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--color-ink);
+}
+
+.date {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-sub);
+}
