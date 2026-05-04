@@ -37,7 +37,7 @@ export default function PressOpen({
     <div className={styles.root}>
       <div className={styles.head}>
         <span className={styles.headWordmark}>
-          <PressWordmark {...press.wordmark} scale={1.05} />
+          <PressWordmark {...press.wordmark} scale={1.05} inline />
         </span>
         <span className={styles.editTime}>{editTime} 편집</span>
         <SubscribePill mode={mode} onClick={handlePill} />

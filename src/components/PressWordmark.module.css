@@ -15,6 +15,12 @@
   font-size: 14px;
 }
 
+.inline {
+  max-width: none;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
 .serif {
   font-family: var(--font-serif);
 }

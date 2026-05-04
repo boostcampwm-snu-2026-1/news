@@ -4,15 +4,17 @@ import styles from './PressWordmark.module.css';
 
 type Props = WordmarkProps & {
   scale?: number;
+  inline?: boolean;
 };
 
-export default function PressWordmark({ scale, ...p }: Props) {
+export default function PressWordmark({ scale, inline, ...p }: Props) {
   const cls = [styles.root];
   if (p.family === 'serif') cls.push(styles.serif);
   if (p.italic) cls.push(styles.italic);
   if (p.underline) cls.push(styles.underline);
   if (p.bg) cls.push(styles.bg);
   if (p.small) cls.push(styles.small);
+  if (inline) cls.push(styles.inline);
 
   const style: CSSProperties = {
     color: p.color,
