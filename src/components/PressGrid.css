@@ -1,0 +1,19 @@
+.press-grid {
+  width: var(--layout-content);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--color-line); /* gap 색상 = 구분선 */
+  border: 1px solid var(--color-line);
+  margin-top: var(--space-6);
+  height: 388px;
+}
+
+.press-grid__cell {
+  background: var(--color-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
+}

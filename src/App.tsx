@@ -2,10 +2,10 @@ import { useState } from 'react'
 import Header from './components/Header'
 import Ticker from './components/Ticker'
 import TabBar, { type TabType, type ViewType } from './components/TabBar'
-import PressWordmark from './components/PressWordmark'
+import PressGrid from './components/PressGrid'
 import { PRESS_LIST } from './data/pressData'
 import './components/Header.css'
-import './components/PressWordmark.css'
+import './components/PressGrid.css'
 import './App.css'
 
 function App() {
@@ -24,12 +24,7 @@ function App() {
         onTabChange={setActiveTab}
         onViewChange={setActiveView}
       />
-      {/* #5 워드마크 확인용 — #6 그리드 작업 시 교체 예정 */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginTop: 24 }}>
-        {PRESS_LIST.slice(0, 12).map(press => (
-          <PressWordmark key={press.id} press={press} />
-        ))}
-      </div>
+      <PressGrid items={PRESS_LIST.slice(0, 24)} />
     </div>
   )
 }
