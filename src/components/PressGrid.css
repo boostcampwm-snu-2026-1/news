@@ -4,7 +4,7 @@
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(4, 1fr);
   gap: 1px;
-  background: var(--color-line); /* gap 색상 = 구분선 */
+  background: var(--color-line);
   border: 1px solid var(--color-line);
   margin-top: var(--space-6);
   height: 388px;
@@ -16,4 +16,45 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-2);
+  position: relative;
+}
+
+/* hover 또는 키보드 포커스 시 배경 변경 */
+.press-grid__cell--interactive:hover,
+.press-grid__cell--interactive:focus-within {
+  background: var(--color-soft);
+}
+
+/* hover/focus 시 워드마크 숨기기 */
+.press-grid__cell--interactive:hover .press-wordmark,
+.press-grid__cell--interactive:focus-within .press-wordmark {
+  visibility: hidden;
+}
+
+/* pill 버튼 — 평소엔 숨김 */
+.press-grid__pill {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-line);
+  background: var(--color-card);
+  box-shadow: var(--shadow-pill);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-sub);
+  cursor: pointer;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+
+/* hover/focus 시 pill 노출 */
+.press-grid__cell--interactive:hover .press-grid__pill,
+.press-grid__cell--interactive:focus-within .press-grid__pill {
+  opacity: 1;
+  pointer-events: auto;
 }

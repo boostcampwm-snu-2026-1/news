@@ -11,7 +11,23 @@ import './App.css'
 function App() {
   const [activeTab, setActiveTab] = useState<TabType>('all')
   const [activeView, setActiveView] = useState<ViewType>('grid')
-  const subCount = 8
+  const [subscribedIds, setSubscribedIds] = useState<Set<string>>(new Set())
+
+  function handleSubscribe(id: string) {
+    setSubscribedIds(prev => new Set(prev).add(id))
+  }
+
+  function handleUnsubscribe(id: string) {
+    setSubscribedIds(prev => {
+      const next = new Set(prev)
+      next.delete(id)
+      return next
+    })
+  }
+
+  const displayItems = activeTab === 'subscribed'
+    ? PRESS_LIST.filter(p => subscribedIds.has(p.id))
+    : PRESS_LIST.slice(0, 24)
 
   return (
     <div className="newsstand">
@@ -20,11 +36,17 @@ function App() {
       <TabBar
         activeTab={activeTab}
         activeView={activeView}
-        subCount={subCount}
+        subCount={subscribedIds.size}
         onTabChange={setActiveTab}
         onViewChange={setActiveView}
       />
-      <PressGrid items={PRESS_LIST.slice(0, 24)} />
+      <PressGrid
+        items={displayItems}
+        activeTab={activeTab}
+        subscribedIds={subscribedIds}
+        onSubscribe={handleSubscribe}
+        onUnsubscribe={handleUnsubscribe}
+      />
     </div>
   )
 }
