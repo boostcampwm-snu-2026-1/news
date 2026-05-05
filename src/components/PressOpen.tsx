@@ -25,10 +25,11 @@ export default function PressOpen({ press, isSubscribed, onSubscribe, onUnsubscr
     <div className="press-open">
       <div className="press-open__head">
         <PressWordmark press={{ ...press }} />
-        <span className="press-open__edit-time">{editTime}</span>
+        <span className="press-open__edit-time" aria-label={`${editTime}`}>{editTime}</span>
         <button
           className="press-open__pill"
           onClick={isSubscribed ? onUnsubscribe : onSubscribe}
+          aria-label={isSubscribed ? `${press.name} 구독 해지하기` : `${press.name} 구독하기`}
         >
           {isSubscribed ? '− 해지하기' : '+ 구독하기'}
         </button>
@@ -36,20 +37,24 @@ export default function PressOpen({ press, isSubscribed, onSubscribe, onUnsubscr
 
       <div className="press-open__body">
         <div className="press-open__image-col">
-          <div className="press-open__image-box" aria-label="헤드라인 이미지" />
+          <div
+            className="press-open__image-box"
+            role="img"
+            aria-label={`${press.name} 헤드라인 이미지`}
+          />
           <p className="press-open__headline">
             {MOCK_ARTICLES[0]}
           </p>
         </div>
 
-        <ul className="press-open__article-list">
+        <ul className="press-open__article-list" aria-label={`${press.name} 기사 목록`}>
           {MOCK_ARTICLES.slice(1).map((title, i) => (
             <li key={i} className="press-open__article-item">
               <span className="press-open__bullet" aria-hidden="true" />
               {title}
             </li>
           ))}
-          <li className="press-open__footnote">
+          <li className="press-open__footnote" aria-live="polite">
             {press.name} 언론사에서 직접 편집한 뉴스입니다.
           </li>
         </ul>

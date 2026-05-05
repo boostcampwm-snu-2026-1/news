@@ -23,30 +23,36 @@ interface TickerLaneProps {
 function TickerLane({ items, startIndex }: TickerLaneProps) {
   const [index, setIndex] = useState(startIndex % items.length)
   const [visible, setVisible] = useState(true)
+  const [paused, setPaused] = useState(false)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const reduced = useRef(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
 
   useEffect(() => {
-    // prefers-reduced-motion이면 자동 전환 안 함
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduced) return
+    if (reduced.current || paused) return
 
     intervalRef.current = setInterval(() => {
       setVisible(false)
       setTimeout(() => {
         setIndex(i => (i + 1) % items.length)
         setVisible(true)
-      }, 275) // crossfade 절반 (0.55s / 2)
+      }, 275)
     }, 3200)
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
-  }, [items.length])
+  }, [items.length, paused])
 
   const item = items[index]
 
   return (
-    <div className={`ticker__lane ${visible ? 'ticker__lane--visible' : ''}`}>
+    <div
+      className={`ticker__lane ${visible ? 'ticker__lane--visible' : ''}`}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
       <span className="ticker__press">{item.press}</span>
       <span className="ticker__title">{item.title}</span>
     </div>
@@ -55,7 +61,7 @@ function TickerLane({ items, startIndex }: TickerLaneProps) {
 
 export default function Ticker() {
   return (
-    <div className="ticker" aria-live="off">
+    <div className="ticker" aria-label="주요 뉴스 티커" aria-live="off">
       <TickerLane items={MOCK_ITEMS} startIndex={0} />
       <TickerLane items={MOCK_ITEMS} startIndex={3} />
     </div>

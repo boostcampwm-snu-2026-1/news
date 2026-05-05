@@ -47,8 +47,22 @@ function GridCell({ press, activeTab, onSubscribe, onUnsubscribe, onOpen }: Grid
   const pillLabel = showUnsubscribe ? '− 해지하기' : '+ 구독하기'
   const handlePill = showUnsubscribe ? onUnsubscribe : onSubscribe
 
+  function handleKeyDown(e: React.KeyboardEvent) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      onOpen?.()
+    }
+  }
+
   return (
-    <div className="press-grid__cell press-grid__cell--interactive" onClick={onOpen}>
+    <div
+      className="press-grid__cell press-grid__cell--interactive"
+      role="button"
+      tabIndex={0}
+      aria-label={`${press.name} 기사 보기`}
+      onClick={onOpen}
+      onKeyDown={handleKeyDown}
+    >
       <PressWordmark press={press} />
       <button
         className="press-grid__pill"
