@@ -8,9 +8,10 @@ interface PressGridProps {
   subscribedIds: Set<string>
   onSubscribe: (id: string) => void
   onUnsubscribe: (id: string) => void
+  onOpen: (id: string) => void
 }
 
-export default function PressGrid({ items, activeTab, subscribedIds, onSubscribe, onUnsubscribe }: PressGridProps) {
+export default function PressGrid({ items, activeTab, subscribedIds, onSubscribe, onUnsubscribe, onOpen }: PressGridProps) {
   const cells = Array.from({ length: 24 }, (_, i) => items[i] ?? null)
 
   return (
@@ -23,6 +24,7 @@ export default function PressGrid({ items, activeTab, subscribedIds, onSubscribe
           isSubscribed={press ? subscribedIds.has(press.id) : false}
           onSubscribe={press ? () => onSubscribe(press.id) : undefined}
           onUnsubscribe={press ? () => onUnsubscribe(press.id) : undefined}
+          onOpen={press ? () => onOpen(press.id) : undefined}
         />
       ))}
     </div>
@@ -35,9 +37,10 @@ interface GridCellProps {
   isSubscribed: boolean
   onSubscribe?: () => void
   onUnsubscribe?: () => void
+  onOpen?: () => void
 }
 
-function GridCell({ press, activeTab, isSubscribed, onSubscribe, onUnsubscribe }: GridCellProps) {
+function GridCell({ press, activeTab, onSubscribe, onUnsubscribe, onOpen }: GridCellProps) {
   if (!press) return <div className="press-grid__cell" />
 
   const showUnsubscribe = activeTab === 'subscribed'
@@ -45,11 +48,11 @@ function GridCell({ press, activeTab, isSubscribed, onSubscribe, onUnsubscribe }
   const handlePill = showUnsubscribe ? onUnsubscribe : onSubscribe
 
   return (
-    <div className="press-grid__cell press-grid__cell--interactive">
+    <div className="press-grid__cell press-grid__cell--interactive" onClick={onOpen}>
       <PressWordmark press={press} />
       <button
         className="press-grid__pill"
-        onClick={handlePill}
+        onClick={e => { e.stopPropagation(); handlePill?.() }}
         aria-label={`${press.name} ${pillLabel}`}
       >
         {pillLabel}
