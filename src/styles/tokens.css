@@ -1,0 +1,84 @@
+/* ======================
+   색상 (Color Tokens)
+   ====================== */
+:root {
+  /* 텍스트 */
+  --color-ink: #14212b;       /* 본문, 굵은 레이블 */
+  --color-sub: #5f6e76;       /* 날짜, 캡션, 보조 텍스트 */
+  --color-mute: #879298;      /* 비활성 탭, 빈 chevron */
+
+  /* 선 / 배경 */
+  --color-line: #d2dae0;      /* 1px 구분선, 카드 테두리 */
+  --color-soft: #f5f7f9;      /* 티커 배경, 열린 언론사 탭 배경 */
+  --color-card: #ffffff;      /* 그리드 셀, 열린 언론사 본문 */
+  --color-page: #fefefe;      /* 페이지 배경 */
+
+  /* 강조 (accent) */
+  --color-accent: #7890e7;    /* 구독 수 배지, 활성 탭 */
+  --color-accent-deep: #4362d0; /* 진행 바 fill */
+
+  /* 기타 */
+  --color-badge-ink: rgba(255, 255, 255, 0.7); /* 배지 안 숫자 */
+  --color-shadow: rgba(20, 33, 43, 0.04);      /* pill 그림자 */
+}
+
+/* ======================
+   폰트 (Typography Tokens)
+   ====================== */
+:root {
+  --font-sans: 'Pretendard Variable', Pretendard, 'Noto Sans KR', sans-serif;
+  --font-serif: 'Noto Serif KR', serif;  /* 조선일보 등 세리프 워드마크 */
+  --font-mono: 'IBM Plex Mono', monospace; /* 탭 카운터 "1 / 81" */
+
+  /* 크기 / 굵기 */
+  --text-display: 700 24px / 100% var(--font-sans);   /* "뉴스스탠드" 타이틀 */
+  --text-heading: 700 16px / 100% var(--font-sans);   /* 활성 탭, 기사 헤드라인 */
+  --text-body:    500 16px / 22px var(--font-sans);   /* 비활성 탭, 날짜 */
+  --text-list:    500 14px / 1.5  var(--font-sans);   /* 기사 목록 행 */
+  --text-caption: 500 12px / 1    var(--font-sans);   /* 편집 시각, 각주, pill */
+  --text-mono:    500 12px / 1    var(--font-mono);   /* 탭 카운터 */
+
+  /* 자간 */
+  --tracking-ko: -0.01em;   /* 한글 본문 */
+  --tracking-display: -0.02em; /* 타이틀 */
+}
+
+/* ======================
+   간격 (Spacing Tokens)
+   ====================== */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+}
+
+/* ======================
+   모서리 둥글기 (Radius Tokens)
+   ====================== */
+:root {
+  --radius-sub: 2px;    /* 언론사 로고 배경 칩 */
+  --radius-pill: 14px;  /* 구독/해지 pill (높이 28px) */
+  --radius-badge: 10px; /* 구독 수 배지 (20×20) */
+}
+
+/* ======================
+   그림자 (Shadow Tokens)
+   ====================== */
+:root {
+  --shadow-pill: 0 1px 2px var(--color-shadow);
+}
+
+/* ======================
+   레이아웃 (Layout Tokens)
+   ====================== */
+:root {
+  --layout-canvas: 1280px;   /* 전체 캔버스 폭 */
+  --layout-content: 930px;   /* 콘텐츠 영역 폭 */
+  --layout-gutter: 175px;    /* 좌우 여백 */
+}
