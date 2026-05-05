@@ -1,5 +1,13 @@
+import Header from './components/Header'
+import './components/Header.css'
+import './App.css'
+
 function App() {
-  return <div>뉴스스탠드</div>
+  return (
+    <div className="newsstand">
+      <Header />
+    </div>
+  )
 }
 
 export default App

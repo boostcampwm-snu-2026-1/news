@@ -1,0 +1,7 @@
+.newsstand {
+  width: var(--layout-canvas);
+  margin: 0 auto;
+  padding: 58px var(--layout-gutter) 0;
+  background: var(--color-page);
+  min-height: 100vh;
+}
