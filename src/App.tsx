@@ -5,11 +5,13 @@ import TabBar, { type TabType, type ViewType } from './components/TabBar'
 import PressGrid from './components/PressGrid'
 import Chevron from './components/Chevron'
 import FieldTab, { type Category, CATEGORIES } from './components/FieldTab'
+import PressOpen from './components/PressOpen'
 import { PRESS_LIST } from './data/pressData'
 import './components/Header.css'
 import './components/PressGrid.css'
 import './components/Chevron.css'
 import './components/FieldTab.css'
+import './components/PressOpen.css'
 import './App.css'
 
 const PAGE_SIZE = 24
@@ -56,6 +58,8 @@ function App() {
   const lastPage = Math.max(0, Math.ceil(sourceList.length / PAGE_SIZE) - 1)
   const displayItems = sourceList.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)
 
+  const openedPress = openedPressId ? PRESS_LIST.find(p => p.id === openedPressId) ?? null : null
+
   return (
     <div className="newsstand" style={{ position: 'relative' }}>
       <Header />
@@ -67,13 +71,21 @@ function App() {
         onTabChange={handleTabChange}
         onViewChange={setActiveView}
       />
-      {openedPressId ? (
-        <FieldTab
-          activeCategory={activeCategory}
-          articleCount={81}
-          currentIndex={1}
-          onCategoryChange={setActiveCategory}
-        />
+      {openedPress ? (
+        <>
+          <FieldTab
+            activeCategory={activeCategory}
+            articleCount={81}
+            currentIndex={1}
+            onCategoryChange={setActiveCategory}
+          />
+          <PressOpen
+            press={openedPress}
+            isSubscribed={subscribedIds.has(openedPress.id)}
+            onSubscribe={() => handleSubscribe(openedPress.id)}
+            onUnsubscribe={() => handleUnsubscribe(openedPress.id)}
+          />
+        </>
       ) : (
         <>
           <PressGrid
