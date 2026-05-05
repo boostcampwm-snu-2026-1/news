@@ -1,0 +1,14 @@
+.press-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  max-width: 88%;
+  word-break: keep-all;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.press-wordmark__flag {
+  flex-shrink: 0;
+  margin-bottom: 1px;
+}
