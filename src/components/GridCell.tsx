@@ -35,7 +35,10 @@ function GridCell({ press, isSubscribed = false, showUnsubscribe = false, onTogg
       <span className="grid-cell__pill" onClick={(e) => e.stopPropagation()}>
         <SubscribePill
           subscribed={showUnsubscribe}
-          onClick={() => onToggle?.(press.id)}
+          onClick={() => {
+            onToggle?.(press.id);
+            (document.activeElement as HTMLElement)?.blur();
+          }}
         />
       </span>
     </div>
