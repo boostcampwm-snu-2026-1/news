@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import type { PressOutlet } from '../data/press';
 import PressWordmark from './PressWordmark';
 import SubscribePill from './SubscribePill';
@@ -12,6 +13,8 @@ interface GridCellProps {
 }
 
 function GridCell({ press, isSubscribed = false, showUnsubscribe = false, onToggle, onCellClick }: GridCellProps) {
+  const cellRef = useRef<HTMLDivElement>(null);
+
   if (!press) {
     return <div className="grid-cell grid-cell--empty" />;
   }
@@ -19,6 +22,7 @@ function GridCell({ press, isSubscribed = false, showUnsubscribe = false, onTogg
   return (
     <div
       className="grid-cell"
+      ref={cellRef}
       tabIndex={0}
       role="gridcell"
       onClick={() => onCellClick?.(press.id)}
@@ -37,7 +41,7 @@ function GridCell({ press, isSubscribed = false, showUnsubscribe = false, onTogg
           subscribed={showUnsubscribe}
           onClick={() => {
             onToggle?.(press.id);
-            (document.activeElement as HTMLElement)?.blur();
+            cellRef.current?.focus();
           }}
         />
       </span>

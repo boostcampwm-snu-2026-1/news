@@ -57,7 +57,7 @@ function PressOpen({ press, isSubscribed, onToggle }: PressOpenProps) {
       setProgress(0);
       progressKeyRef.current += 1;
     }
-  });
+  }, [currentArticle]);
 
   useEffect(() => {
     if (reducedMotion.current || paused) return;

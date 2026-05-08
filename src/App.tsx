@@ -64,7 +64,11 @@ function App() {
       setOpenedPressId(null);
     } else if (v === 'list' && openedPressId === null) {
       const firstItem = allItems[0];
-      if (firstItem) setOpenedPressId(firstItem.id);
+      if (firstItem) {
+        setOpenedPressId(firstItem.id);
+      } else {
+        setViewer('grid');
+      }
     }
   };
 
