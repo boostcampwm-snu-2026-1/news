@@ -66,7 +66,10 @@ function App() {
         subCount={subscribed.size}
         viewer={viewer}
         onTabChange={handleTabChange}
-        onViewerChange={setViewer}
+        onViewerChange={(v) => {
+          setViewer(v);
+          if (v === 'grid') setOpenedPressId(null);
+        }}
       />
       {viewer === 'list' && openedPress ? (
         <PressOpen
@@ -83,8 +86,12 @@ function App() {
           onCellClick={handleCellClick}
         />
       )}
-      <Chevron dir="left" disabled={page === 0} onClick={() => setPage((p) => p - 1)} />
-      <Chevron dir="right" disabled={page >= totalPages - 1} onClick={() => setPage((p) => p + 1)} />
+      {!(viewer === 'list' && openedPress) && (
+        <>
+          <Chevron dir="left" disabled={page === 0} onClick={() => setPage((p) => p - 1)} />
+          <Chevron dir="right" disabled={page >= totalPages - 1} onClick={() => setPage((p) => p + 1)} />
+        </>
+      )}
     </div>
   );
 }
