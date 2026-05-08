@@ -7,9 +7,10 @@ interface PressGridProps {
   subscribedIds: Set<number>;
   isSubTab: boolean;
   onToggle: (id: number) => void;
+  onCellClick?: (id: number) => void;
 }
 
-function PressGrid({ items, subscribedIds, isSubTab, onToggle }: PressGridProps) {
+function PressGrid({ items, subscribedIds, isSubTab, onToggle, onCellClick }: PressGridProps) {
   const cells = Array.from({ length: 24 }, (_, i) => items[i]);
 
   return (
@@ -21,6 +22,7 @@ function PressGrid({ items, subscribedIds, isSubTab, onToggle }: PressGridProps)
           isSubscribed={press ? subscribedIds.has(press.id) : false}
           showUnsubscribe={press ? (isSubTab ? true : subscribedIds.has(press.id)) : false}
           onToggle={onToggle}
+          onCellClick={onCellClick}
         />
       ))}
     </div>

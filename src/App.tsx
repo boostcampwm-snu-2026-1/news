@@ -4,6 +4,7 @@ import Ticker from './components/Ticker';
 import TabBar from './components/TabBar';
 import type { TabType, ViewType } from './components/TabBar';
 import PressGrid from './components/PressGrid';
+import PressOpen from './components/PressOpen';
 import Chevron from './components/Chevron';
 import { tickerData, pressData } from './data/press';
 
@@ -33,6 +34,7 @@ function App() {
     });
   };
   const [page, setPage] = useState(0);
+  const [openedPressId, setOpenedPressId] = useState<number | null>(null);
 
   const allItems = activeTab === 'all'
     ? pressData
@@ -43,7 +45,17 @@ function App() {
   const handleTabChange = (tab: TabType) => {
     setActiveTab(tab);
     setPage(0);
+    setOpenedPressId(null);
   };
+
+  const handleCellClick = (id: number) => {
+    setOpenedPressId(id);
+    setViewer('list');
+  };
+
+  const openedPress = openedPressId !== null
+    ? pressData.find((p) => p.id === openedPressId) ?? null
+    : null;
 
   return (
     <div className="newsstand-wrap">
@@ -56,12 +68,21 @@ function App() {
         onTabChange={handleTabChange}
         onViewerChange={setViewer}
       />
-      <PressGrid
+      {viewer === 'list' && openedPress ? (
+        <PressOpen
+          press={openedPress}
+          isSubscribed={subscribed.has(openedPress.id)}
+          onToggle={handleToggle}
+        />
+      ) : (
+        <PressGrid
           items={pageItems}
           subscribedIds={subscribed}
           isSubTab={activeTab === 'sub'}
           onToggle={handleToggle}
+          onCellClick={handleCellClick}
         />
+      )}
       <Chevron dir="left" disabled={page === 0} onClick={() => setPage((p) => p - 1)} />
       <Chevron dir="right" disabled={page >= totalPages - 1} onClick={() => setPage((p) => p + 1)} />
     </div>
