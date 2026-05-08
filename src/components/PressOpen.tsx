@@ -44,6 +44,15 @@ function PressOpen({ press, isSubscribed, onToggle }: PressOpenProps) {
     resetProgress();
   }, [resetProgress]);
 
+  const advanceToNextCategory = useCallback(() => {
+    setActiveCategory((prev) => {
+      const idx = CATEGORIES.indexOf(prev);
+      return CATEGORIES[(idx + 1) % CATEGORIES.length];
+    });
+    setCurrentArticle(0);
+    progressKeyRef.current += 1;
+  }, []);
+
   useEffect(() => {
     if (reducedMotion.current || paused) return;
 
@@ -51,7 +60,14 @@ function PressOpen({ press, isSubscribed, onToggle }: PressOpenProps) {
       setProgress((prev) => {
         const next = prev + (TICK_INTERVAL / PROGRESS_DURATION) * 100;
         if (next >= 100) {
-          setCurrentArticle((cur) => (cur + 1) % totalArticles);
+          setCurrentArticle((cur) => {
+            const nextArticle = cur + 1;
+            if (nextArticle >= totalArticles) {
+              advanceToNextCategory();
+              return 0;
+            }
+            return nextArticle;
+          });
           progressKeyRef.current += 1;
           return 0;
         }
@@ -60,7 +76,7 @@ function PressOpen({ press, isSubscribed, onToggle }: PressOpenProps) {
     }, TICK_INTERVAL);
 
     return () => clearInterval(timer);
-  }, [paused, totalArticles, activeCategory]);
+  }, [paused, totalArticles, activeCategory, advanceToNextCategory]);
 
   return (
     <div
