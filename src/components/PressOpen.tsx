@@ -44,14 +44,20 @@ function PressOpen({ press, isSubscribed, onToggle }: PressOpenProps) {
     resetProgress();
   }, [resetProgress]);
 
-  const advanceToNextCategory = useCallback(() => {
-    setActiveCategory((prev) => {
-      const idx = CATEGORIES.indexOf(prev);
-      return CATEGORIES[(idx + 1) % CATEGORIES.length];
-    });
-    setCurrentArticle(0);
-    progressKeyRef.current += 1;
-  }, []);
+  const needsCategoryAdvance = useRef(false);
+
+  useEffect(() => {
+    if (needsCategoryAdvance.current) {
+      needsCategoryAdvance.current = false;
+      setActiveCategory((prev) => {
+        const idx = CATEGORIES.indexOf(prev);
+        return CATEGORIES[(idx + 1) % CATEGORIES.length];
+      });
+      setCurrentArticle(0);
+      setProgress(0);
+      progressKeyRef.current += 1;
+    }
+  });
 
   useEffect(() => {
     if (reducedMotion.current || paused) return;
@@ -63,8 +69,8 @@ function PressOpen({ press, isSubscribed, onToggle }: PressOpenProps) {
           setCurrentArticle((cur) => {
             const nextArticle = cur + 1;
             if (nextArticle >= totalArticles) {
-              advanceToNextCategory();
-              return 0;
+              needsCategoryAdvance.current = true;
+              return cur;
             }
             return nextArticle;
           });
@@ -76,7 +82,7 @@ function PressOpen({ press, isSubscribed, onToggle }: PressOpenProps) {
     }, TICK_INTERVAL);
 
     return () => clearInterval(timer);
-  }, [paused, totalArticles, activeCategory, advanceToNextCategory]);
+  }, [paused, totalArticles]);
 
   return (
     <div
