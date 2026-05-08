@@ -44,20 +44,8 @@ function PressOpen({ press, isSubscribed, onToggle }: PressOpenProps) {
     resetProgress();
   }, [resetProgress]);
 
-  const needsCategoryAdvance = useRef(false);
-
-  useEffect(() => {
-    if (needsCategoryAdvance.current) {
-      needsCategoryAdvance.current = false;
-      setActiveCategory((prev) => {
-        const idx = CATEGORIES.indexOf(prev);
-        return CATEGORIES[(idx + 1) % CATEGORIES.length];
-      });
-      setCurrentArticle(0);
-      setProgress(0);
-      progressKeyRef.current += 1;
-    }
-  }, [currentArticle]);
+  const totalArticlesRef = useRef(totalArticles);
+  totalArticlesRef.current = totalArticles;
 
   useEffect(() => {
     if (reducedMotion.current || paused) return;
@@ -66,11 +54,15 @@ function PressOpen({ press, isSubscribed, onToggle }: PressOpenProps) {
       setProgress((prev) => {
         const next = prev + (TICK_INTERVAL / PROGRESS_DURATION) * 100;
         if (next >= 100) {
+          const total = totalArticlesRef.current;
           setCurrentArticle((cur) => {
             const nextArticle = cur + 1;
-            if (nextArticle >= totalArticles) {
-              needsCategoryAdvance.current = true;
-              return cur;
+            if (nextArticle >= total) {
+              setActiveCategory((prevCat) => {
+                const idx = CATEGORIES.indexOf(prevCat);
+                return CATEGORIES[(idx + 1) % CATEGORIES.length];
+              });
+              return 0;
             }
             return nextArticle;
           });
@@ -82,7 +74,7 @@ function PressOpen({ press, isSubscribed, onToggle }: PressOpenProps) {
     }, TICK_INTERVAL);
 
     return () => clearInterval(timer);
-  }, [paused, totalArticles]);
+  }, [paused]);
 
   return (
     <div
