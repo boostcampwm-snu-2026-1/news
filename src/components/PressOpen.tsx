@@ -8,6 +8,7 @@ import './PressOpen.css';
 
 const PROGRESS_DURATION = 6000;
 const TICK_INTERVAL = 100;
+const PROGRESS_INCREMENT = (TICK_INTERVAL / PROGRESS_DURATION) * 100;
 
 interface PressOpenProps {
   press: PressOutlet;
@@ -19,7 +20,7 @@ function PressOpen({ press, isSubscribed, onToggle }: PressOpenProps) {
   const [activeCategory, setActiveCategory] = useState<Category>(CATEGORIES[0]);
   const [currentArticle, setCurrentArticle] = useState(0);
   const [progress, setProgress] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const pausedRef = useRef(false);
   const progressKeyRef = useRef(0);
 
   const article = mockArticles[press.name];
@@ -44,46 +45,72 @@ function PressOpen({ press, isSubscribed, onToggle }: PressOpenProps) {
     resetProgress();
   }, [resetProgress]);
 
+  // All mutable state for the timer lives in refs to avoid
+  // StrictMode double-invocation of setState updaters.
+  const progressRef = useRef(0);
+  const currentArticleRef = useRef(0);
+  const activeCategoryRef = useRef<Category>(CATEGORIES[0]);
   const totalArticlesRef = useRef(totalArticles);
   totalArticlesRef.current = totalArticles;
 
+  // Sync refs when user manually selects a category
   useEffect(() => {
-    if (reducedMotion.current || paused) return;
+    activeCategoryRef.current = activeCategory;
+  }, [activeCategory]);
+  useEffect(() => {
+    currentArticleRef.current = currentArticle;
+  }, [currentArticle]);
+
+  useEffect(() => {
+    if (reducedMotion.current) return;
 
     const timer = setInterval(() => {
-      setProgress((prev) => {
-        const next = prev + (TICK_INTERVAL / PROGRESS_DURATION) * 100;
-        if (next >= 100) {
-          const total = totalArticlesRef.current;
-          setCurrentArticle((cur) => {
-            const nextArticle = cur + 1;
-            if (nextArticle >= total) {
-              setActiveCategory((prevCat) => {
-                const idx = CATEGORIES.indexOf(prevCat);
-                return CATEGORIES[(idx + 1) % CATEGORIES.length];
-              });
-              return 0;
-            }
-            return nextArticle;
-          });
+      if (pausedRef.current) return;
+
+      const nextProgress = progressRef.current + PROGRESS_INCREMENT;
+
+      if (nextProgress >= 100) {
+        progressRef.current = 0;
+        const total = totalArticlesRef.current;
+        const nextArticle = currentArticleRef.current + 1;
+
+        if (nextArticle >= total) {
+          // Advance to next category
+          const idx = CATEGORIES.indexOf(activeCategoryRef.current);
+          const nextCat = CATEGORIES[(idx + 1) % CATEGORIES.length];
+          activeCategoryRef.current = nextCat;
+          currentArticleRef.current = 0;
           progressKeyRef.current += 1;
-          return 0;
+
+          setActiveCategory(nextCat);
+          setCurrentArticle(0);
+          setProgress(0);
+        } else {
+          // Advance to next article
+          currentArticleRef.current = nextArticle;
+          progressKeyRef.current += 1;
+
+          setCurrentArticle(nextArticle);
+          setProgress(0);
         }
-        return next;
-      });
+      } else {
+        progressRef.current = nextProgress;
+        setProgress(nextProgress);
+      }
     }, TICK_INTERVAL);
 
     return () => clearInterval(timer);
-  }, [paused]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div
       className="press-open"
       role="tabpanel"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
+      onMouseEnter={() => { pausedRef.current = true; }}
+      onMouseLeave={() => { pausedRef.current = false; }}
+      onFocus={() => { pausedRef.current = true; }}
+      onBlur={() => { pausedRef.current = false; }}
     >
       {/* Head row */}
       <div className="press-open__head">
