@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Header from './components/Header';
 import Ticker from './components/Ticker';
 import TabBar from './components/TabBar';
@@ -18,44 +18,60 @@ function getFormattedDate(): string {
 }
 
 function App() {
+  // ── Newsstand root state ──
   const [activeTab, setActiveTab] = useState<TabType>('all');
   const [viewer, setViewer] = useState<ViewType>('grid');
+  const [page, setPage] = useState(0);
+  const [openedPressId, setOpenedPressId] = useState<number | null>(null);
   const [subscribed, setSubscribed] = useState<Set<number>>(new Set());
 
+  // ── Derived ──
+  const allItems = useMemo(
+    () => activeTab === 'all'
+      ? pressData
+      : pressData.filter((p) => subscribed.has(p.id)),
+    [activeTab, subscribed],
+  );
+  const totalPages = Math.max(1, Math.ceil(allItems.length / 24));
+  const pageItems = allItems.slice(page * 24, (page + 1) * 24);
+
+  const openedPress = openedPressId !== null
+    ? pressData.find((p) => p.id === openedPressId) ?? null
+    : null;
+
+  const showListView = viewer === 'list' && openedPress !== null;
+
+  // ── Handlers ──
   const handleToggle = (id: number) => {
     setSubscribed((prev) => {
       const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
       return next;
     });
   };
-  const [page, setPage] = useState(0);
-  const [openedPressId, setOpenedPressId] = useState<number | null>(null);
-
-  const allItems = activeTab === 'all'
-    ? pressData
-    : pressData.filter((p) => subscribed.has(p.id));
-  const totalPages = Math.max(1, Math.ceil(allItems.length / 24));
-  const pageItems = allItems.slice(page * 24, (page + 1) * 24);
 
   const handleTabChange = (tab: TabType) => {
     setActiveTab(tab);
     setPage(0);
     setOpenedPressId(null);
+    setViewer('grid');
+  };
+
+  const handleViewerChange = (v: ViewType) => {
+    setViewer(v);
+    if (v === 'grid') {
+      setOpenedPressId(null);
+    } else if (v === 'list' && openedPressId === null) {
+      const firstItem = allItems[0];
+      if (firstItem) setOpenedPressId(firstItem.id);
+    }
   };
 
   const handleCellClick = (id: number) => {
     setOpenedPressId(id);
     setViewer('list');
   };
-
-  const openedPress = openedPressId !== null
-    ? pressData.find((p) => p.id === openedPressId) ?? null
-    : null;
 
   return (
     <div className="newsstand-wrap">
@@ -66,27 +82,30 @@ function App() {
         subCount={subscribed.size}
         viewer={viewer}
         onTabChange={handleTabChange}
-        onViewerChange={(v) => {
-          setViewer(v);
-          if (v === 'grid') setOpenedPressId(null);
-        }}
+        onViewerChange={handleViewerChange}
       />
-      {viewer === 'list' && openedPress ? (
-        <PressOpen
-          press={openedPress}
-          isSubscribed={subscribed.has(openedPress.id)}
-          onToggle={handleToggle}
-        />
-      ) : (
-        <PressGrid
-          items={pageItems}
-          subscribedIds={subscribed}
-          isSubTab={activeTab === 'sub'}
-          onToggle={handleToggle}
-          onCellClick={handleCellClick}
-        />
-      )}
-      {!(viewer === 'list' && openedPress) && (
+      <div className="view-container">
+        {showListView ? (
+          <div className="view-panel view-panel--list" key={`list-${openedPressId}`}>
+            <PressOpen
+              press={openedPress!}
+              isSubscribed={subscribed.has(openedPress!.id)}
+              onToggle={handleToggle}
+            />
+          </div>
+        ) : (
+          <div className="view-panel view-panel--grid" key={`grid-${page}`}>
+            <PressGrid
+              items={pageItems}
+              subscribedIds={subscribed}
+              isSubTab={activeTab === 'sub'}
+              onToggle={handleToggle}
+              onCellClick={handleCellClick}
+            />
+          </div>
+        )}
+      </div>
+      {!showListView && (
         <>
           <Chevron dir="left" disabled={page === 0} onClick={() => setPage((p) => p - 1)} />
           <Chevron dir="right" disabled={page >= totalPages - 1} onClick={() => setPage((p) => p + 1)} />

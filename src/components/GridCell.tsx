@@ -17,7 +17,18 @@ function GridCell({ press, isSubscribed = false, showUnsubscribe = false, onTogg
   }
 
   return (
-    <div className="grid-cell" tabIndex={0} onClick={() => onCellClick?.(press.id)}>
+    <div
+      className="grid-cell"
+      tabIndex={0}
+      role="gridcell"
+      onClick={() => onCellClick?.(press.id)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onCellClick?.(press.id);
+        }
+      }}
+    >
       <span className="grid-cell__wordmark">
         <PressWordmark name={press.name} style={press.wordmark} />
       </span>
