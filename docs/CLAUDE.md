@@ -150,25 +150,30 @@ export default class NewsCard extends React.Component<any> { ... }
 
 ## 커밋 메시지 규칙
 
-> 모든 커밋은 **체크리스트 항목 번호**와 **학습 내용**을 포함해야 한다.
+> 커밋 메시지는 **간결하게** 작성한다. 제목 한 줄 + 필요 시 짧은 bullet 1~2개.
 
 ### 포맷
 
 ```
 <prefix>: #<항목번호> <기능명>
+```
 
-- 확인내용: <구현된 화면/로직의 동작 확인 결과>
-- 이해 안 됐던 부분: <AI 추천 패턴 중 추가 학습한 내용 / CLAUDE.md에 반영할 사항>
+본문이 필요한 경우에만 한 줄 추가:
+
+```
+<prefix>: #<항목번호> <기능명>
+
+- <핵심 변경사항 한 줄>
 ```
 
 ### 예시
 
 ```
-feat: #3 뉴스 카드 컴포넌트
+feat: #3 NewsCard component
 
-- 확인내용: 컴포넌트 배치 확인, 구조가 복잡해서 컴포넌트 분리 추가 진행
-- 이해 안 됐던 부분: useCallback 왜 사용했는지 확인함 → CLAUDE.md에 반영,
-  2주차 과제로 무엇을 더 검증할지 의견 제시받음
+feat: #9 subscription state with localStorage
+
+fix: #12 reset pagination on tab change
 ```
 
 ### Prefix 종류
