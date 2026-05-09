@@ -72,6 +72,27 @@
 - 활성: `bg-tab-active text-white rounded-full px-4 py-1.5 text-sm font-bold`
 - 비활성: `text-text-secondary hover:text-text-primary rounded-full px-4 py-1.5 text-sm font-bold`
 
+### Carousel (3-패널)
+
+레이아웃 상수:
+
+| 변수 | 값 |
+|------|----|
+| `PANEL_W` | `736px` (920 × 0.8) |
+| `PEEK_W` | `176px` (220 × 0.8) |
+| `BASE_X` | `PEEK_W - PANEL_W = -560px` |
+| 패널 높이 | `416px` (520 × 0.8) |
+| 전체 가시 너비 | `PEEK_W * 2 + PANEL_W = 1088px` |
+
+- 슬라이드 트랙: `flex`, 3개 패널(`[prevIdx, activeIndex, nextIdx]`)을 항상 렌더
+- 이동 애니메이션: `transform translateX`, `250ms ease-out`
+- 전환 중 `onTransitionEnd`에서 `activeIndex` 업데이트 후 위치 즉시 리셋 (transition 비활성화)
+- 끝에서 순환 (`% count`)
+- peek 패널: `opacity-60 scale-95 pointer-events-none`
+- **화살표**: 원형 배경 없음, `‹` `›` SVG 아이콘만, hover 시 인접 언론사명 툴팁 표시
+- 패널 렌더: `renderPanel(index, isActive)` render prop으로 외부에서 주입
+- `prevLabel` / `nextLabel` prop으로 툴팁 텍스트 주입
+
 ---
 
 ## 색상 팔레트

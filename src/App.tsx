@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { GlobalHeader } from './components/GlobalHeader/GlobalHeader';
 import { CategoryTabs } from './components/CategoryTabs/CategoryTabs';
 import { Carousel } from './components/Carousel/Carousel';
+import { PublisherStrip } from './components/PublisherStrip/PublisherStrip';
 import publishersRaw from './data/publishers.json';
 import type { CategoryTab, TabType, Publisher } from './types';
 
@@ -47,6 +48,13 @@ function App() {
               </span>
             </div>
           )}
+        />
+      </div>
+      <div className="container-page">
+        <PublisherStrip
+          publishers={publishers}
+          activeIndex={activeIndex}
+          onSelect={setActiveIndex}
         />
       </div>
     </div>
