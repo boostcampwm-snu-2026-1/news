@@ -2,18 +2,17 @@ import { useState, useRef } from 'react';
 
 const PANEL_W = 736;
 const HALF = PANEL_W / 2;      // 368
-const BTN_GAP = 48;            // 버튼 ~ 중앙 패널 경계 간격
+const BTN_GAP  = 80;   // 버튼 ~ 중앙 패널 경계 간격 (이 값만 바꾸면 버튼만 이동)
+const PEEK_PAD = 48;   // peek 카드 내부 패딩 (독립 조절)
 
 // 트랙 translateX — 중앙 패널(index 1)이 화면 정중앙에 오도록
 const BASE  = `calc(50% - ${HALF + PANEL_W}px)`;      // calc(50% - 1104px)
 const NEXT  = `calc(50% - ${HALF + PANEL_W * 2}px)`;  // calc(50% - 1840px)
 const PREV  = `calc(50% - ${HALF}px)`;                // calc(50% - 368px)
 
-// 버튼 위치: 중앙 패널 경계에서 80px 바깥
-// peek 카드 패딩도 80px이므로 어떤 화면 너비에서든 버튼과 카드 사이 80px 여백 유지
+// 버튼 위치: 중앙 패널 경계에서 BTN_GAP px 바깥
 const BTN_LEFT  = `calc(50% - ${HALF + BTN_GAP}px)`;  // calc(50% - 448px)
 const BTN_RIGHT = `calc(50% + ${HALF + BTN_GAP}px)`;  // calc(50% + 448px)
-const PEEK_PAD  = BTN_GAP;     // 80px — peek 카드 내부 패딩 (버튼 쪽 방향)
 
 interface CarouselProps {
   count: number;
