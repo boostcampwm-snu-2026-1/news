@@ -2,344 +2,181 @@
   {
     "id": "chosun",
     "name": "조선일보",
-    "logoUrl": "https://placehold.co/80x40/003399/ffffff?text=조선",
-    "category": "종합",
-    "description": "1920년 창간, 대한민국 대표 종합 일간지"
+    "logoUrl": "/logos/chosun.svg",
+    "thumbnailUrl": "/thumbs/chosun.jpg",
+    "category": "종합/경제",
+    "isMajor": true,
+    "siteUrl": "https://www.chosun.com"
   },
   {
     "id": "joongang",
     "name": "중앙일보",
-    "logoUrl": "https://placehold.co/80x40/CC0000/ffffff?text=중앙",
-    "category": "종합",
-    "description": "깊이 있는 분석과 해설로 신뢰받는 종합 일간지"
+    "logoUrl": "/logos/joongang.svg",
+    "thumbnailUrl": "/thumbs/joongang.jpg",
+    "category": "종합/경제",
+    "isMajor": true,
+    "siteUrl": "https://www.joongang.co.kr"
   },
   {
     "id": "donga",
     "name": "동아일보",
-    "logoUrl": "https://placehold.co/80x40/00539C/ffffff?text=동아",
-    "category": "종합",
-    "description": "1920년 창간, 독립운동 정신을 이어온 언론"
+    "logoUrl": "/logos/donga.svg",
+    "thumbnailUrl": "/thumbs/donga.jpg",
+    "category": "종합/경제",
+    "isMajor": true,
+    "siteUrl": "https://www.donga.com"
   },
   {
     "id": "hani",
     "name": "한겨레",
-    "logoUrl": "https://placehold.co/80x40/004225/ffffff?text=한겨레",
-    "category": "종합",
-    "description": "시민이 만든 독립 언론, 진보적 관점의 종합 일간지"
+    "logoUrl": "/logos/hani.svg",
+    "thumbnailUrl": "/thumbs/hani.jpg",
+    "category": "종합/경제",
+    "isMajor": true,
+    "siteUrl": "https://www.hani.co.kr"
   },
   {
-    "id": "kyunghyang",
+    "id": "khan",
     "name": "경향신문",
-    "logoUrl": "https://placehold.co/80x40/1B4F72/ffffff?text=경향",
-    "category": "종합",
-    "description": "1946년 창간, 진보적 시각의 전통 있는 종합지"
+    "logoUrl": "/logos/khan.svg",
+    "thumbnailUrl": "/thumbs/khan.jpg",
+    "category": "종합/경제",
+    "isMajor": false,
+    "siteUrl": "https://www.khan.co.kr"
   },
   {
-    "id": "munhwa",
-    "name": "문화일보",
-    "logoUrl": "https://placehold.co/80x40/6C3483/ffffff?text=문화",
-    "category": "종합",
-    "description": "문화·예술에 특화된 시각을 가진 종합 일간지"
-  },
-  {
-    "id": "segye",
-    "name": "세계일보",
-    "logoUrl": "https://placehold.co/80x40/117A65/ffffff?text=세계",
-    "category": "종합",
-    "description": "국제 뉴스에 강점을 가진 종합 일간지"
-  },
-  {
-    "id": "kukmin",
-    "name": "국민일보",
-    "logoUrl": "https://placehold.co/80x40/784212/ffffff?text=국민",
-    "category": "종합",
-    "description": "기독교 정신을 바탕으로 한 종합 일간지"
-  },
-  {
-    "id": "seoul",
-    "name": "서울신문",
-    "logoUrl": "https://placehold.co/80x40/2C3E50/ffffff?text=서울",
-    "category": "종합",
-    "description": "1904년 창간, 대한민국에서 가장 오래된 신문 중 하나"
-  },
-  {
-    "id": "newsis",
-    "name": "뉴시스",
-    "logoUrl": "https://placehold.co/80x40/E74C3C/ffffff?text=뉴시스",
-    "category": "종합",
-    "description": "빠른 속보와 다양한 분야의 뉴스를 제공하는 통신사"
-  },
-  {
-    "id": "yonhap",
-    "name": "연합뉴스",
-    "logoUrl": "https://placehold.co/80x40/1A5276/ffffff?text=연합",
-    "category": "종합",
-    "description": "대한민국 국가기간 뉴스통신사, 속보 중심"
-  },
-  {
-    "id": "news1",
-    "name": "뉴스1",
-    "logoUrl": "https://placehold.co/80x40/E67E22/ffffff?text=뉴스1",
-    "category": "종합",
-    "description": "디지털 퍼스트 뉴스통신사, 신속한 속보 제공"
-  },
-  {
-    "id": "nocut",
-    "name": "노컷뉴스",
-    "logoUrl": "https://placehold.co/80x40/C0392B/ffffff?text=노컷",
-    "category": "종합",
-    "description": "CBS 계열 뉴스 전문 미디어, 탐사보도 특화"
-  },
-  {
-    "id": "ohmynews",
-    "name": "오마이뉴스",
-    "logoUrl": "https://placehold.co/80x40/27AE60/ffffff?text=오마이",
-    "category": "종합",
-    "description": "시민기자가 만드는 참여형 뉴스 미디어"
-  },
-  {
-    "id": "pressian",
-    "name": "프레시안",
-    "logoUrl": "https://placehold.co/80x40/8E44AD/ffffff?text=프레시안",
-    "category": "종합",
-    "description": "독립 인터넷 언론, 심층 분석과 기획 기사 중심"
+    "id": "mk",
+    "name": "매일경제",
+    "logoUrl": "/logos/mk.svg",
+    "thumbnailUrl": "/thumbs/mk.jpg",
+    "category": "종합/경제",
+    "isMajor": true,
+    "siteUrl": "https://www.mk.co.kr"
   },
   {
     "id": "hankyung",
     "name": "한국경제",
-    "logoUrl": "https://placehold.co/80x40/D4380D/ffffff?text=한경",
-    "category": "경제",
-    "description": "국내 1위 경제 전문 일간지, 기업·시장 심층 보도"
+    "logoUrl": "/logos/hankyung.svg",
+    "thumbnailUrl": "/thumbs/hankyung.jpg",
+    "category": "종합/경제",
+    "isMajor": true,
+    "siteUrl": "https://www.hankyung.com"
   },
   {
-    "id": "maeil",
-    "name": "매일경제",
-    "logoUrl": "https://placehold.co/80x40/0066CC/ffffff?text=매경",
-    "category": "경제",
-    "description": "경제·금융·부동산 분야 깊이 있는 보도"
+    "id": "kbs",
+    "name": "KBS",
+    "logoUrl": "/logos/kbs.svg",
+    "thumbnailUrl": "/thumbs/kbs.jpg",
+    "category": "방송/통신",
+    "isMajor": true,
+    "siteUrl": "https://news.kbs.co.kr"
   },
   {
-    "id": "asia",
-    "name": "아시아경제",
-    "logoUrl": "https://placehold.co/80x40/16A085/ffffff?text=아시아",
-    "category": "경제",
-    "description": "아시아 경제권을 중심으로 한 경제 전문 미디어"
+    "id": "mbc",
+    "name": "MBC",
+    "logoUrl": "/logos/mbc.svg",
+    "thumbnailUrl": "/thumbs/mbc.jpg",
+    "category": "방송/통신",
+    "isMajor": false,
+    "siteUrl": "https://imnews.imbc.com"
   },
   {
-    "id": "herald",
-    "name": "헤럴드경제",
-    "logoUrl": "https://placehold.co/80x40/CA6F1E/ffffff?text=헤럴드",
-    "category": "경제",
-    "description": "생활경제와 부동산·금융 뉴스에 특화된 경제지"
-  },
-  {
-    "id": "financial",
-    "name": "파이낸셜뉴스",
-    "logoUrl": "https://placehold.co/80x40/1F618D/ffffff?text=파이낸셜",
-    "category": "경제",
-    "description": "금융·증권·자본시장 전문 경제 미디어"
-  },
-  {
-    "id": "edaily",
-    "name": "이데일리",
-    "logoUrl": "https://placehold.co/80x40/6E2F1A/ffffff?text=이데일리",
-    "category": "경제",
-    "description": "디지털 경제 미디어, 증권·부동산 뉴스 강점"
-  },
-  {
-    "id": "mtn",
-    "name": "머니투데이",
-    "logoUrl": "https://placehold.co/80x40/1E8449/ffffff?text=머니",
-    "category": "경제",
-    "description": "경제·금융 뉴스와 주식 정보를 제공하는 경제 미디어"
-  },
-  {
-    "id": "sedaily",
-    "name": "서울경제",
-    "logoUrl": "https://placehold.co/80x40/2471A3/ffffff?text=서울경제",
-    "category": "경제",
-    "description": "서울 소재 경제 전문 일간지, 산업·금융 보도"
-  },
-  {
-    "id": "etnews",
-    "name": "전자신문",
-    "logoUrl": "https://placehold.co/80x40/005F73/ffffff?text=전자",
-    "category": "IT/과학",
-    "description": "ICT 산업 전문 미디어, 기술 트렌드 선도"
-  },
-  {
-    "id": "zdnet",
-    "name": "ZDNet Korea",
-    "logoUrl": "https://placehold.co/80x40/E63946/ffffff?text=ZD",
-    "category": "IT/과학",
-    "description": "글로벌 IT 미디어 ZDNet의 한국판, 기술 뉴스"
-  },
-  {
-    "id": "itchosun",
-    "name": "IT조선",
-    "logoUrl": "https://placehold.co/80x40/2C3E50/ffffff?text=IT조선",
-    "category": "IT/과학",
-    "description": "조선일보 계열 IT 전문 온라인 미디어"
-  },
-  {
-    "id": "techm",
-    "name": "테크M",
-    "logoUrl": "https://placehold.co/80x40/1ABC9C/ffffff?text=TechM",
-    "category": "IT/과학",
-    "description": "테크놀로지와 비즈니스를 잇는 전문 미디어"
-  },
-  {
-    "id": "digitaltoday",
-    "name": "디지털투데이",
-    "logoUrl": "https://placehold.co/80x40/0097A7/ffffff?text=DT",
-    "category": "IT/과학",
-    "description": "IT·과학 분야 디지털 뉴스 전문 미디어"
-  },
-  {
-    "id": "inews24",
-    "name": "아이뉴스24",
-    "logoUrl": "https://placehold.co/80x40/6A1B9A/ffffff?text=iNews",
-    "category": "IT/과학",
-    "description": "IT·인터넷 산업 전문 온라인 미디어"
-  },
-  {
-    "id": "bloter",
-    "name": "블로터",
-    "logoUrl": "https://placehold.co/80x40/37474F/ffffff?text=Bloter",
-    "category": "IT/과학",
-    "description": "IT 기술과 스타트업 생태계를 다루는 전문 미디어"
-  },
-  {
-    "id": "spotvnews",
-    "name": "스포티비뉴스",
-    "logoUrl": "https://placehold.co/80x40/E74C3C/ffffff?text=SPOTV",
-    "category": "스포츠",
-    "description": "스포츠 전문 채널 SPOTV의 뉴스 서비스"
-  },
-  {
-    "id": "starnews",
-    "name": "스타뉴스",
-    "logoUrl": "https://placehold.co/80x40/F39C12/000000?text=Star",
-    "category": "스포츠",
-    "description": "스포츠·연예 전문 뉴스 미디어"
-  },
-  {
-    "id": "osen",
-    "name": "OSEN",
-    "logoUrl": "https://placehold.co/80x40/B71C1C/ffffff?text=OSEN",
-    "category": "스포츠",
-    "description": "스포츠·연예 전문 뉴스통신사"
-  },
-  {
-    "id": "sportschosun",
-    "name": "스포츠조선",
-    "logoUrl": "https://placehold.co/80x40/283593/ffffff?text=스조",
-    "category": "스포츠",
-    "description": "조선일보 계열 스포츠 전문 미디어"
-  },
-  {
-    "id": "ilganseports",
-    "name": "일간스포츠",
-    "logoUrl": "https://placehold.co/80x40/AD1457/ffffff?text=일스",
-    "category": "스포츠",
-    "description": "중앙일보 계열 스포츠·연예 전문 일간지"
-  },
-  {
-    "id": "sportskyunghyang",
-    "name": "스포츠경향",
-    "logoUrl": "https://placehold.co/80x40/00695C/ffffff?text=스경",
-    "category": "스포츠",
-    "description": "경향신문 계열 스포츠 전문 미디어"
-  },
-  {
-    "id": "mbn",
-    "name": "MBN",
-    "logoUrl": "https://placehold.co/80x40/154360/ffffff?text=MBN",
-    "category": "방송/연예",
-    "description": "매일경제 계열 종합편성채널, 경제·시사 특화"
+    "id": "sbs",
+    "name": "SBS",
+    "logoUrl": "/logos/sbs.svg",
+    "thumbnailUrl": "/thumbs/sbs.jpg",
+    "category": "방송/통신",
+    "isMajor": true,
+    "siteUrl": "https://news.sbs.co.kr"
   },
   {
     "id": "jtbc",
     "name": "JTBC",
-    "logoUrl": "https://placehold.co/80x40/E8000D/ffffff?text=JTBC",
-    "category": "방송/연예",
-    "description": "중앙일보 계열 종합편성채널, 탐사보도 강점"
+    "logoUrl": "/logos/jtbc.svg",
+    "thumbnailUrl": "/thumbs/jtbc.jpg",
+    "category": "방송/통신",
+    "isMajor": false,
+    "siteUrl": "https://news.jtbc.co.kr"
   },
   {
     "id": "ytn",
     "name": "YTN",
-    "logoUrl": "https://placehold.co/80x40/003580/ffffff?text=YTN",
-    "category": "방송/연예",
-    "description": "24시간 뉴스 전문 채널, 속보·현장 중심 보도"
+    "logoUrl": "/logos/ytn.svg",
+    "thumbnailUrl": "/thumbs/ytn.jpg",
+    "category": "방송/통신",
+    "isMajor": false,
+    "siteUrl": "https://www.ytn.co.kr"
   },
   {
-    "id": "tvchosun",
-    "name": "TV조선",
-    "logoUrl": "https://placehold.co/80x40/003399/ffffff?text=TV조선",
-    "category": "방송/연예",
-    "description": "조선일보 계열 종합편성채널, 시사·오락 프로그램"
+    "id": "yonhaptv",
+    "name": "연합뉴스TV",
+    "logoUrl": "/logos/yonhaptv.svg",
+    "thumbnailUrl": "/thumbs/yonhaptv.jpg",
+    "category": "방송/통신",
+    "isMajor": false,
+    "siteUrl": "https://www.yonhapnewstv.co.kr"
   },
   {
-    "id": "channela",
-    "name": "채널A",
-    "logoUrl": "https://placehold.co/80x40/D4AC0D/000000?text=채널A",
-    "category": "방송/연예",
-    "description": "동아일보 계열 종합편성채널"
+    "id": "bloter",
+    "name": "BLOTER",
+    "logoUrl": "/logos/bloter.svg",
+    "thumbnailUrl": "/thumbs/bloter.jpg",
+    "category": "IT",
+    "isMajor": false,
+    "siteUrl": "https://www.bloter.net"
   },
   {
-    "id": "tenasia",
-    "name": "텐아시아",
-    "logoUrl": "https://placehold.co/80x40/880E4F/ffffff?text=텐아시아",
-    "category": "방송/연예",
-    "description": "아시아 엔터테인먼트 전문 미디어"
+    "id": "dt",
+    "name": "디지털타임스",
+    "logoUrl": "/logos/dt.svg",
+    "thumbnailUrl": "/thumbs/dt.jpg",
+    "category": "IT",
+    "isMajor": false,
+    "siteUrl": "https://www.dt.co.kr"
   },
   {
-    "id": "busan",
-    "name": "부산일보",
-    "logoUrl": "https://placehold.co/80x40/0077B6/ffffff?text=부산",
-    "category": "지역",
-    "description": "부산·경남 지역 대표 종합 일간지"
+    "id": "etnews",
+    "name": "전자신문",
+    "logoUrl": "/logos/etnews.svg",
+    "thumbnailUrl": "/thumbs/etnews.jpg",
+    "category": "IT",
+    "isMajor": true,
+    "siteUrl": "https://www.etnews.com"
   },
   {
-    "id": "daejeon",
-    "name": "대전일보",
-    "logoUrl": "https://placehold.co/80x40/2E86AB/ffffff?text=대전",
-    "category": "지역",
-    "description": "충청권 대표 지역 언론, 지역 밀착 보도"
+    "id": "zdnet",
+    "name": "ZDNet Korea",
+    "logoUrl": "/logos/zdnet.svg",
+    "thumbnailUrl": "/thumbs/zdnet.jpg",
+    "category": "IT",
+    "isMajor": false,
+    "siteUrl": "https://zdnet.co.kr"
   },
   {
-    "id": "gwangju",
-    "name": "광주일보",
-    "logoUrl": "https://placehold.co/80x40/457B9D/ffffff?text=광주",
-    "category": "지역",
-    "description": "광주·전남 지역을 대표하는 종합 일간지"
+    "id": "inews24",
+    "name": "아이뉴스24",
+    "logoUrl": "/logos/inews24.svg",
+    "thumbnailUrl": "/thumbs/inews24.jpg",
+    "category": "IT",
+    "isMajor": false,
+    "siteUrl": "https://www.inews24.com"
   },
   {
-    "id": "incheon",
-    "name": "인천일보",
-    "logoUrl": "https://placehold.co/80x40/1D6A96/ffffff?text=인천",
-    "category": "지역",
-    "description": "인천·경기 서부 지역 대표 일간지"
+    "id": "itchosun",
+    "name": "IT조선",
+    "logoUrl": "/logos/itchosun.svg",
+    "thumbnailUrl": "/thumbs/itchosun.jpg",
+    "category": "IT",
+    "isMajor": false,
+    "siteUrl": "https://it.chosun.com"
   },
   {
-    "id": "jeonbuk",
-    "name": "전북일보",
-    "logoUrl": "https://placehold.co/80x40/145A32/ffffff?text=전북",
-    "category": "지역",
-    "description": "전라북도 지역 대표 종합 일간지"
-  },
-  {
-    "id": "kangwon",
-    "name": "강원일보",
-    "logoUrl": "https://placehold.co/80x40/5D4037/ffffff?text=강원",
-    "category": "지역",
-    "description": "강원도 지역 대표 종합 일간지"
-  },
-  {
-    "id": "jeju",
-    "name": "제주일보",
-    "logoUrl": "https://placehold.co/80x40/00838F/ffffff?text=제주",
-    "category": "지역",
-    "description": "제주특별자치도 대표 지역 언론"
+    "id": "ddaily",
+    "name": "디지털데일리",
+    "logoUrl": "/logos/ddaily.svg",
+    "thumbnailUrl": "/thumbs/ddaily.jpg",
+    "category": "IT",
+    "isMajor": false,
+    "siteUrl": "https://www.ddaily.co.kr"
   }
 ]

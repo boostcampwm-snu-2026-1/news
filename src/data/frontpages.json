@@ -1,0 +1,559 @@
+[
+  {
+    "publisherId": "chosun",
+    "editedAt": "2026-05-09T06:00:00",
+    "mainArticle": {
+      "id": "chosun-m1",
+      "title": "한미 정상회담, 반도체·AI 동맹 강화 합의",
+      "lead": "양국 정상은 워싱턴 회담에서 반도체 공급망 안정과 AI 기술 협력을 골자로 하는 공동성명을 채택했다. 백악관은 후속 실무회담 일정을 다음 달 발표한다고 밝혔다.",
+      "imageUrl": "/thumbs/articles/chosun-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "chosun-s1", "title": "[사설] 반도체 동맹, 실효성이 관건이다" },
+      { "id": "chosun-s2", "title": "여야, 추경안 처리 두고 막판 진통" },
+      { "id": "chosun-s3", "title": "서울 아파트값 5주 연속 상승세" },
+      { "id": "chosun-s4", "title": "코스피 2,800선 회복… 외국인 매수 전환" },
+      { "id": "chosun-s5", "title": "북, 동해상으로 단거리 미사일 2발 발사" },
+      { "id": "chosun-s6", "title": "교육부, 초등 AI교과서 도입 1년 유예" }
+    ],
+    "featureBox": {
+      "type": "person",
+      "name": "이재현",
+      "subtitle": "前 산업통상자원부 차관",
+      "bullets": [
+        "서울대 경제학과 졸업, 미시간대 경제학 박사",
+        "통상교섭본부장, 산업부 차관 역임",
+        "미·중 무역 갈등 협상 실무 주도"
+      ],
+      "imageUrl": "/thumbs/people/leejaehyun.jpg"
+    },
+    "hotArticles": [
+      { "rank": 1, "title": "[단독] 삼성, 美 텍사스 2공장 착공 임박", "thumbUrl": "/thumbs/hot/chosun-h1.jpg" },
+      { "rank": 2, "title": "[칼럼] 한국 외교, 균형이냐 선택이냐", "thumbUrl": "/thumbs/hot/chosun-h2.jpg" },
+      { "rank": 3, "title": "전기차 보조금 개편안 6월 발표", "thumbUrl": "/thumbs/hot/chosun-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "joongang",
+    "editedAt": "2026-05-09T05:45:00",
+    "mainArticle": {
+      "id": "joongang-m1",
+      "title": "수도권 광역급행철도 GTX-D 노선 5월 확정",
+      "lead": "국토부는 GTX-D 본선 노선과 정거장을 이달 말 확정 발표한다. 김포·부천·강남을 잇는 본선과 인천공항 지선 운영 방식이 핵심 쟁점이다.",
+      "imageUrl": "/thumbs/articles/joongang-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "joongang-s1", "title": "전세사기 특별법 개정안, 국회 본회의 통과" },
+      { "id": "joongang-s2", "title": "서울대병원 의료진 집단행동 일주일째" },
+      { "id": "joongang-s3", "title": "OECD, 韓 성장률 전망 1.9%로 상향" },
+      { "id": "joongang-s4", "title": "오픈AI, 서울에 한국 법인 설립 신고" },
+      { "id": "joongang-s5", "title": "[르포] 멈춰선 컨테이너… 부산항 파업 현장" }
+    ],
+    "hotArticles": [
+      { "rank": 1, "title": "尹 대통령 지지율 32%, 1주 만에 반등", "thumbUrl": "/thumbs/hot/joongang-h1.jpg" },
+      { "rank": 2, "title": "기아 EV5 사전예약 1주 만에 4만대", "thumbUrl": "/thumbs/hot/joongang-h2.jpg" },
+      { "rank": 3, "title": "[분석] 트럼프 2기, 한국 기업 셈법", "thumbUrl": "/thumbs/hot/joongang-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "donga",
+    "editedAt": "2026-05-09T06:10:00",
+    "mainArticle": {
+      "id": "donga-m1",
+      "title": "한일 정상, 안보·경제 셔틀외교 정례화 합의",
+      "lead": "도쿄에서 열린 정상회담에서 양국은 분기별 셔틀외교 정례화와 한일 경제안보 대화체 신설을 합의했다. 첫 회의는 7월 서울에서 개최된다.",
+      "imageUrl": "/thumbs/articles/donga-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "donga-s1", "title": "[단독] 軍, 무인전투기 양산 2027년 착수" },
+      { "id": "donga-s2", "title": "검찰, 대장동 항소심 핵심 증인 재소환" },
+      { "id": "donga-s3", "title": "한은, 기준금리 3.0% 동결" },
+      { "id": "donga-s4", "title": "현대차 美 조지아 공장 풀가동 임박" },
+      { "id": "donga-s5", "title": "교사노조, 교권보호법 추가 개정 요구" },
+      { "id": "donga-s6", "title": "[기획] 인구 5천만 시대, 마지막 5년" }
+    ],
+    "featureBox": {
+      "type": "column",
+      "name": "다시 묻는 한일관계",
+      "subtitle": "박상훈 논설위원",
+      "bullets": [
+        "셔틀외교의 진짜 시험대는 산업협력",
+        "위안부·강제징용 그림자는 여전히",
+        "차세대 교류, 정부 의지에 달렸다"
+      ]
+    },
+    "hotArticles": [
+      { "rank": 1, "title": "[단독] LG엔솔, 美 합작공장 1조 추가투자", "thumbUrl": "/thumbs/hot/donga-h1.jpg" },
+      { "rank": 2, "title": "코스닥 850선 돌파… 1년래 최고", "thumbUrl": "/thumbs/hot/donga-h2.jpg" },
+      { "rank": 3, "title": "수도권 5월 분양 1만2천 가구", "thumbUrl": "/thumbs/hot/donga-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "hani",
+    "editedAt": "2026-05-09T05:30:00",
+    "mainArticle": {
+      "id": "hani-m1",
+      "title": "쿠팡 물류센터 산재 사망, 1년새 4건… 노동부 특별감독",
+      "lead": "지난해 5월 이후 쿠팡 물류센터에서 발생한 산업재해 사망사고가 4건에 이르는 것으로 확인됐다. 노동부는 전국 23개 센터 특별근로감독에 착수한다.",
+      "imageUrl": "/thumbs/articles/hani-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "hani-s1", "title": "[르포] 야간 분류작업 12시간… 기록되지 않은 노동" },
+      { "id": "hani-s2", "title": "전세사기 피해자 단체, 정부에 추가 대책 촉구" },
+      { "id": "hani-s3", "title": "기후위기 청소년 헌법소원 본안심리 시작" },
+      { "id": "hani-s4", "title": "건강보험료 부과체계 개편안 시행 6개월" },
+      { "id": "hani-s5", "title": "이주노동자 산재율 내국인 2.3배" }
+    ],
+    "featureBox": {
+      "type": "person",
+      "name": "정선아",
+      "subtitle": "산업재해 유가족 협의회 대표",
+      "bullets": [
+        "10년째 산재 유가족 지원 활동",
+        "중대재해처벌법 입법 운동 주도",
+        "물류센터 노동조건 실태조사 발표"
+      ],
+      "imageUrl": "/thumbs/people/jeongseona.jpg"
+    },
+    "hotArticles": [
+      { "rank": 1, "title": "[단독] 환경부, 4대강 보 개방 내년 재개", "thumbUrl": "/thumbs/hot/hani-h1.jpg" },
+      { "rank": 2, "title": "[사설] 산재 공화국, 더는 안 된다", "thumbUrl": "/thumbs/hot/hani-h2.jpg" },
+      { "rank": 3, "title": "최저임금위, 1차 회의 무산", "thumbUrl": "/thumbs/hot/hani-h3.jpg" }
+    ],
+    "adBanner": {
+      "imageUrl": "/thumbs/ads/hani-ad1.jpg",
+      "linkUrl": "#",
+      "alt": "한겨레 후원 캠페인"
+    }
+  },
+  {
+    "publisherId": "khan",
+    "editedAt": "2026-05-09T05:55:00",
+    "mainArticle": {
+      "id": "khan-m1",
+      "title": "공공임대 사전공급 확대… 청년·신혼 대상 3만 가구",
+      "lead": "국토부가 청년·신혼부부 대상 공공임대 사전공급을 올해 3만 가구로 확대한다. 본청약 전 소득기준 완화 방안도 함께 추진된다.",
+      "imageUrl": "/thumbs/articles/khan-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "khan-s1", "title": "[단독] 농어촌 의료공백 메우는 닥터헬기 30% 부족" },
+      { "id": "khan-s2", "title": "전국 교사 30%, 지난해 정신건강 상담" },
+      { "id": "khan-s3", "title": "탈탄소 산업전환 기금 5조 신설안 발의" },
+      { "id": "khan-s4", "title": "택배노동자 휴게시설 의무화, 시행 1년의 빛과 그림자" },
+      { "id": "khan-s5", "title": "[사설] 연금 개혁, 다시 정치 시간표에 갇히나" }
+    ],
+    "hotArticles": [
+      { "rank": 1, "title": "尹 정부 4대 개혁, 중간 평가는?", "thumbUrl": "/thumbs/hot/khan-h1.jpg" },
+      { "rank": 2, "title": "한미 방위비 협상, 5차 회의 마무리", "thumbUrl": "/thumbs/hot/khan-h2.jpg" },
+      { "rank": 3, "title": "[르포] 폐교 마을의 마지막 학생", "thumbUrl": "/thumbs/hot/khan-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "mk",
+    "editedAt": "2026-05-09T06:20:00",
+    "mainArticle": {
+      "id": "mk-m1",
+      "title": "코스피 2,820 돌파… 외국인 5거래일 연속 순매수",
+      "lead": "8일 코스피는 외국인 자금 유입에 힘입어 2,820선을 돌파했다. 반도체 대형주가 지수 상승을 견인했고, 5월 들어 누적 순매수액은 3조원을 넘어섰다.",
+      "imageUrl": "/thumbs/articles/mk-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "mk-s1", "title": "[단독] SK하이닉스, HBM4 양산 3분기로 앞당겨" },
+      { "id": "mk-s2", "title": "강남3구 재건축 분담금 평균 2.4억" },
+      { "id": "mk-s3", "title": "원-달러 환율 1,330원선 회복" },
+      { "id": "mk-s4", "title": "[부동산] 마포·성동, 재개발 청약 경쟁률 100대1" },
+      { "id": "mk-s5", "title": "삼성전자, 美 파운드리 신규 수주 1.2조" },
+      { "id": "mk-s6", "title": "[칼럼] 금리 인하, 시장은 너무 앞서갔다" }
+    ],
+    "featureBox": {
+      "type": "person",
+      "name": "한도윤",
+      "subtitle": "삼성자산운용 글로벌투자본부장",
+      "bullets": [
+        "와튼스쿨 MBA, 골드만삭스 출신",
+        "2025 베스트 펀드매니저상 수상",
+        "AI·반도체 테마 ETF 5종 운용"
+      ],
+      "imageUrl": "/thumbs/people/handoyoon.jpg"
+    },
+    "hotArticles": [
+      { "rank": 1, "title": "[단독] 카카오뱅크, 일본 진출 본격 검토", "thumbUrl": "/thumbs/hot/mk-h1.jpg" },
+      { "rank": 2, "title": "비트코인 9만달러 재돌파", "thumbUrl": "/thumbs/hot/mk-h2.jpg" },
+      { "rank": 3, "title": "엔비디아 주가 사상 최고치", "thumbUrl": "/thumbs/hot/mk-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "hankyung",
+    "editedAt": "2026-05-09T06:05:00",
+    "mainArticle": {
+      "id": "hankyung-m1",
+      "title": "한은 \"하반기 금리 인하 여건 점차 조성\"",
+      "lead": "한국은행이 통화정책방향 보고서에서 하반기 기준금리 인하 가능성을 시사했다. 인플레이션 둔화와 가계부채 감소세가 결정적 변수로 지목됐다.",
+      "imageUrl": "/thumbs/articles/hankyung-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "hankyung-s1", "title": "현대차·기아, 美 4월 판매 사상 최대" },
+      { "id": "hankyung-s2", "title": "[단독] 네이버, 사우디 디지털 청사 수주" },
+      { "id": "hankyung-s3", "title": "건설사 PF 부실 우려 38곳으로 축소" },
+      { "id": "hankyung-s4", "title": "美 연준, 6월 동결 가능성 80%로" },
+      { "id": "hankyung-s5", "title": "[부동산] 분양가 상한제 폐지론 재점화" }
+    ],
+    "hotArticles": [
+      { "rank": 1, "title": "삼성전자 갤럭시Z 7 시리즈 7월 공개", "thumbUrl": "/thumbs/hot/hankyung-h1.jpg" },
+      { "rank": 2, "title": "[칼럼] 인구 절벽, 성장률보다 무서운 통계", "thumbUrl": "/thumbs/hot/hankyung-h2.jpg" },
+      { "rank": 3, "title": "포스코, 호주 리튬 광산 추가 인수", "thumbUrl": "/thumbs/hot/hankyung-h3.jpg" }
+    ],
+    "adBanner": {
+      "imageUrl": "/thumbs/ads/hankyung-ad1.jpg",
+      "linkUrl": "#",
+      "alt": "한경 머니로드쇼"
+    }
+  },
+  {
+    "publisherId": "kbs",
+    "editedAt": "2026-05-09T06:00:00",
+    "mainArticle": {
+      "id": "kbs-m1",
+      "title": "[속보] 강원도 산불 18시간 만에 주불 진화",
+      "lead": "강원 양양에서 발생한 산불이 18시간 만에 주불 진화에 성공했다. 주택 12채가 소실됐으며 인명 피해는 없는 것으로 확인됐다.",
+      "imageUrl": "/thumbs/articles/kbs-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "kbs-s1", "title": "어린이날 연휴 고속도로 정체 절정" },
+      { "id": "kbs-s2", "title": "전국 곳곳 황사… 미세먼지 '나쁨'" },
+      { "id": "kbs-s3", "title": "[단독] 학교폭력 신고 건수 2년 연속 증가" },
+      { "id": "kbs-s4", "title": "수능 9월 모의평가 일정 확정" },
+      { "id": "kbs-s5", "title": "북한 주민 1명, 동해상으로 귀순 추정" }
+    ],
+    "featureBox": {
+      "type": "person",
+      "name": "최민혁",
+      "subtitle": "기상청 예보분석관",
+      "bullets": [
+        "20년차 기상예보 전문가",
+        "엘니뇨·라니냐 장기예보 모델 개발",
+        "올여름 평년보다 더울 확률 70%"
+      ],
+      "imageUrl": "/thumbs/people/choiminhyuk.jpg"
+    },
+    "hotArticles": [
+      { "rank": 1, "title": "어린이 교통사고 5년새 32% 감소", "thumbUrl": "/thumbs/hot/kbs-h1.jpg" },
+      { "rank": 2, "title": "[기획] 1인 가구 1000만 시대, 정책은 따라가나", "thumbUrl": "/thumbs/hot/kbs-h2.jpg" },
+      { "rank": 3, "title": "한일 해저터널 공동연구 재개 검토", "thumbUrl": "/thumbs/hot/kbs-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "mbc",
+    "editedAt": "2026-05-09T05:50:00",
+    "mainArticle": {
+      "id": "mbc-m1",
+      "title": "[탐사] 보험사기 '브로커 조직' 200명 적발",
+      "lead": "MBC 탐사보도팀이 1년간 추적한 보험사기 조직 실체가 드러났다. 브로커 200여 명이 가담해 280억원대 보험금을 편취한 것으로 확인됐다.",
+      "imageUrl": "/thumbs/articles/mbc-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "mbc-s1", "title": "[단독] 군 내부 폭력 사건 은폐 의혹" },
+      { "id": "mbc-s2", "title": "전세보증금 미반환 사고, 4월 사상 최대" },
+      { "id": "mbc-s3", "title": "공공기관 비정규직 '쪼개기 계약' 여전" },
+      { "id": "mbc-s4", "title": "코로나 후유증 환자 30만명 추산" },
+      { "id": "mbc-s5", "title": "[현장] 폐업하는 동네 슈퍼, 1주일에 한 곳" }
+    ],
+    "hotArticles": [
+      { "rank": 1, "title": "[단독] 의대 정원 배분 갈등 재점화", "thumbUrl": "/thumbs/hot/mbc-h1.jpg" },
+      { "rank": 2, "title": "한강버스 운항 첫 주 만석", "thumbUrl": "/thumbs/hot/mbc-h2.jpg" },
+      { "rank": 3, "title": "[기획] 청년 자영업자 폐업률 38%", "thumbUrl": "/thumbs/hot/mbc-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "sbs",
+    "editedAt": "2026-05-09T06:15:00",
+    "mainArticle": {
+      "id": "sbs-m1",
+      "title": "수도권 1호선 오전 출근길 30분 지연",
+      "lead": "8일 오전 7시경 1호선 영등포역 인근에서 신호장애가 발생해 출근길 시민 수만 명이 불편을 겪었다. 코레일은 정확한 원인을 조사 중이라고 밝혔다.",
+      "imageUrl": "/thumbs/articles/sbs-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "sbs-s1", "title": "[단독] 보이스피싱 1분기 피해액 2,100억" },
+      { "id": "sbs-s2", "title": "BTS 진, 솔로 미니앨범 글로벌 1위" },
+      { "id": "sbs-s3", "title": "프로야구 한화, 12년 만에 1위 도약" },
+      { "id": "sbs-s4", "title": "어린이날 예술의전당 가족 관람객 4만 명" },
+      { "id": "sbs-s5", "title": "온라인 도박 청소년 가담 5년새 6배" }
+    ],
+    "featureBox": {
+      "type": "column",
+      "name": "데이터로 본 한 주",
+      "subtitle": "이수진 데이터저널리스트",
+      "bullets": [
+        "출근길 지연, 작년보다 23% 증가",
+        "보이스피싱 평균 피해액 2,800만원",
+        "5월 첫째 주 기온 평년 +1.8℃"
+      ]
+    },
+    "hotArticles": [
+      { "rank": 1, "title": "월드컵 예선 한국 vs 호주, 다음 달 6일 격돌", "thumbUrl": "/thumbs/hot/sbs-h1.jpg" },
+      { "rank": 2, "title": "[연예] 봉준호 신작, 칸 경쟁부문 진출", "thumbUrl": "/thumbs/hot/sbs-h2.jpg" },
+      { "rank": 3, "title": "전국 어린이날 행사 200만 명 운집", "thumbUrl": "/thumbs/hot/sbs-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "jtbc",
+    "editedAt": "2026-05-09T05:40:00",
+    "mainArticle": {
+      "id": "jtbc-m1",
+      "title": "[단독] 대통령실 인사 검증 보고서 1년치 입수",
+      "lead": "JTBC가 입수한 대통령실 인사 검증 보고서에는 23명의 고위 인사 후보 명단이 포함됐다. 부적격 사유가 기록된 인물 일부가 임명된 정황도 확인됐다.",
+      "imageUrl": "/thumbs/articles/jtbc-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "jtbc-s1", "title": "[팩트체크] 야당 대표 발언, 3가지 중 2가지 거짓" },
+      { "id": "jtbc-s2", "title": "검찰 수뇌부 인사 다음주 단행" },
+      { "id": "jtbc-s3", "title": "방통위, OTT 사업자 약관 점검 착수" },
+      { "id": "jtbc-s4", "title": "[탐사] 대학 등록금 동결 14년… 누가 부담했나" },
+      { "id": "jtbc-s5", "title": "한국형 기본소득 실험, 충북서 시작" }
+    ],
+    "hotArticles": [
+      { "rank": 1, "title": "尹 대통령, 외신 인터뷰서 \"개헌 논의 시기상조\"", "thumbUrl": "/thumbs/hot/jtbc-h1.jpg" },
+      { "rank": 2, "title": "[앵커브리핑] 진실의 시간표", "thumbUrl": "/thumbs/hot/jtbc-h2.jpg" },
+      { "rank": 3, "title": "여야, 22대 국회 전반기 원구성 합의", "thumbUrl": "/thumbs/hot/jtbc-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "ytn",
+    "editedAt": "2026-05-09T06:25:00",
+    "mainArticle": {
+      "id": "ytn-m1",
+      "title": "[속보] 부산 해운대 앞바다 화물선 충돌… 인명피해 없어",
+      "lead": "9일 새벽 부산 해운대 앞바다에서 화물선 두 척이 충돌하는 사고가 발생했다. 승선원 18명 전원 구조됐고 기름 유출은 확인되지 않았다.",
+      "imageUrl": "/thumbs/articles/ytn-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "ytn-s1", "title": "[속보] 경기 안성 공장 화재, 1시간 만에 진화" },
+      { "id": "ytn-s2", "title": "기상청, 내일 전국 대부분 비… 강수량 30~80mm" },
+      { "id": "ytn-s3", "title": "[속보] 美 연준, FOMC 회의록 공개" },
+      { "id": "ytn-s4", "title": "오늘의 환율: 달러 1,331원, 엔화 869원" },
+      { "id": "ytn-s5", "title": "오전 7시 기준 주요 도로 정체 구간" }
+    ],
+    "hotArticles": [
+      { "rank": 1, "title": "[속보] 일본 후쿠시마 인근 규모 5.2 지진", "thumbUrl": "/thumbs/hot/ytn-h1.jpg" },
+      { "rank": 2, "title": "美 뉴욕증시 3대 지수 일제히 상승 마감", "thumbUrl": "/thumbs/hot/ytn-h2.jpg" },
+      { "rank": 3, "title": "오늘 날씨, 한낮 최고 24도 초여름 더위", "thumbUrl": "/thumbs/hot/ytn-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "yonhaptv",
+    "editedAt": "2026-05-09T06:30:00",
+    "mainArticle": {
+      "id": "yonhaptv-m1",
+      "title": "美 \"이란 핵 시설 추가 제재 검토\"… 중동 긴장 고조",
+      "lead": "미 국무부 대변인이 이란의 우라늄 농축 가속화에 대응해 추가 제재를 검토한다고 밝혔다. 호르무즈 해협을 둘러싼 긴장이 다시 고조되는 양상이다.",
+      "imageUrl": "/thumbs/articles/yonhaptv-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "yonhaptv-s1", "title": "EU, 對中 전기차 관세 9월 본격 발효" },
+      { "id": "yonhaptv-s2", "title": "[속보] 우크라이나, 동부 전선 일부 탈환" },
+      { "id": "yonhaptv-s3", "title": "일본 엔화 158엔 돌파… 34년래 최저" },
+      { "id": "yonhaptv-s4", "title": "베트남 호치민 폭우, 출퇴근 마비" },
+      { "id": "yonhaptv-s5", "title": "OPEC+ 6월 회의, 감산 연장 가능성" }
+    ],
+    "hotArticles": [
+      { "rank": 1, "title": "中, 5월 수출 전년比 8.1% 증가", "thumbUrl": "/thumbs/hot/yonhaptv-h1.jpg" },
+      { "rank": 2, "title": "[속보] 폴란드 신임 총리 취임 선서", "thumbUrl": "/thumbs/hot/yonhaptv-h2.jpg" },
+      { "rank": 3, "title": "사우디, 네옴시티 1단계 일정 재조정", "thumbUrl": "/thumbs/hot/yonhaptv-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "bloter",
+    "editedAt": "2026-05-09T02:11:00",
+    "mainArticle": {
+      "id": "bloter-m1",
+      "title": "[SK 리밸런싱 그 후] SK이노베이션, 80조 매출 불구 이익률 정체",
+      "lead": "SK이노베이션이 80조원대 매출에도 1%에 못 미치는 EBIT(이자·세금 차감 전 이익) 마진을 기록했다. 지난해 대규모 자본확충과 사업 재편으로 재무 부담은 일부 덜었지만 낮아진 이익창출력은 여전히 기업가치 회복의 걸림돌로 남아 있다.",
+      "imageUrl": "/thumbs/articles/bloter-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "bloter-s1", "title": "[바이오사 리포트] 에이비엘, 릴리 딜로 현금 보유 1조 돌파" },
+      { "id": "bloter-s2", "title": "삼성전자 노사, 총파업 열흘 앞두고 11일 막판 교섭" },
+      { "id": "bloter-s3", "title": "KT스카이라프, 외형 성장 넘어 수익화 '시험대'" },
+      { "id": "bloter-s4", "title": "실적 회복세 진입 SKT… 정재현표 'AI 전략' 승부수" },
+      { "id": "bloter-s5", "title": "KB라이프, 부실대출 '제로'… 자산 건전성 최상위" },
+      { "id": "bloter-s6", "title": "코오롱인더, 영업익 130% 껑충 '중동 리스크' 넘었다" }
+    ],
+    "featureBox": {
+      "type": "person",
+      "name": "진인혜",
+      "subtitle": "베리스모테라퓨틱스 상무 / 1996년 10월생",
+      "bullets": [
+        "영국 킹스칼리지 법대 졸업",
+        "영국 런던정경대(LSE) 대학원 졸업",
+        "심가툰펀드 펀드 운용사 근무",
+        "HLB이노베이션 미국 자회사 베리스모테라퓨틱스 재직중"
+      ],
+      "imageUrl": "/thumbs/people/jininhye.jpg"
+    },
+    "hotArticles": [
+      { "rank": 1, "title": "[단독] SKC, '취득가 4511억'", "thumbUrl": "/thumbs/hot/bloter-h1.jpg" },
+      { "rank": 2, "title": "[박종면칼럼] 왜 SK는 되고", "thumbUrl": "/thumbs/hot/bloter-h2.jpg" },
+      { "rank": 3, "title": "국민성장펀드 1차 출자사업, 본격화", "thumbUrl": "/thumbs/hot/bloter-h3.jpg" }
+    ],
+    "adBanner": {
+      "imageUrl": "/thumbs/ads/bloter-ad1.jpg",
+      "linkUrl": "#",
+      "alt": "취향의 보물창고, 프리미엄콘텐츠"
+    }
+  },
+  {
+    "publisherId": "dt",
+    "editedAt": "2026-05-09T05:35:00",
+    "mainArticle": {
+      "id": "dt-m1",
+      "title": "5G 28GHz 할당 4년… 정부, 6G 정책 로드맵 6월 발표",
+      "lead": "과기정통부는 28GHz 5G 정책 실패를 반면교사 삼아 6G 주파수·인프라 로드맵을 6월 공개한다. 통신3사 의견 수렴이 막바지에 접어들었다.",
+      "imageUrl": "/thumbs/articles/dt-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "dt-s1", "title": "KT, AI 콘택트센터 솔루션 일본 수출" },
+      { "id": "dt-s2", "title": "LG유플러스 신임 CFO에 김재현 부사장" },
+      { "id": "dt-s3", "title": "[단독] 통신요금 인가제 폐지안 재발의" },
+      { "id": "dt-s4", "title": "갤럭시S26 시리즈 1월 출시 유력" },
+      { "id": "dt-s5", "title": "알뜰폰 가입자 1,800만 돌파" }
+    ],
+    "hotArticles": [
+      { "rank": 1, "title": "삼성, 1나노 GAA 공정 2027년 양산", "thumbUrl": "/thumbs/hot/dt-h1.jpg" },
+      { "rank": 2, "title": "MWC 상하이 6월 개막… 한국 30개사 참가", "thumbUrl": "/thumbs/hot/dt-h2.jpg" },
+      { "rank": 3, "title": "[칼럼] 통신산업, 다음 10년의 BM은?", "thumbUrl": "/thumbs/hot/dt-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "etnews",
+    "editedAt": "2026-05-09T05:25:00",
+    "mainArticle": {
+      "id": "etnews-m1",
+      "title": "삼성·SK, HBM4 양산 경쟁 본격화… 엔비디아 공급 분배 주목",
+      "lead": "삼성전자와 SK하이닉스가 5세대 고대역폭 메모리(HBM4) 양산 시점을 3분기로 앞당겼다. 엔비디아의 차세대 GPU 공급 비중이 두 회사의 명운을 가를 전망이다.",
+      "imageUrl": "/thumbs/articles/etnews-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "etnews-s1", "title": "[단독] 정부, 반도체 특별법 9월 시행" },
+      { "id": "etnews-s2", "title": "삼성디스플레이, 8세대 OLED 라인 가동 임박" },
+      { "id": "etnews-s3", "title": "현대차그룹 SDV 전환 가속… 소프트웨어 인력 5천명 충원" },
+      { "id": "etnews-s4", "title": "TSMC, 미국 3공장 2027년 가동 확정" },
+      { "id": "etnews-s5", "title": "LG에너지솔루션, 전고체 배터리 시제품 공개" },
+      { "id": "etnews-s6", "title": "[기획] AI 반도체 스타트업, 투자 혹한기 어떻게 넘나" }
+    ],
+    "featureBox": {
+      "type": "person",
+      "name": "박지원",
+      "subtitle": "KAIST 반도체공학과 교수",
+      "bullets": [
+        "스탠퍼드 전자공학 박사",
+        "차세대 메모리 아키텍처 권위자",
+        "정부 반도체 자문위원 겸직"
+      ],
+      "imageUrl": "/thumbs/people/parkjiwon.jpg"
+    },
+    "hotArticles": [
+      { "rank": 1, "title": "[단독] LG전자, 인도 첸나이 가전 신공장 착공", "thumbUrl": "/thumbs/hot/etnews-h1.jpg" },
+      { "rank": 2, "title": "퀄컴 \"한국, 차세대 모바일 AI 핵심 거점\"", "thumbUrl": "/thumbs/hot/etnews-h2.jpg" },
+      { "rank": 3, "title": "AI 반도체 스타트업 리벨리온, 5천억 투자 유치", "thumbUrl": "/thumbs/hot/etnews-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "zdnet",
+    "editedAt": "2026-05-09T05:20:00",
+    "mainArticle": {
+      "id": "zdnet-m1",
+      "title": "오픈AI, GPT-5 정식 출시… 멀티모달 추론 비용 60% 절감",
+      "lead": "오픈AI가 GPT-5를 공개하며 멀티모달 추론 비용을 GPT-4 대비 60% 낮췄다고 발표했다. 기업용 API 가격 인하가 시장 판도를 흔들 것으로 보인다.",
+      "imageUrl": "/thumbs/articles/zdnet-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "zdnet-s1", "title": "구글, 안드로이드 17 개발자 프리뷰 공개" },
+      { "id": "zdnet-s2", "title": "마이크로소프트, 코파일럿 한국어 정확도 12%p 향상" },
+      { "id": "zdnet-s3", "title": "메타, 라마 4 오픈소스로 공개" },
+      { "id": "zdnet-s4", "title": "[글로벌] EU AI법 6월 1일 본격 시행" },
+      { "id": "zdnet-s5", "title": "애플 비전프로 2세대, 9월 공개 유력" }
+    ],
+    "hotArticles": [
+      { "rank": 1, "title": "[분석] 빅테크 5사, AI 인프라 투자 1년새 2배", "thumbUrl": "/thumbs/hot/zdnet-h1.jpg" },
+      { "rank": 2, "title": "테슬라 옵티머스 양산형, 6월 공장 투입", "thumbUrl": "/thumbs/hot/zdnet-h2.jpg" },
+      { "rank": 3, "title": "엔비디아 블랙웰, 데이터센터 출하 본격화", "thumbUrl": "/thumbs/hot/zdnet-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "inews24",
+    "editedAt": "2026-05-09T05:50:00",
+    "mainArticle": {
+      "id": "inews24-m1",
+      "title": "넥슨 신작 '프로젝트 SF' 공개… 스팀 동시접속 50만 돌파",
+      "lead": "넥슨이 새 PC·콘솔 IP '프로젝트 SF' 글로벌 베타를 시작했다. 출시 첫날 스팀 동시접속자 50만 명을 넘기며 흥행 시동을 걸었다.",
+      "imageUrl": "/thumbs/articles/inews24-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "inews24-s1", "title": "엔씨소프트, 2분기 실적 컨센서스 상회 전망" },
+      { "id": "inews24-s2", "title": "[단독] 카카오게임즈, 콘솔 시장 본격 진출" },
+      { "id": "inews24-s3", "title": "갤럭시Z 폴드7 카메라 스펙 유출" },
+      { "id": "inews24-s4", "title": "넷플릭스 '오징어게임 시즌3' 6월 공개" },
+      { "id": "inews24-s5", "title": "스마일게이트, 인도 게임시장 진출 협약" }
+    ],
+    "hotArticles": [
+      { "rank": 1, "title": "[리뷰] 갤럭시 링 2세대, 일주일 사용기", "thumbUrl": "/thumbs/hot/inews24-h1.jpg" },
+      { "rank": 2, "title": "유튜브 프리미엄, 가족 요금제 가격 인상", "thumbUrl": "/thumbs/hot/inews24-h2.jpg" },
+      { "rank": 3, "title": "AI 챗봇 '뤼튼', 월 활성 사용자 800만", "thumbUrl": "/thumbs/hot/inews24-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "itchosun",
+    "editedAt": "2026-05-09T06:00:00",
+    "mainArticle": {
+      "id": "itchosun-m1",
+      "title": "정부, AI 산업 진흥 종합대책 발표… 5년간 12조 투자",
+      "lead": "정부가 향후 5년간 12조원을 투입하는 AI 산업 진흥 종합대책을 확정했다. AI 인프라·인재·규제 3대 축으로 추진되며 6월부터 단계 시행된다.",
+      "imageUrl": "/thumbs/articles/itchosun-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "itchosun-s1", "title": "[단독] 개인정보위, 생성AI 학습데이터 가이드라인 7월 시행" },
+      { "id": "itchosun-s2", "title": "디지털플랫폼정부 1주년… 성과와 한계" },
+      { "id": "itchosun-s3", "title": "공공 클라우드 전환율 67% 도달" },
+      { "id": "itchosun-s4", "title": "사이버보안 인력 2030년까지 4만 명 양성" },
+      { "id": "itchosun-s5", "title": "[기고] AI 시대 저작권법, 어디로 가나" }
+    ],
+    "featureBox": {
+      "type": "column",
+      "name": "디지털 정책 인사이트",
+      "subtitle": "김도현 디지털전환 전문기자",
+      "bullets": [
+        "AI 기본법, 산업과 권리 사이",
+        "데이터 주권, 더는 미룰 수 없는 의제",
+        "공공 디지털 전환의 진짜 성과는?"
+      ]
+    },
+    "hotArticles": [
+      { "rank": 1, "title": "한국형 LLM 'KO-GPT 3', 공공기관 도입 본격화", "thumbUrl": "/thumbs/hot/itchosun-h1.jpg" },
+      { "rank": 2, "title": "[단독] 망 사용료 분쟁, 넷플릭스-SKB 화해 임박", "thumbUrl": "/thumbs/hot/itchosun-h2.jpg" },
+      { "rank": 3, "title": "사이버 침해사고 1분기 4,200건 신고", "thumbUrl": "/thumbs/hot/itchosun-h3.jpg" }
+    ]
+  },
+  {
+    "publisherId": "ddaily",
+    "editedAt": "2026-05-09T05:55:00",
+    "mainArticle": {
+      "id": "ddaily-m1",
+      "title": "국내 데이터센터 전력 사용량 5년새 3배… 입지 갈등 심화",
+      "lead": "국내 데이터센터 전력 사용량이 2020년 대비 3배로 늘었다. 수도권 집중과 주민 반발이 겹치며 신규 부지 확보가 업계의 최대 난제로 떠올랐다.",
+      "imageUrl": "/thumbs/articles/ddaily-m1.jpg"
+    },
+    "subArticles": [
+      { "id": "ddaily-s1", "title": "[단독] 네이버클라우드, 사우디 리야드 리전 9월 가동" },
+      { "id": "ddaily-s2", "title": "AWS 한국 리전 추가 증설 검토" },
+      { "id": "ddaily-s3", "title": "삼성SDS, 생성AI 보안 솔루션 출시" },
+      { "id": "ddaily-s4", "title": "금융권 망분리 규제 완화 9월 시행" },
+      { "id": "ddaily-s5", "title": "[기획] 양자컴퓨팅 시대, 보안은 준비됐나" }
+    ],
+    "hotArticles": [
+      { "rank": 1, "title": "[단독] 카카오엔터프라이즈, 클라우드 사업 분사 검토", "thumbUrl": "/thumbs/hot/ddaily-h1.jpg" },
+      { "rank": 2, "title": "오라클 vs MS, 한국 공공 클라우드 격돌", "thumbUrl": "/thumbs/hot/ddaily-h2.jpg" },
+      { "rank": 3, "title": "DDoS 공격 1분기 18% 증가", "thumbUrl": "/thumbs/hot/ddaily-h3.jpg" }
+    ]
+  }
+]
