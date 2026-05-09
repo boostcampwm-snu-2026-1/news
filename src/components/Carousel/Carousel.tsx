@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 
 const PANEL_W = 736;
 const HALF = PANEL_W / 2;      // 368
-const BTN_GAP = 80;            // 버튼 ~ 중앙 패널 경계 간격
+const BTN_GAP = 48;            // 버튼 ~ 중앙 패널 경계 간격
 
 // 트랙 translateX — 중앙 패널(index 1)이 화면 정중앙에 오도록
 const BASE  = `calc(50% - ${HALF + PANEL_W}px)`;      // calc(50% - 1104px)
