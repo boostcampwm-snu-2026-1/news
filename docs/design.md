@@ -93,6 +93,22 @@
 - 패널 렌더: `renderPanel(index, isActive)` render prop으로 외부에서 주입
 - `prevLabel` / `nextLabel` prop으로 툴팁 텍스트 주입
 
+### CarouselControlBar
+
+- `flex items-center justify-between text-xs text-text-secondary px-2 py-1.5`
+- 너비: 중앙 패널과 동일 (`736px`, `mx-auto`)
+- **좌측**: 자동넘김 토글 버튼 (`border border-text-primary` 활성 / `border-border` 비활성) + 자동넘김 ON일 때 속도 드롭다운 노출 (`느리게(30초)` / `보통(20초)` / `빠르게(15초)`)
+- **우측**: `{n} / {total}` (`tabular-nums`) + ◁ ▷ 미세이동 버튼
+
+### PublisherStrip
+
+- `flex justify-center gap-1 pt-1 pb-2` — 가로 정렬, 스크롤 없음
+- 썸네일: `64 × 40px`, 20개 × 64px + 19 × 4px = 1356px (container-page 1368px 이내)
+- 활성: `border-2 border-text-primary opacity-100`
+- 비활성: `border border-border opacity-55 hover:opacity-85`
+- 이름 표시: hover 툴팁 (`bg-text-primary text-white rounded px-2 py-0.5`)
+- 클릭 시 캐러셀 `activeIndex` 점프 + `scrollIntoView` 자동 스크롤
+
 ---
 
 ## 색상 팔레트
