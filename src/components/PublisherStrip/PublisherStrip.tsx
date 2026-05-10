@@ -21,15 +21,14 @@ export function PublisherStrip({ publishers, activeIndex, onSelect }: PublisherS
         return (
           <button
             key={pub.id}
+            type="button"
             ref={isActive ? activeRef : null}
             onClick={() => onSelect(i)}
-            title={pub.name}
-            className={`group relative flex-shrink-0 transition-all duration-150 focus:outline-none ${
+            className={`flex-shrink-0 transition-all duration-150 focus:outline-none ${
               isActive ? 'opacity-100' : 'opacity-55 hover:opacity-85'
             }`}
             style={{ width: 64 }}
           >
-            {/* 썸네일 */}
             <div
               className={`bg-surface flex items-center justify-center overflow-hidden transition-all duration-150 ${
                 isActive
@@ -54,11 +53,6 @@ export function PublisherStrip({ publishers, activeIndex, onSelect }: PublisherS
                 }}
               />
             </div>
-
-            {/* hover 툴팁 */}
-            <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 whitespace-nowrap text-xs font-medium bg-text-primary text-white rounded px-2 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none z-20">
-              {pub.name}
-            </span>
           </button>
         );
       })}

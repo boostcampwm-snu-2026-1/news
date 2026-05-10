@@ -44,6 +44,7 @@ export function FrontPagePanel({ publisher, frontPage }: FrontPagePanelProps) {
           {['구독하기', '이용자 한마디', '공유'].map((label) => (
             <button
               key={label}
+              type="button"
               className="text-[10px] text-text-secondary border border-border rounded px-1 py-px hover:border-text-secondary transition-colors duration-150"
             >
               {label}

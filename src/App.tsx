@@ -68,9 +68,7 @@ function App() {
   return (
     <div className="min-h-screen bg-bg">
       <GlobalHeader activeTab={viewTab} onTabChange={setViewTab} />
-      <div className="container-page">
-        <CategoryTabs activeTab={categoryTab} onTabChange={handleCategoryChange} />
-      </div>
+      <CategoryTabs activeTab={categoryTab} onTabChange={handleCategoryChange} />
       <div className="pt-4">
         <Carousel
           count={total}

@@ -12,6 +12,7 @@ export function CategoryTabs({ activeTab, onTabChange }: CategoryTabsProps) {
       {CATEGORY_TABS.map((tab) => (
         <button
           key={tab}
+          type="button"
           onClick={() => onTabChange(tab)}
           className={
             tab === activeTab

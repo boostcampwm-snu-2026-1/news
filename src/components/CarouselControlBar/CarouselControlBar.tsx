@@ -58,8 +58,8 @@ export function CarouselControlBar({
         <span className="font-medium text-text-primary">자동넘김</span>
 
         <div ref={ref} className="relative">
-          {/* 트리거 버튼 */}
           <button
+            type="button"
             onClick={() => setOpen((v) => !v)}
             className="flex items-center gap-1 px-2 py-0.5 rounded border border-border text-text-secondary hover:border-text-secondary transition-colors duration-150"
           >
@@ -72,12 +72,12 @@ export function CarouselControlBar({
             </svg>
           </button>
 
-          {/* 드롭업 리스트 */}
           {open && (
             <ul className="absolute bottom-full left-0 mb-1 bg-white border border-border rounded shadow-panel min-w-full z-20 overflow-hidden">
               {SPEED_OPTIONS.map(({ value, label }) => (
                 <li key={value}>
                   <button
+                    type="button"
                     onClick={() => select(value)}
                     className={`w-full text-left px-3 py-1.5 text-xs whitespace-nowrap hover:bg-border transition-colors duration-100 ${
                       speed === value ? 'font-medium text-text-primary' : 'text-text-secondary'
@@ -99,6 +99,7 @@ export function CarouselControlBar({
         </span>
         <div className="flex items-center gap-0.5">
           <button
+            type="button"
             onClick={onPrev}
             aria-label="이전"
             className="px-1.5 py-1 hover:text-text-primary transition-colors duration-150"
@@ -106,6 +107,7 @@ export function CarouselControlBar({
             ◁
           </button>
           <button
+            type="button"
             onClick={onNext}
             aria-label="다음"
             className="px-1.5 py-1 hover:text-text-primary transition-colors duration-150"

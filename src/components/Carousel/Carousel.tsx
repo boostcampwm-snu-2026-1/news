@@ -85,6 +85,7 @@ export function Carousel({
 
       {/* < 버튼 — 왼쪽 peek 영역 중앙 */}
       <button
+        type="button"
         onClick={() => slide('prev')}
         aria-label="이전"
         disabled={sliding}
@@ -106,6 +107,7 @@ export function Carousel({
 
       {/* > 버튼 — 오른쪽 peek 영역 중앙 */}
       <button
+        type="button"
         onClick={() => slide('next')}
         aria-label="다음"
         disabled={sliding}
