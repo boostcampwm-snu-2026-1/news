@@ -5,6 +5,7 @@ export const PRESS_CATEGORIES = [
   '종합/경제',
   '방송/통신',
   '스포츠/연예',
+  'IT/과학',
   '매거진/전문지',
   '지역',
 ]
@@ -122,3 +123,62 @@ export const PRESS_DATA = [
   createPress({ id: 'kado', name: '강원도민일보', category: '지역' }),
   createPress({ id: 'imaeil', name: '매일신문', category: '지역' }),
 ]
+
+const CATEGORY_ARTICLE_TEMPLATES = {
+  '종합/경제': [
+    '정책 변화가 시장에 미치는 영향 점검',
+    '주요 기업 실적과 투자 흐름 분석',
+    '생활 물가 지표로 보는 이번 주 경제',
+    '금융권 디지털 전환 속도 비교',
+  ],
+  '방송/통신': [
+    '플랫폼 경쟁 속 시청자 이용 패턴 변화',
+    '통신 인프라 투자와 AI 서비스 확장',
+    '콘텐츠 편성 전략의 새 흐름',
+    '미디어 규제 이슈와 업계 반응',
+  ],
+  '스포츠/연예': [
+    '주말 경기 결과와 다음 라운드 전망',
+    '신작 공개 이후 팬덤 반응 분석',
+    '이적 시장 주요 변수와 팀 전략',
+    '공연 일정 확정으로 되살아난 현장 열기',
+  ],
+  'IT/과학': [
+    '생성형 AI 서비스의 최신 적용 사례',
+    '클라우드 비용 최적화 전략 부상',
+    '보안 업데이트가 개발 조직에 남긴 과제',
+    '연구 현장에서 검증 중인 차세대 기술',
+  ],
+  '매거진/전문지': [
+    '깊이 읽는 산업 트렌드 리포트',
+    '전문가 인터뷰로 짚은 현장 변화',
+    '데이터로 보는 소비자 관심사',
+    '롱폼 기사로 정리한 이번 주 쟁점',
+  ],
+  지역: [
+    '지역 현안과 주민 생활 변화',
+    '지자체 정책 발표 이후 현장 반응',
+    '문화 행사와 골목 상권 회복 흐름',
+    '교통망 개선이 생활권에 미치는 영향',
+  ],
+}
+
+export function getPressPrimaryCategory(press) {
+  return PRESS_CATEGORIES.includes(press?.category) ? press.category : PRESS_CATEGORIES[0]
+}
+
+export function getPressArticleDeck(press) {
+  if (!press) {
+    return []
+  }
+
+  return PRESS_CATEGORIES.map((category) => ({
+    key: category,
+    label: category,
+    articles: CATEGORY_ARTICLE_TEMPLATES[category].map((title, index) => ({
+      id: `${press.id}-${category}-${index}`,
+      title: `${press.name}, ${title}`,
+      meta: `${press.category === category ? '주요 분야' : '확장 기사'} · ${index + 1}면`,
+    })),
+  }))
+}
