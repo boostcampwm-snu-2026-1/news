@@ -56,7 +56,7 @@
 
 - [x] **(2주차)** 구독 0개 상태 — 구독 탭 진입 시 빈 그리드 + 안내, 페이지 클램프 동작 ([2-B-1 테스트](../src/test/edge-cases/2-B-1-empty-subscription.test.tsx))
 - [x] **(2주차)** 마지막 페이지에서 구독 해지로 페이지 수 줄어드는 시나리오 ([2-B-2 테스트](../src/test/edge-cases/2-B-2-page-clamp.test.tsx))
-- [ ] **(2주차)** 오픈 상태에서 해당 언론사 구독 해지 시 동작 (계속 보기 vs 닫기)
+- [x] **(2주차)** 오픈 상태에서 해당 언론사 구독 해지 시 동작 — "계속 보기" 정책 확정 ([2-B-3 테스트](../src/test/edge-cases/2-B-3-unsub-while-open.test.tsx))
 - [ ] **(2주차)** progress 도중 카테고리 수동 전환 → 진행도 0 리셋
 - [ ] **(2주차)** `prefers-reduced-motion` 적용 시 ticker · progress 모두 비활성 확인
 - [ ] **(2주차)** 키보드 only — Tab 순서, `:focus-within` pill 노출, chevron `aria-disabled`
