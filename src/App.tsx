@@ -119,6 +119,14 @@ function NewsstandExperience({
   )
   const selectedPublisher =
     publishers.find((publisher) => publisher.id === selectedPublisherId) ?? null
+  const openedPublisherIndex = selectedPublisher
+    ? getOpenedPublisherIndex(selectedPublisher.id, publishers, categories)
+    : -1
+  const openedPublisherStatus =
+    openedPublisherIndex >= 0
+      ? `${openedPublisherIndex + 1}/${publishers.length}`
+      : `0/${publishers.length}`
+  const isOpenedNavigationDisabled = publishers.length <= 1
   const selectedCategoryPublishers = selectedPublisher
     ? publishers.filter(
         (publisher) => publisher.category === selectedPublisher.category,
@@ -237,6 +245,18 @@ function NewsstandExperience({
     }
   }
 
+  const handlePreviousOpenedPublisher = () => {
+    setSelectedPublisherId((currentPublisherId) =>
+      getPreviousOpenedPublisherId(currentPublisherId, publishers, categories),
+    )
+  }
+
+  const handleNextOpenedPublisher = () => {
+    setSelectedPublisherId((currentPublisherId) =>
+      getNextOpenedPublisherId(currentPublisherId, publishers, categories),
+    )
+  }
+
   const handleClosePublisher = () => {
     pendingGridFocusRef.current = { type: 'grid' }
     setSelectedPublisherId(null)
@@ -258,7 +278,10 @@ function NewsstandExperience({
       }
     >
       {selectedPublisher ? (
-        <div className={CONTENT_TRANSITION_CLASS} key={`opened-${selectedPublisher.id}`}>
+        <div
+          className={`relative ${CONTENT_TRANSITION_CLASS}`}
+          key={`opened-${selectedPublisher.id}`}
+        >
           <ArticleListView
             activeCategory={selectedPublisher.category}
             activeCategoryIndex={selectedCategoryIndex}
@@ -270,6 +293,16 @@ function NewsstandExperience({
             onToggleSubscription={togglePublisherSubscription}
             progressEnabled={!prefersReducedMotion}
             publisher={selectedPublisher}
+          />
+          <Pagination
+            nextDisabled={isOpenedNavigationDisabled}
+            nextLabel={`다음 언론사 (${openedPublisherStatus})`}
+            onNext={handleNextOpenedPublisher}
+            onPrevious={handlePreviousOpenedPublisher}
+            pageCount={publishers.length}
+            pageIndex={Math.max(openedPublisherIndex, 0)}
+            previousDisabled={isOpenedNavigationDisabled}
+            previousLabel={`이전 언론사 (${openedPublisherStatus})`}
           />
         </div>
       ) : subscriptionError ? (
@@ -357,6 +390,66 @@ function getNextOpenedPublisherId(
   )
 
   return nextCategoryPublisher?.id ?? currentPublisher.id
+}
+
+function getPreviousOpenedPublisherId(
+  currentPublisherId: Publisher['id'] | null,
+  publishers: readonly Publisher[],
+  categories: readonly CategoryMeta[],
+) {
+  const currentPublisher = publishers.find(
+    (publisher) => publisher.id === currentPublisherId,
+  )
+
+  if (!currentPublisher) {
+    return currentPublisherId
+  }
+
+  const currentCategoryPublishers = publishers.filter(
+    (publisher) => publisher.category === currentPublisher.category,
+  )
+  const currentPublisherIndex = currentCategoryPublishers.findIndex(
+    (publisher) => publisher.id === currentPublisher.id,
+  )
+  const previousPublisher = currentCategoryPublishers[currentPublisherIndex - 1]
+
+  if (previousPublisher) {
+    return previousPublisher.id
+  }
+
+  if (categories.length === 0) {
+    return currentPublisher.id
+  }
+
+  const categoryIndex = categories.findIndex(
+    (category) => category.key === currentPublisher.category,
+  )
+  const previousCategory =
+    categories[
+      categoryIndex > 0 ? categoryIndex - 1 : categories.length - 1
+    ] ?? categories[categories.length - 1]
+  const previousCategoryPublishers = publishers.filter(
+    (publisher) => publisher.category === previousCategory.key,
+  )
+
+  return (
+    previousCategoryPublishers[previousCategoryPublishers.length - 1]?.id ??
+    currentPublisher.id
+  )
+}
+
+function getOpenedPublisherIndex(
+  publisherId: Publisher['id'],
+  publishers: readonly Publisher[],
+  categories: readonly CategoryMeta[],
+) {
+  const openedPublisherIds = categories.flatMap((category) =>
+    publishers
+      .filter((publisher) => publisher.category === category.key)
+      .map((publisher) => publisher.id),
+  )
+
+  return openedPublisherIds.findIndex((openedPublisherId) => openedPublisherId === publisherId)
 }
 
 function ContentMessage({ children }: { children: ReactNode }) {
