@@ -18,6 +18,7 @@ import {
 } from "../../state/selectors";
 import { loadFromStorage, saveToStorage } from "../../hooks/useLocalStorage";
 import { useAutoAdvance } from "../../hooks/useAutoAdvance";
+import { useKeyboardShortcuts } from "../../hooks/useKeyboardShortcuts";
 import { Header } from "../Header/Header";
 import { Ticker } from "../Ticker/Ticker";
 import { TabBar, type ViewerId } from "../TabBar/TabBar";
@@ -141,6 +142,12 @@ export function Newsstand() {
       dispatch({ type: "page/next" });
     }
   };
+
+  useKeyboardShortcuts({
+    onLeft: leftDisabled ? undefined : onLeft,
+    onRight: rightDisabled ? undefined : onRight,
+    onEscape: isOpened ? () => dispatch({ type: "press/close" }) : undefined,
+  });
 
   return (
     <main className="canvas" aria-label="뉴스스탠드">
