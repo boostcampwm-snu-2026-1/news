@@ -69,5 +69,5 @@
 
 ### 2-D. 품질
 
-- [ ] **(2주차)** 컴포넌트 단위 검증 노트 — 검증 항목/방법/결과를 PR 본문에 첨부
-- [ ] **(2주차)** 리팩토링 — `<Newsstand>` 핸들러 분리 (커스텀 훅 또는 reducer 검토)
+- [x] **(2주차)** 컴포넌트 단위 검증 노트 — 검증 항목/방법/결과를 PR 본문에 첨부 ([verification-notes.md](verification-notes.md))
+- [x] **(2주차)** 리팩토링 — `<Newsstand>` 핸들러 분리 ([useSubscriptions](../src/hooks/useSubscriptions.ts) · [useProgressDriver](../src/hooks/useProgressDriver.ts))
