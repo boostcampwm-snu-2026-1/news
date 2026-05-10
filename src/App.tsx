@@ -4,11 +4,14 @@ import { CategoryTabs } from './components/CategoryTabs/CategoryTabs';
 import { Carousel } from './components/Carousel/Carousel';
 import { CarouselControlBar } from './components/CarouselControlBar/CarouselControlBar';
 import { PublisherStrip } from './components/PublisherStrip/PublisherStrip';
+import { FrontPagePanel } from './components/FrontPagePanel/FrontPagePanel';
 import publishersRaw from './data/publishers.json';
+import frontpagesRaw from './data/frontpages.json';
 import { SLIDE_INTERVAL_MS } from './types';
-import type { CategoryTab, TabType, Publisher, SlideSpeed } from './types';
+import type { CategoryTab, TabType, Publisher, SlideSpeed, FrontPage } from './types';
 
 const allPublishers = publishersRaw as Publisher[];
+const frontPageMap = new Map((frontpagesRaw as FrontPage[]).map((fp) => [fp.publisherId, fp]));
 
 function filterPublishers(tab: CategoryTab): Publisher[] {
   if (tab === '주요언론사') return allPublishers.filter((p) => p.isMajor);
@@ -63,16 +66,16 @@ function App() {
           onIndexChange={setActiveIndex}
           prevLabel={publishers[(activeIndex - 1 + total) % total]?.name}
           nextLabel={publishers[(activeIndex + 1) % total]?.name}
-          renderPanel={(idx, isActive) => (
-            <div
-              className="bg-surface shadow-panel flex items-center justify-center rounded-sm mx-1"
-              style={{ height: 416 }}
-            >
-              <span className={`font-bold ${isActive ? 'text-xl text-text-primary' : 'text-base text-text-secondary'}`}>
-                {publishers[idx]?.name ?? ''}
-              </span>
-            </div>
-          )}
+          renderPanel={(idx, isActive) => {
+            const pub = publishers[idx];
+            const fp = pub ? frontPageMap.get(pub.id) : undefined;
+            if (!pub || !fp) return (
+              <div className="bg-surface shadow-panel flex items-center justify-center rounded-sm" style={{ height: 416 }}>
+                <span className="text-text-secondary text-sm">{pub?.name ?? ''}</span>
+              </div>
+            );
+            return <FrontPagePanel publisher={pub} frontPage={fp} isActive={isActive} />;
+          }}
         />
 
         {/* 컨트롤 바 */}
