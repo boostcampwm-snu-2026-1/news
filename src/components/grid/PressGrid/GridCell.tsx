@@ -13,7 +13,7 @@ const GridCell = ({ press, isSubscribed = false, onToggleSubscription }: GridCel
   const [isHovered, setIsHovered] = useState(false);
 
   if (!press) {
-    return <div className="w-full h-full bg-[var(--color-card)] flex items-center justify-center" />;
+    return <div className="w-full h-full bg-[var(--color-card)]" aria-hidden="true" />;
   }
 
   const handleSubscribeClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -23,20 +23,25 @@ const GridCell = ({ press, isSubscribed = false, onToggleSubscription }: GridCel
     }
   };
 
+  const showPill = isHovered;
+
   return (
     <div 
-      className="w-full h-full bg-[var(--color-card)] flex items-center justify-center hover:bg-[var(--color-soft)]"
+      className="w-full h-full bg-[var(--color-card)] flex items-center justify-center hover:bg-[var(--color-soft)] focus-within:bg-[var(--color-soft)] group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      aria-label={press.name}
     >
-      {isHovered ? (
+      {/* 마우스 호버 시 구독 버튼, 키보드 포커스 시에도 노출 */}
+      <div className={`${showPill ? 'block' : 'hidden'} group-focus-within:block`}>
         <SubscribePill 
           isSubscribed={isSubscribed} 
           onClick={handleSubscribeClick} 
         />
-      ) : (
+      </div>
+      <div className={`${showPill ? 'hidden' : 'block'} group-focus-within:hidden`}>
         <PressWordmark press={press} />
-      )}
+      </div>
     </div>
   );
 };

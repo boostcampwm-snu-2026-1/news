@@ -47,10 +47,11 @@ const PressGrid = () => {
       
       {currentPage > 0 && (
         <button 
-          className="absolute top-1/2 -translate-y-1/2 text-[var(--color-mute)] flex items-center justify-center cursor-pointer -left-[60px]" 
+          aria-label="이전 페이지"
+          className="absolute top-1/2 -translate-y-1/2 text-[var(--color-mute)] flex items-center justify-center cursor-pointer -left-[60px] focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]" 
           onClick={handlePrevPage}
         >
-          <svg width="24" height="40" viewBox="0 0 24 40" fill="none" stroke="currentColor" strokeWidth="1.4">
+          <svg width="24" height="40" viewBox="0 0 24 40" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
             <path d="M18 34L6 20L18 6" />
           </svg>
         </button>
@@ -58,10 +59,11 @@ const PressGrid = () => {
       
       {currentPage < totalPages - 1 && (
         <button 
-          className="absolute top-1/2 -translate-y-1/2 text-[var(--color-mute)] flex items-center justify-center cursor-pointer -right-[60px]" 
+          aria-label="다음 페이지"
+          className="absolute top-1/2 -translate-y-1/2 text-[var(--color-mute)] flex items-center justify-center cursor-pointer -right-[60px] focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]" 
           onClick={handleNextPage}
         >
-          <svg width="24" height="40" viewBox="0 0 24 40" fill="none" stroke="currentColor" strokeWidth="1.4">
+          <svg width="24" height="40" viewBox="0 0 24 40" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
             <path d="M6 34L18 20L6 6" />
           </svg>
         </button>
