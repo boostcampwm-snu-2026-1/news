@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { mockPressData } from '../../../data/pressData';
 import GridCell from './GridCell';
 import type { Press } from '../../../types/press';
@@ -9,6 +9,11 @@ const ITEMS_PER_PAGE = 24;
 const PressGrid = () => {
   const { subscribedIds, toggleSubscription, activeTab } = useNewsstandStore();
   const [currentPage, setCurrentPage] = useState(0);
+
+  // '전체 언론사' ↔ '내가 구독한 언론사' 탭 전환 시 항상 첫 페이지로 이동
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [activeTab]);
 
   // 'sub' 탭일 때는 구독한 언론사만 필터링, 아니면 전체 언론사
   const filteredData = activeTab === 'sub' 
