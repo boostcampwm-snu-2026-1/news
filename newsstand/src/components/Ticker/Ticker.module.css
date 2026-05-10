@@ -13,6 +13,7 @@
   padding: 0 var(--sp-8);
   gap: var(--sp-4);
   border-right: 1px solid var(--line);
+  min-width: 0;
 }
 
 .lane:last-child {
@@ -28,7 +29,18 @@
   text-transform: uppercase;
 }
 
-.text {
+.textWrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 1.2em;
+  overflow: hidden;
+}
+
+.textIn,
+.textOut {
+  position: absolute;
+  inset: 0;
   font-size: 13px;
   font-weight: 500;
   color: var(--ink);
@@ -36,4 +48,29 @@
   overflow: hidden;
   text-overflow: ellipsis;
   letter-spacing: -0.01em;
+}
+
+.textIn {
+  animation: fadeIn 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.textOut {
+  animation: fadeOut 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .textIn,
+  .textOut {
+    animation: none;
+  }
 }
