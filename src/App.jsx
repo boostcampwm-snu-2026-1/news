@@ -1,16 +1,27 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Header from './components/Header'
 import Ticker from './components/Ticker'
 import TabBar from './components/TabBar'
 import PressGrid from './components/PressGrid'
+import PressOpen from './components/PressOpen'
 import Chevron from './components/Chevron'
-import { PRESS_DATA, PRESS_PAGE_SIZE, PRESS_TOTAL_PAGES } from './data/pressData'
+import {
+  getPressArticleDeck,
+  getPressPrimaryCategory,
+  PRESS_DATA,
+  PRESS_PAGE_SIZE,
+  PRESS_TOTAL_PAGES,
+} from './data/pressData'
 
 export default function App() {
   const [state, setState] = useState({
     tab: 'all',
     viewMode: 'grid',
     page: 0,
+    opened: null,
+    tabKey: '',
+    progress: 0,
+    currentInTab: 0,
     subscribed: new Set()
   })
   const [subscriptionNotice, setSubscriptionNotice] = useState('')
@@ -22,13 +33,89 @@ export default function App() {
   const maxPages = state.tab === 'all'
     ? PRESS_TOTAL_PAGES
     : Math.ceil(subscribedItems.length / PRESS_PAGE_SIZE) || 1
+  const openedPress = useMemo(
+    () => PRESS_DATA.find((press) => press.id === state.opened) ?? null,
+    [state.opened],
+  )
+  const openedTabs = useMemo(() => getPressArticleDeck(openedPress), [openedPress])
+
+  useEffect(() => {
+    if (!state.opened || openedTabs.length === 0) {
+      return undefined
+    }
+
+    const duration = 6000
+    const startedAt = window.performance.now()
+    const intervalId = window.setInterval(() => {
+      setState((prev) => {
+        if (!prev.opened) {
+          return prev
+        }
+
+        const elapsed = window.performance.now() - startedAt
+        const nextProgress = Math.min(elapsed / duration, 1)
+
+        if (nextProgress < 1) {
+          return { ...prev, progress: nextProgress }
+        }
+
+        const activeIndex = Math.max(0, openedTabs.findIndex((tab) => tab.key === prev.tabKey))
+        const activeTab = openedTabs[activeIndex]
+        const hasNextArticle = prev.currentInTab + 1 < activeTab.articles.length
+
+        if (hasNextArticle) {
+          return { ...prev, currentInTab: prev.currentInTab + 1, progress: 0 }
+        }
+
+        const nextTab = openedTabs[(activeIndex + 1) % openedTabs.length]
+
+        return {
+          ...prev,
+          tabKey: nextTab.key,
+          currentInTab: 0,
+          progress: 0,
+        }
+      })
+    }, 100)
+
+    return () => window.clearInterval(intervalId)
+  }, [state.currentInTab, state.opened, state.tabKey, openedTabs])
 
   const handleTabChange = (newTab) => {
-    setState(prev => ({ ...prev, tab: newTab, page: 0 }))
+    setState(prev => ({
+      ...prev,
+      tab: newTab,
+      page: 0,
+      opened: null,
+      viewMode: 'grid',
+      progress: 0,
+      currentInTab: 0,
+    }))
   }
 
   const handleViewChange = (newViewMode) => {
-    setState(prev => ({ ...prev, viewMode: newViewMode }))
+    if (newViewMode === 'grid') {
+      setState(prev => ({
+        ...prev,
+        viewMode: 'grid',
+        opened: null,
+        progress: 0,
+        currentInTab: 0,
+      }))
+      return
+    }
+
+    const visibleItems = state.tab === 'all' ? PRESS_DATA : subscribedItems
+    const firstPress = visibleItems[state.page * PRESS_PAGE_SIZE] ?? visibleItems[0] ?? null
+
+    setState(prev => ({
+      ...prev,
+      viewMode: 'list',
+      opened: firstPress?.id ?? null,
+      tabKey: firstPress ? getPressPrimaryCategory(firstPress) : '',
+      progress: 0,
+      currentInTab: 0,
+    }))
   }
 
   const handlePageChange = (direction) => {
@@ -81,6 +168,42 @@ export default function App() {
     }
   }
 
+  const handleOpenPress = (pressId) => {
+    const press = PRESS_DATA.find(item => item.id === pressId)
+
+    if (!press) {
+      return
+    }
+
+    setState(prev => ({
+      ...prev,
+      viewMode: 'list',
+      opened: pressId,
+      tabKey: getPressPrimaryCategory(press),
+      progress: 0,
+      currentInTab: 0,
+    }))
+  }
+
+  const handleFieldTabChange = (tabKey) => {
+    setState(prev => ({
+      ...prev,
+      tabKey,
+      progress: 0,
+      currentInTab: 0,
+    }))
+  }
+
+  const handleCloseOpen = () => {
+    setState(prev => ({
+      ...prev,
+      viewMode: 'grid',
+      opened: null,
+      progress: 0,
+      currentInTab: 0,
+    }))
+  }
+
   const currentPage = Math.min(state.page, maxPages - 1)
 
   const getPressItems = () => {
@@ -116,13 +239,25 @@ export default function App() {
           totalPages={maxPages}
           onClick={() => handlePageChange('prev')}
         />
-        <PressGrid 
-          items={pressItems}
-          subscribed={state.subscribed}
-          mode={state.tab}
-          isEmpty={state.tab === 'sub' && subscribedItems.length === 0}
-          onSubscribe={handleSubscribe}
-        />
+        {state.viewMode === 'list' ? (
+          <PressOpen
+            press={openedPress}
+            tabKey={state.tabKey}
+            progress={state.progress}
+            currentInTab={state.currentInTab}
+            onTabChange={handleFieldTabChange}
+            onClose={handleCloseOpen}
+          />
+        ) : (
+          <PressGrid
+            items={pressItems}
+            subscribed={state.subscribed}
+            mode={state.tab}
+            isEmpty={state.tab === 'sub' && subscribedItems.length === 0}
+            onSubscribe={handleSubscribe}
+            onOpen={handleOpenPress}
+          />
+        )}
         <p className="visually-hidden" aria-live="polite">
           {currentPage + 1} / {maxPages} 페이지
         </p>

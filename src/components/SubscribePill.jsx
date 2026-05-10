@@ -9,7 +9,8 @@ export default function SubscribePill({ isSubscribed, mode, pressName, onClick }
       ? `${pressName} 이미 구독 중, 구독 상태 유지`
       : `${pressName} 구독하기`
 
-  const handleClick = () => {
+  const handleClick = (event) => {
+    event.stopPropagation()
     onClick(action)
   }
 
