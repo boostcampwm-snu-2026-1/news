@@ -81,7 +81,7 @@ git commit -m "feat: checklist-4 Header + Ticker 컴포넌트" -m "확인내용:
 - [x] checklist-19 빌드 검증과 수동 확인 항목 기록
 - [x] checklist-20 수동 UI 검증 수행 결과 기록
 - [x] checklist-21 접근성 세부 점검 및 보완
-- [ ] checklist-22 PR 작성용 회고 및 검증 요약 정리
+- [x] checklist-22 PR 작성용 회고 및 검증 요약 정리
 - [ ] checklist-23 최종 빌드 및 제출 전 점검
 
 ## 🎯 2주차 완료 조건
