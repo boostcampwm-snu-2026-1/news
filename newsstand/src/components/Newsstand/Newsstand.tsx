@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react'
+import { useEffect, useReducer, useRef } from 'react'
 import { PRESSES } from '../../data/presses'
 import { PRESS_CONTENTS } from '../../data/articles'
 import type { TabKey, ViewerKey } from '../TabBar/TabBar'
@@ -31,7 +31,7 @@ type Action =
   | { type: 'OPEN_PRESS'; id: string }
   | { type: 'CLOSE_PRESS' }
   | { type: 'SET_CATEGORY'; key: string }
-  | { type: 'TICK' }
+  | { type: 'TICK'; visiblePressIds: string[] }
   | { type: 'SUBSCRIBE'; id: string }
   | { type: 'UNSUBSCRIBE'; id: string }
 
@@ -58,24 +58,31 @@ function reducer(state: State, action: Action): State {
 
       const content = PRESS_CONTENTS[state.opened]
       const cats = content?.categories ?? []
+      if (cats.length === 0) return { ...state, progress: 0 }
+
       const catIdx = cats.findIndex((c) => c.key === state.tabKey)
-      const cat = cats[catIdx]
-      const articleCount = cat?.articles.length ?? 0
+      const articleCount = cats[catIdx]?.articles.length ?? 0
       const nextInTab = state.currentInTab + 1
 
+      // 현재 카테고리 내 다음 기사로
       if (nextInTab < articleCount) {
         return { ...state, progress: 0, currentInTab: nextInTab }
       }
 
-      // 다음 카테고리로 이동 (cats가 비어있으면 현재 유지)
-      if (cats.length === 0) return { ...state, progress: 0 }
-      const nextCatIdx = (catIdx + 1) % cats.length
-      return {
-        ...state,
-        progress: 0,
-        currentInTab: 0,
-        tabKey: cats[nextCatIdx]?.key ?? state.tabKey,
+      // 다음 카테고리로
+      const isLastCat = catIdx === cats.length - 1
+      if (!isLastCat) {
+        return { ...state, progress: 0, currentInTab: 0, tabKey: cats[catIdx + 1].key }
       }
+
+      // 마지막 카테고리 소진 → 다음 언론사로 자동 전환
+      const currIdx = action.visiblePressIds.indexOf(state.opened)
+      const nextPressId = action.visiblePressIds[currIdx + 1] ?? null
+      if (nextPressId) {
+        return { ...state, opened: nextPressId, tabKey: FIRST_CATEGORY, progress: 0, currentInTab: 0 }
+      }
+      // 마지막 언론사였으면 닫기
+      return { ...state, opened: null }
     }
     case 'SUBSCRIBE': {
       const next = new Set(state.subscribed)
@@ -111,17 +118,24 @@ const TICKER_LANES: [Parameters<typeof Ticker>[0]['lanes'][0], Parameters<typeof
 export function Newsstand() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
 
-  // 6초 프로그레스 tick
-  useEffect(() => {
-    if (!state.opened) return
-    const timer = setInterval(() => dispatch({ type: 'TICK' }), TICK_MS)
-    return () => clearInterval(timer)
-  }, [state.opened])
-
   const visiblePresses =
     state.tab === 'all'
       ? PRESSES
       : PRESSES.filter((p) => state.subscribed.has(p.id))
+
+  // ref로 최신 visiblePressIds를 항상 유지 (interval stale closure 방지)
+  const visiblePressIdsRef = useRef<string[]>([])
+  visiblePressIdsRef.current = visiblePresses.map((p) => p.id)
+
+  // 6초 프로그레스 tick
+  useEffect(() => {
+    if (!state.opened) return
+    const timer = setInterval(
+      () => dispatch({ type: 'TICK', visiblePressIds: visiblePressIdsRef.current }),
+      TICK_MS,
+    )
+    return () => clearInterval(timer)
+  }, [state.opened])
 
   const lastPage = Math.max(0, Math.ceil(visiblePresses.length / PAGE_SIZE) - 1)
   const pageItems = visiblePresses.slice(state.page * PAGE_SIZE, (state.page + 1) * PAGE_SIZE)
