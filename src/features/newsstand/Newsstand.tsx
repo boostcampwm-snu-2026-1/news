@@ -14,6 +14,7 @@ const PAGE_SIZE = 24;
 export function Newsstand() {
   const [activeTab, setActiveTab] = useState<NewsstandTab>("all");
   const [viewer, setViewer] = useState<ViewerMode>("grid");
+  const [pageByTab, setPageByTab] = useState<Record<NewsstandTab, number>>({ all: 0, subscribed: 0 });
   const [subscribed, setSubscribed] = useState<Set<string>>(
     () => new Set(presses.filter((press) => press.subscribed).map((press) => press.id)),
   );
@@ -36,7 +37,17 @@ export function Newsstand() {
   );
 
   const isSubscribedTab = activeTab === "subscribed";
-  const gridItems = isSubscribedTab ? subscribedPresses.slice(0, PAGE_SIZE) : presses.slice(0, PAGE_SIZE);
+  const sourceItems = isSubscribedTab ? subscribedPresses : presses;
+  const totalPages = Math.max(1, Math.ceil(sourceItems.length / PAGE_SIZE));
+  const currentPage = Math.min(pageByTab[activeTab], totalPages - 1);
+  const pageStart = currentPage * PAGE_SIZE;
+  const gridItems = sourceItems.slice(pageStart, pageStart + PAGE_SIZE);
+
+  const canPrev = currentPage > 0;
+  const canNext = currentPage < totalPages - 1;
+
+  const goPrev = () => setPageByTab((prev) => ({ ...prev, [activeTab]: currentPage - 1 }));
+  const goNext = () => setPageByTab((prev) => ({ ...prev, [activeTab]: currentPage + 1 }));
 
   return (
     <main className="newsstand-shell" aria-label="뉴스스탠드">
@@ -55,17 +66,28 @@ export function Newsstand() {
           <PressGrid
             action={isSubscribedTab ? "unsubscribe" : "subscribe"}
             items={gridItems}
-            sparse={isSubscribedTab}
             pageSize={PAGE_SIZE}
             ariaLabel={isSubscribedTab ? "내가 구독한 언론사" : "전체 언론사"}
             onToggle={toggleSubscribe}
           />
         </div>
 
-        <button className="newsstand-chevron newsstand-chevron-left" type="button" aria-label="이전 페이지">
+        <button
+          className="newsstand-chevron newsstand-chevron-left"
+          type="button"
+          aria-label={`이전 페이지 (${currentPage} / ${totalPages})`}
+          disabled={!canPrev}
+          onClick={goPrev}
+        >
           <ChevronLeft aria-hidden="true" size={24} strokeWidth={1.4} />
         </button>
-        <button className="newsstand-chevron newsstand-chevron-right" type="button" aria-label="다음 페이지">
+        <button
+          className="newsstand-chevron newsstand-chevron-right"
+          type="button"
+          aria-label={`다음 페이지 (${currentPage + 2} / ${totalPages})`}
+          disabled={!canNext}
+          onClick={goNext}
+        >
           <ChevronRight aria-hidden="true" size={24} strokeWidth={1.4} />
         </button>
       </section>

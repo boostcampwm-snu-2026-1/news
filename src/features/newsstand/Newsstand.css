@@ -392,6 +392,11 @@
   outline-offset: var(--space-4);
 }
 
+.newsstand-chevron:disabled {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 @keyframes ticker-crossfade {
   from {
     opacity: 0;

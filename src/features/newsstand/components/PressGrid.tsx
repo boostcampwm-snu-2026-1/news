@@ -10,12 +10,11 @@ type PressGridProps = {
   items: Press[];
   ariaLabel: string;
   onToggle: (pressId: string) => void;
-  sparse?: boolean;
   pageSize?: number;
 };
 
-export function PressGrid({ action, items, ariaLabel, onToggle, sparse = false, pageSize = 24 }: PressGridProps) {
-  const emptyCount = sparse ? Math.max(0, pageSize - items.length) : 0;
+export function PressGrid({ action, items, ariaLabel, onToggle, pageSize = 24 }: PressGridProps) {
+  const emptyCount = Math.max(0, pageSize - items.length);
 
   return (
     <div className="press-grid" role="grid" aria-label={ariaLabel}>
