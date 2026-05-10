@@ -5,6 +5,8 @@ interface FrontPagePanelProps {
   publisher: Publisher;
   frontPage: FrontPage;
   isActive: boolean;
+  isSubscribed: boolean;
+  onToggleSubscribe: (id: string) => void;
 }
 
 function formatEditedAt(iso: string): string {
@@ -14,7 +16,7 @@ function formatEditedAt(iso: string): string {
   return `편집 ${hh}:${mm}`;
 }
 
-export function FrontPagePanel({ publisher, frontPage }: FrontPagePanelProps) {
+export function FrontPagePanel({ publisher, frontPage, isSubscribed, onToggleSubscribe }: FrontPagePanelProps) {
   const [logoError, setLogoError] = useState(false);
   const { mainArticle, subArticles, hotArticles } = frontPage;
 
@@ -41,7 +43,18 @@ export function FrontPagePanel({ publisher, frontPage }: FrontPagePanelProps) {
           </span>
         </div>
         <div className="flex items-center gap-1">
-          {['구독하기', '이용자 한마디', '공유'].map((label) => (
+          <button
+            type="button"
+            onClick={() => onToggleSubscribe(publisher.id)}
+            className={`text-[10px] border rounded px-1 py-px transition-colors duration-150 ${
+              isSubscribed
+                ? 'text-primary border-primary font-bold'
+                : 'text-text-secondary border-border hover:border-text-secondary'
+            }`}
+          >
+            {isSubscribed ? '구독중' : '구독하기'}
+          </button>
+          {['이용자 한마디', '공유'].map((label) => (
             <button
               key={label}
               type="button"

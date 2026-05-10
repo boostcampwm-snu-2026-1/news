@@ -16,8 +16,8 @@ export function CategoryTabs({ activeTab, onTabChange }: CategoryTabsProps) {
           onClick={() => onTabChange(tab)}
           className={
             tab === activeTab
-              ? 'bg-tab-active text-white rounded-full px-4 py-1.5 text-sm font-bold transition-colors duration-150'
-              : 'text-text-secondary hover:text-text-primary rounded-full px-4 py-1.5 text-sm font-bold transition-colors duration-150'
+              ? 'bg-tab-active text-white px-4 py-1.5 text-sm font-bold transition-colors duration-150'
+              : 'text-text-secondary hover:text-text-primary px-4 py-1.5 text-sm font-bold transition-colors duration-150'
           }
         >
           {tab}

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, forwardRef, useImperativeHandle } from 'react';
 
 const PANEL_W = 736;
 const HALF = PANEL_W / 2;      // 368
@@ -14,6 +14,11 @@ const PREV  = `calc(50% - ${HALF}px)`;                // calc(50% - 368px)
 const BTN_LEFT  = `calc(50% - ${HALF + BTN_GAP}px)`;  // calc(50% - 448px)
 const BTN_RIGHT = `calc(50% + ${HALF + BTN_GAP}px)`;  // calc(50% + 448px)
 
+export interface CarouselHandle {
+  slideNext: () => void;
+  slidePrev: () => void;
+}
+
 interface CarouselProps {
   count: number;
   activeIndex: number;
@@ -23,9 +28,10 @@ interface CarouselProps {
   nextLabel?: string;
 }
 
-export function Carousel({
-  count, activeIndex, onIndexChange, renderPanel, prevLabel, nextLabel,
-}: CarouselProps) {
+export const Carousel = forwardRef<CarouselHandle, CarouselProps>(function Carousel(
+  { count, activeIndex, onIndexChange, renderPanel, prevLabel, nextLabel },
+  ref,
+) {
   const [transform, setTransform] = useState(BASE);
   const [animated, setAnimated] = useState(false);
   const [sliding, setSliding] = useState(false);
@@ -42,7 +48,13 @@ export function Carousel({
     setTransform(dir === 'next' ? NEXT : PREV);
   }
 
-  function handleTransitionEnd() {
+  useImperativeHandle(ref, () => ({
+    slideNext: () => slide('next'),
+    slidePrev: () => slide('prev'),
+  }));
+
+  function handleTransitionEnd(e: React.TransitionEvent<HTMLDivElement>) {
+    if (e.target !== e.currentTarget) return;
     const dir = dirRef.current;
     onIndexChange(dir === 'next' ? nextIdx : prevIdx);
     setAnimated(false);
@@ -72,7 +84,7 @@ export function Carousel({
               i === 1 ? 'opacity-100' : 'opacity-40 pointer-events-none'
             }`}
           >
-            {/* peek 패널: 버튼 방향으로 80px 패딩 → 버튼과 카드 사이 항상 80px 여백 */}
+            {/* peek 패널: 버튼 방향으로 패딩 → 버튼과 카드 사이 여백 */}
             <div style={{
               paddingRight: i === 0 ? PEEK_PAD : 0,
               paddingLeft:  i === 2 ? PEEK_PAD : 0,
@@ -128,4 +140,4 @@ export function Carousel({
       </button>
     </div>
   );
-}
+});
