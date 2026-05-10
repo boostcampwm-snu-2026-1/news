@@ -63,6 +63,11 @@
   color: var(--card);
 }
 
+.pill:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 2px;
+}
+
 /* 구독 배지 */
 .subscribedBadge {
   position: absolute;
