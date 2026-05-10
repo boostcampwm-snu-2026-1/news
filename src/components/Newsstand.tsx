@@ -4,9 +4,9 @@ import {
   PRESSES,
   PRESSES_BY_ID,
   PAGE_SIZE,
-  DEFAULT_SUBSCRIBED_IDS,
 } from '../data/presses';
 import { CATEGORY_KEYS, TAB_TOTAL } from '../data/categories';
+import { useSubscriptions } from '../hooks/useSubscriptions';
 import { TICKER_LANES } from '../data/ticker';
 import { getArticle } from '../data/articles';
 import Header from './Header';
@@ -35,9 +35,7 @@ export default function Newsstand() {
   const [tabKey, setTabKey] = useState<CategoryKey>(CATEGORY_KEYS[0]);
   const [progress, setProgress] = useState(0);
   const [currentInTab, setCurrentInTab] = useState(1);
-  const [subscribed, setSubscribed] = useState<Set<PressId>>(
-    () => new Set(DEFAULT_SUBSCRIBED_IDS),
-  );
+  const { subscribed, subscribe, unsubscribe } = useSubscriptions();
 
   /* derive page items */
   const subscribedList = useMemo(
@@ -89,22 +87,6 @@ export default function Newsstand() {
   const onTabChange = (t: Tab) => {
     setTab(t);
     setPage(0);
-  };
-
-  const onSubscribe = (id: PressId) => {
-    setSubscribed((s) => {
-      const next = new Set(s);
-      next.add(id);
-      return next;
-    });
-  };
-
-  const onUnsubscribe = (id: PressId) => {
-    setSubscribed((s) => {
-      const next = new Set(s);
-      next.delete(id);
-      return next;
-    });
   };
 
   const onOpen = (id: PressId) => {
@@ -165,16 +147,16 @@ export default function Newsstand() {
                 editTime={article.editTime}
                 headline={article.headline}
                 list={article.list}
-                onSubscribe={onSubscribe}
-                onUnsubscribe={onUnsubscribe}
+                onSubscribe={subscribe}
+                onUnsubscribe={unsubscribe}
               />
             </>
           ) : (
             <PressGrid
               items={pageItems}
               subscribedIds={subscribed}
-              onSubscribe={onSubscribe}
-              onUnsubscribe={onUnsubscribe}
+              onSubscribe={subscribe}
+              onUnsubscribe={unsubscribe}
               onOpen={onOpen}
             />
           )}
