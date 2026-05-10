@@ -22,7 +22,7 @@ export default function NewsStand() {
     (currentPage + 1) * ITEMS_PER_PAGE
   );
 
-  const paddedPageItems = activeTab === 'subscribed' && pageItems.length > 0
+  const paddedPageItems = pageItems.length > 0 && pageItems.length < ITEMS_PER_PAGE
     ? [...pageItems, ...Array(ITEMS_PER_PAGE - pageItems.length).fill(null)]
     : pageItems;
 
