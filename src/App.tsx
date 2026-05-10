@@ -43,13 +43,17 @@ function App() {
             progress={listView.progress}
             onCategoryChange={listView.onCategoryChange}
           />
-          {listView.currentPress && (
+          {listView.currentPress ? (
             <PressNewsCard
               press={listView.currentPress}
               isSubscribed={subscribedIds.has(listView.currentPress.id)}
               onToggleSubscription={toggleSubscription}
               onNext={listView.advancePressIndex}
             />
+          ) : (
+            <div className="max-w-[1080px] mx-auto border border-t-0 border-[#e0e0e0] px-6 py-10 text-center text-sm text-gray-400">
+              구독한 언론사가 없습니다.
+            </div>
           )}
         </>
       )}

@@ -18,6 +18,7 @@ export function useListView(tab: TabKind, subscribedIds: Set<string>) {
   const activeCategoryRef = useRef(activeCategory);
   const tabRef = useRef(tab);
   const subscribedIdsRef = useRef(subscribedIds);
+  const shouldResetTimerRef = useRef(false);
 
   useLayoutEffect(() => {
     activeCategoryRef.current = activeCategory;
@@ -40,7 +41,11 @@ export function useListView(tab: TabKind, subscribedIds: Set<string>) {
         return;
       }
 
-      if (startTime === null) startTime = timestamp;
+      if (startTime === null || shouldResetTimerRef.current) {
+        shouldResetTimerRef.current = false;
+        startTime = timestamp;
+      }
+
       const p = Math.min((timestamp - startTime) / DURATION, 1);
       setProgress(p);
 
@@ -70,6 +75,7 @@ export function useListView(tab: TabKind, subscribedIds: Set<string>) {
     if (total > 0) {
       setPressIndex((prev) => (prev + 1) % total);
     }
+    shouldResetTimerRef.current = true;
     setProgress(0);
   };
 

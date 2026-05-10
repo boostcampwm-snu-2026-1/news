@@ -34,7 +34,7 @@ export default function CategoryTabBar({
               `}
             >
               <span className="block leading-tight">
-                {isActive
+                {isActive && pressTotal > 0
                   ? `${category} ${pressIndex + 1} / ${pressTotal}`
                   : category}
               </span>
