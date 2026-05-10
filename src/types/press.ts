@@ -21,6 +21,7 @@ export interface PressArticle {
 export interface Press {
   id: string;
   name: string;
+  categoryId: string;
   style: PressStyle;
   articles?: PressArticle;
 }

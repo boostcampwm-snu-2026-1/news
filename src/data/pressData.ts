@@ -1,8 +1,10 @@
+import { CATEGORIES } from './categories';
 import type { Press } from '../types/press';
 
 export const mockPressData: Press[] = Array.from({ length: 72 }, (_, i) => ({
   id: `press-${i + 1}`,
   name: i % 2 === 0 ? `언론사 ${i + 1}` : `News ${i + 1}`,
+  categoryId: CATEGORIES[Math.floor(i / 12)], // 12개씩 6개 카테고리에 분배
   style: { 
     weight: i % 3 === 0 ? 700 : 500,
     italic: i % 4 === 0,
