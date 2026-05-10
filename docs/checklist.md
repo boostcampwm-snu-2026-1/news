@@ -32,6 +32,6 @@
 | 15 | `<Ticker>` 애니메이션 — 3.2초 crossfade + hover 정지 | [x] |
 | 16 | `<PressOpen>` — 기사 리스트 뷰 레이아웃 | [x] |
 | 17 | `<FieldTab>` — 6초 프로그레스 바 + 카테고리 탭 전환 | [x] |
-| 18 | 프로그레스 완료 시 다음 언론사 자동 전환 | [ ] |
+| 18 | 프로그레스 완료 시 다음 언론사 자동 전환 | [x] |
 | 19 | 키보드 접근성 — `:focus-within` hover 동등 처리 | [x] |
 | 20 | `prefers-reduced-motion` 대응 + WCAG AA 색상 대비 확인 | [x] |
