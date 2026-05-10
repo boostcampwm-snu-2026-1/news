@@ -16,14 +16,14 @@ function formatEditedAt(iso: string): string {
 
 export function FrontPagePanel({ publisher, frontPage }: FrontPagePanelProps) {
   const [logoError, setLogoError] = useState(false);
-  const { mainArticle, subArticles, hotArticles, featureBox } = frontPage;
+  const { mainArticle, subArticles, hotArticles } = frontPage;
 
   return (
     <div
       className="bg-surface flex flex-col rounded-sm overflow-hidden"
       style={{ height: 416 }}
     >
-      {/* 헤더 — 2행: 로고+편집시각 / 버튼 */}
+      {/* 헤더 — 로고 + 편집시각 / 버튼 */}
       <div className="flex flex-col px-3 pt-2.5 pb-2 border-b border-border shrink-0 gap-1.5">
         <div className="flex items-center justify-between">
           {logoError ? (
@@ -52,28 +52,13 @@ export function FrontPagePanel({ publisher, frontPage }: FrontPagePanelProps) {
         </div>
       </div>
 
-      {/* 바디: 3-컬럼 */}
+      {/* 바디: 좌(메인+서브) | 우(HOT) */}
       <div className="flex flex-1 min-h-0 divide-x divide-border">
 
-        {/* 좌측 — subArticles 리스트 */}
-        <div className="flex flex-col py-2 px-2.5 w-44 shrink-0">
-          <ul className="flex flex-col gap-1.5">
-            {subArticles.slice(0, 6).map((art) => (
-              <li key={art.id}>
-                <a
-                  href={art.url ?? '#'}
-                  className="text-xs text-text-primary leading-tight hover:underline line-clamp-2 block"
-                >
-                  {art.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* 중앙 — 메인 기사 */}
+        {/* 좌측 — 메인 기사 + 서브 기사 리스트 */}
         <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
-          <div className="relative bg-border shrink-0" style={{ height: 160 }}>
+          {/* 메인 이미지 */}
+          <div className="relative bg-border shrink-0" style={{ height: 148 }}>
             {mainArticle.imageUrl ? (
               <img
                 src={mainArticle.imageUrl}
@@ -86,28 +71,40 @@ export function FrontPagePanel({ publisher, frontPage }: FrontPagePanelProps) {
               </div>
             )}
           </div>
-          <div className="flex flex-col gap-1 px-2.5 py-2 flex-1 min-h-0 overflow-hidden">
+
+          {/* 헤드라인 + 리드 */}
+          <div className="px-3 pt-2 pb-1.5 shrink-0">
             <p className="text-sm font-bold text-text-primary leading-snug line-clamp-2">
               {mainArticle.title}
             </p>
             {mainArticle.lead && (
-              <p className="text-xs text-text-secondary leading-relaxed line-clamp-3">
+              <p className="text-xs text-text-secondary leading-relaxed line-clamp-2 mt-0.5">
                 {mainArticle.lead}
               </p>
             )}
-            {featureBox && (
-              <div className="mt-auto pt-1.5 border-t border-border">
-                <p className="text-xs font-bold text-text-primary line-clamp-1">{featureBox.name}</p>
-                {featureBox.subtitle && (
-                  <p className="text-xs text-text-secondary">{featureBox.subtitle}</p>
-                )}
-              </div>
-            )}
           </div>
+
+          {/* 구분선 */}
+          <div className="border-t border-border mx-3 shrink-0" />
+
+          {/* 서브 기사 리스트 */}
+          <ul className="flex flex-col flex-1 min-h-0 overflow-hidden px-3 py-1.5 gap-1">
+            {subArticles.slice(0, 5).map((art) => (
+              <li key={art.id} className="flex items-start gap-1.5">
+                <span className="text-text-secondary text-xs mt-px shrink-0">•</span>
+                <a
+                  href={art.url ?? '#'}
+                  className="text-xs text-text-primary leading-tight hover:underline line-clamp-1"
+                >
+                  {art.title}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* 우측 — HOT 뉴스 1·2·3 */}
-        <div className="flex flex-col py-2 px-2.5 w-44 shrink-0 gap-2">
+        <div className="flex flex-col py-2 px-2.5 w-44 shrink-0 gap-2.5">
           <p className="text-xs font-bold text-text-secondary uppercase tracking-wide">HOT</p>
           {hotArticles.map((hot) => (
             <div key={hot.rank} className="flex gap-1.5 items-start">
@@ -136,12 +133,12 @@ export function FrontPagePanel({ publisher, frontPage }: FrontPagePanelProps) {
       </div>
 
       {/* 푸터 */}
-      <div className="shrink-0 border-t border-border px-3 py-1.5">
+      <div className="shrink-0 border-t border-border px-3 py-1 flex justify-end">
         <a
           href={publisher.siteUrl}
           target="_blank"
           rel="noreferrer"
-          className="text-xs text-text-secondary hover:text-text-primary transition-colors duration-150"
+          className="text-[10px] text-text-secondary hover:text-text-primary transition-colors duration-150"
         >
           {publisher.name} 사이트 바로가기 →
         </a>
