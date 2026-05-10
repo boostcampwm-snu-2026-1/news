@@ -35,7 +35,7 @@ week1 의 18 항목으로 기능 1차 구현은 끝났다. week2 는 그 결과�
 각 항목 = 한 commit 단위. 항목 번호가 commit 메시지의 `#N`.
 
 - [x] **1. 컴포넌트 계층 + props 흐름 설계 문서** — `works/week2/design/component-hierarchy.md` 에 Mermaid 트리 + 컴포넌트별 책임/props/event 표 + 데이터 소유권 경계.
-- [ ] **2. 상태 흐름 + 액션 다이어그램 설계 문서** — `works/week2/design/state-flow.md` 에 reducer 액션 → state 전이 다이어그램, 파생 상태 표(visible/pageItems/catOutlets/lastPage), 사이드이펙트(localStorage/useInterval) 정리.
+- [x] **2. 상태 흐름 + 액션 다이어그램 설계 문서** — `works/week2/design/state-flow.md` 에 reducer 액션 → state 전이 다이어그램, 파생 상태 표(visible/pageItems/catOutlets/lastPage), 사이드이펙트(localStorage/useInterval) 정리.
 - [ ] **3. selectors 분리 + 단위 테스트** — `src/state/selectors.ts` 로 `getVisible / getPageItems / getLastPage / getCatOutlets / getCurrentInTabFromOpened / findNextCategoryWithOutlets` 추출. Newsstand.tsx 의 inline derive 를 selector 호출로 치환. `selectors.test.ts` 추가.
 - [ ] **4. `useAutoAdvance` 훅 분리** — Newsstand 의 useInterval + 다음 outlet/카테고리 wrap 로직을 `src/hooks/useAutoAdvance.ts` 로 추출. `prefers-reduced-motion` / `isOpened` 가드 포함. Newsstand 는 단순 호출만.
 - [ ] **5. 리듀서 엣지케이스 보강 테스트** — 동일 액션 idempotency(같은 tab/set 노옵, 동일 progress 클램프 0/1, 동일 subscribe 노옵 reference equality), page/set 음수 클램프, press/open 뒤 progress=0/currentInTab=1 보장, subscribed/hydrate 가 다른 필드 보존.
