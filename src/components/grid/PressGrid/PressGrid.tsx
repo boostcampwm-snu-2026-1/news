@@ -7,11 +7,17 @@ import { useNewsstandStore } from '../../../store/NewsstandContext';
 const ITEMS_PER_PAGE = 24;
 
 const PressGrid = () => {
-  const { subscribedIds, toggleSubscription } = useNewsstandStore();
+  const { subscribedIds, toggleSubscription, activeTab } = useNewsstandStore();
   const [currentPage, setCurrentPage] = useState(0);
-  const totalPages = Math.ceil(mockPressData.length / ITEMS_PER_PAGE);
 
-  const currentItems = mockPressData.slice(
+  // 'sub' 탭일 때는 구독한 언론사만 필터링, 아니면 전체 언론사
+  const filteredData = activeTab === 'sub' 
+    ? mockPressData.filter(press => subscribedIds.has(press.id))
+    : mockPressData;
+
+  const totalPages = Math.max(1, Math.ceil(filteredData.length / ITEMS_PER_PAGE));
+
+  const currentItems = filteredData.slice(
     currentPage * ITEMS_PER_PAGE,
     (currentPage + 1) * ITEMS_PER_PAGE
   );

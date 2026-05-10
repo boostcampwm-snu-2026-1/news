@@ -1,22 +1,40 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import FieldTab from '../FieldTab/FieldTab';
 import PressHeader from './PressHeader';
 import PressBody from './PressBody';
 import { CATEGORIES } from '../../../data/categories';
-import type { Category } from '../../../data/categories';
 import { mockPressData } from '../../../data/pressData';
 import { useNewsstandStore } from '../../../store/NewsstandContext';
 
 const PressOpen = () => {
-  const [activeCategory, setActiveCategory] = useState<Category>(CATEGORIES[0]);
+  const { subscribedIds, toggleSubscription, activeTab } = useNewsstandStore();
+  
+  // 'all' 모드면 CATEGORIES[0], 'sub' 모드면 구독한 첫 언론사 이름
+  const [activeTabName, setActiveTabName] = useState<string>(CATEGORIES[0]);
   const [activePressIndex, setActivePressIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const { subscribedIds, toggleSubscription } = useNewsstandStore();
 
-  // 현재 탭에 해당하는 언론사들만 필터링
+  // 1. 현재 모드에 따라 탭 목록과 프레스 데이터 결정
+  const isSubMode = activeTab === 'sub';
+  const subscribedPresses = useMemo(() => mockPressData.filter(p => subscribedIds.has(p.id)), [subscribedIds]);
+  
+  const tabs = isSubMode ? subscribedPresses.map(p => p.name) : (CATEGORIES as unknown as string[]);
+
+  // activeTab 모드가 바뀔 때마다 첫 번째 탭으로 리셋
+  useEffect(() => {
+    setActiveTabName(isSubMode ? (subscribedPresses[0]?.name || '') : CATEGORIES[0]);
+    setActivePressIndex(0);
+  }, [isSubMode, subscribedPresses.length]);
+
+  // 2. 현재 탭에 해당하는 언론사들 필터링
   const currentCategoryPresses = useMemo(() => {
-    return mockPressData.filter(press => press.categoryId === activeCategory);
-  }, [activeCategory]);
+    if (isSubMode) {
+      // 구독 모드에서는 탭 자체가 하나의 언론사이므로, 해당 언론사 1개만 배열로 반환
+      return subscribedPresses.filter(p => p.name === activeTabName);
+    }
+    // 전체 모드에서는 해당 카테고리에 속한 모든 언론사 반환
+    return mockPressData.filter(press => press.categoryId === activeTabName);
+  }, [activeTabName, isSubMode, subscribedPresses]);
 
   const currentPress = currentCategoryPresses[activePressIndex];
   const isSubscribed = currentPress ? subscribedIds.has(currentPress.id) : false;
@@ -25,28 +43,34 @@ const PressOpen = () => {
     setActivePressIndex(prevIndex => {
       const nextIndex = prevIndex + 1;
       
-      // 현재 카테고리의 마지막 언론사를 넘어섰을 때
       if (nextIndex >= currentCategoryPresses.length) {
-        // 다음 카테고리로 이동
-        setActiveCategory(prevCategory => {
-          const currentCatIndex = CATEGORIES.indexOf(prevCategory);
-          const nextCatIndex = (currentCatIndex + 1) % CATEGORIES.length;
-          return CATEGORIES[nextCatIndex];
+        // 다음 탭으로 이동
+        setActiveTabName(prevTab => {
+          const currentTabIndex = tabs.indexOf(prevTab);
+          const nextTabIndex = (currentTabIndex + 1) % Math.max(1, tabs.length);
+          return tabs[nextTabIndex] || '';
         });
-        return 0; // 다음 카테고리의 첫 번째 언론사로 리셋
+        return 0;
       }
       
       return nextIndex;
     });
   };
 
-  const handleCategoryChange = (category: Category) => {
-    setActiveCategory(category);
-    setActivePressIndex(0); // 사용자가 직접 탭을 클릭하면 항상 첫 번째 언론사부터 시작
+  const handleTabChange = (tabName: string) => {
+    setActiveTabName(tabName);
+    setActivePressIndex(0);
   };
 
-  // currentPress가 아직 없는 경우 방어 코드 (드물지만 데이터 로딩 시)
-  if (!currentPress) return null;
+  if (!currentPress && tabs.length > 0) return null;
+  
+  if (tabs.length === 0) {
+    return (
+      <div className="w-[var(--width-content)] mt-[var(--spacing-48)] h-[388px] flex items-center justify-center bg-[var(--color-card)] border border-[var(--color-line)]">
+        <span className="text-[var(--color-mute)] font-medium">구독한 언론사가 없습니다.</span>
+      </div>
+    );
+  }
 
   return (
     <main 
@@ -55,8 +79,9 @@ const PressOpen = () => {
       onMouseLeave={() => setIsPaused(false)}
     >
       <FieldTab 
-        activeCategory={activeCategory}
-        onCategoryChange={handleCategoryChange}
+        tabs={tabs}
+        activeTabName={activeTabName}
+        onTabChange={handleTabChange}
         isPaused={isPaused}
         onProgressComplete={handleProgressComplete}
         currentInTab={activePressIndex + 1}
