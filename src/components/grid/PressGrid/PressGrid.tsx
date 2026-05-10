@@ -34,16 +34,23 @@ const PressGrid = () => {
 
   return (
     <main className="relative w-[var(--width-content)] mt-[var(--spacing-48)]">
-      <div className="grid grid-cols-6 grid-rows-[repeat(4,96px)] bg-[var(--color-line)] border border-[var(--color-line)] gap-[1px] w-full h-[388px]">
-        {cells.map((press, index) => (
-          <GridCell 
-            key={press ? press.id : `empty-${index}`} 
-            press={press} 
-            isSubscribed={press ? subscribedIds.has(press.id) : false}
-            onToggleSubscription={toggleSubscription}
-          />
-        ))}
-      </div>
+      {/* 구독 0개 상태: 그리드 중앙에 안내 메시지 */}
+      {activeTab === 'sub' && filteredData.length === 0 ? (
+        <div className="w-full h-[388px] bg-[var(--color-card)] border border-[var(--color-line)] flex items-center justify-center">
+          <span className="text-[var(--color-mute)] font-medium">구독한 언론사가 없습니다.</span>
+        </div>
+      ) : (
+        <div className="grid grid-cols-6 grid-rows-[repeat(4,96px)] bg-[var(--color-line)] border border-[var(--color-line)] gap-[1px] w-full h-[388px]">
+          {cells.map((press, index) => (
+            <GridCell 
+              key={press ? press.id : `empty-${index}`} 
+              press={press} 
+              isSubscribed={press ? subscribedIds.has(press.id) : false}
+              onToggleSubscription={toggleSubscription}
+            />
+          ))}
+        </div>
+      )}
       
       {currentPage > 0 && (
         <button 

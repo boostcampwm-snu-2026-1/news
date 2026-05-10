@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import FieldTab from '../FieldTab/FieldTab';
 import PressHeader from './PressHeader';
 import PressBody from './PressBody';
@@ -39,12 +39,13 @@ const PressOpen = () => {
   const currentPress = currentCategoryPresses[activePressIndex];
   const isSubscribed = currentPress ? subscribedIds.has(currentPress.id) : false;
 
-  const handleProgressComplete = () => {
+  // useCallback: 함수 레퍼런스를 안정화하여 useProgress의 effect 재실행 방지
+  // (이게 없으면 매 렌더마다 새 함수가 생겨 isPaused 상태와 무관하게 타이머가 재시작됨)
+  const handleProgressComplete = useCallback(() => {
     setActivePressIndex(prevIndex => {
       const nextIndex = prevIndex + 1;
       
       if (nextIndex >= currentCategoryPresses.length) {
-        // 다음 탭으로 이동
         setActiveTabName(prevTab => {
           const currentTabIndex = tabs.indexOf(prevTab);
           const nextTabIndex = (currentTabIndex + 1) % Math.max(1, tabs.length);
@@ -55,7 +56,7 @@ const PressOpen = () => {
       
       return nextIndex;
     });
-  };
+  }, [currentCategoryPresses.length, tabs]);
 
   const handleTabChange = (tabName: string) => {
     setActiveTabName(tabName);
