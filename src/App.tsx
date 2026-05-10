@@ -259,6 +259,7 @@ function NewsstandExperience({
 
   const handleClosePublisher = () => {
     pendingGridFocusRef.current = { type: 'grid' }
+    setViewMode('grid')
     setSelectedPublisherId(null)
   }
 
