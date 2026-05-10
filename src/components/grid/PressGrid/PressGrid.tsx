@@ -2,15 +2,12 @@ import { useState } from 'react';
 import { mockPressData } from '../../../data/pressData';
 import GridCell from './GridCell';
 import type { Press } from '../../../types/press';
+import { useNewsstandStore } from '../../../store/NewsstandContext';
 
 const ITEMS_PER_PAGE = 24;
 
-interface PressGridProps {
-  subscribedIds: Set<string>;
-  onToggleSubscription: (id: string) => void;
-}
-
-const PressGrid = ({ subscribedIds, onToggleSubscription }: PressGridProps) => {
+const PressGrid = () => {
+  const { subscribedIds, toggleSubscription } = useNewsstandStore();
   const [currentPage, setCurrentPage] = useState(0);
   const totalPages = Math.ceil(mockPressData.length / ITEMS_PER_PAGE);
 
@@ -37,7 +34,7 @@ const PressGrid = ({ subscribedIds, onToggleSubscription }: PressGridProps) => {
             key={press ? press.id : `empty-${index}`} 
             press={press} 
             isSubscribed={press ? subscribedIds.has(press.id) : false}
-            onToggleSubscription={onToggleSubscription}
+            onToggleSubscription={toggleSubscription}
           />
         ))}
       </div>

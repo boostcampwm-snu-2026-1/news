@@ -1,12 +1,8 @@
-interface TabBarProps {
-  activeTab: 'all' | 'sub';
-  onTabChange: (tab: 'all' | 'sub') => void;
-  viewMode: 'grid' | 'list';
-  onViewModeChange: (mode: 'grid' | 'list') => void;
-  subscribedCount: number;
-}
+import { useNewsstandStore } from '../../../store/NewsstandContext';
 
-const TabBar = ({ activeTab, onTabChange, viewMode, onViewModeChange, subscribedCount }: TabBarProps) => {
+const TabBar = () => {
+  const { activeTab, setActiveTab, viewMode, setViewMode, subscribedIds } = useNewsstandStore();
+  const subscribedCount = subscribedIds.size;
   return (
     <div className="flex justify-between items-center w-[var(--width-content)] h-[24px] mt-[var(--spacing-48)]">
       <div className="flex gap-[var(--spacing-24)]">
@@ -16,7 +12,7 @@ const TabBar = ({ activeTab, onTabChange, viewMode, onViewModeChange, subscribed
               ? 'font-bold text-[var(--color-ink)]' 
               : 'font-medium text-[var(--color-mute)]'
           }`}
-          onClick={() => onTabChange('all')}
+          onClick={() => setActiveTab('all')}
         >
           전체 언론사
         </button>
@@ -26,7 +22,7 @@ const TabBar = ({ activeTab, onTabChange, viewMode, onViewModeChange, subscribed
               ? 'font-bold text-[var(--color-ink)]' 
               : 'font-medium text-[var(--color-mute)]'
           }`}
-          onClick={() => onTabChange('sub')}
+          onClick={() => setActiveTab('sub')}
         >
           내가 구독한 언론사
           {activeTab === 'sub' && (
@@ -42,7 +38,7 @@ const TabBar = ({ activeTab, onTabChange, viewMode, onViewModeChange, subscribed
           className={`flex items-center justify-center ${
             viewMode === 'list' ? 'text-[var(--color-ink)]' : 'text-[var(--color-mute)]'
           }`}
-          onClick={() => onViewModeChange('list')}
+          onClick={() => setViewMode('list')}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="8" y1="6" x2="21" y2="6" />
@@ -57,7 +53,7 @@ const TabBar = ({ activeTab, onTabChange, viewMode, onViewModeChange, subscribed
           className={`flex items-center justify-center ${
             viewMode === 'grid' ? 'text-[var(--color-ink)]' : 'text-[var(--color-mute)]'
           }`}
-          onClick={() => onViewModeChange('grid')}
+          onClick={() => setViewMode('grid')}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <rect x="3" y="3" width="7" height="7" />
