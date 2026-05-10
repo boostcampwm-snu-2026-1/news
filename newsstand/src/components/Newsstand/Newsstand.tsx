@@ -93,11 +93,14 @@ export function Newsstand() {
           <PressGrid
             items={pageItems}
             subscribedIds={state.subscribed}
+            tab={state.tab}
             page={state.page}
             lastPage={lastPage}
             onPagePrev={() => dispatch({ type: 'SET_PAGE', page: state.page - 1 })}
             onPageNext={() => dispatch({ type: 'SET_PAGE', page: state.page + 1 })}
             onOpen={(id) => dispatch({ type: 'OPEN_PRESS', id })}
+            onSubscribe={(id) => dispatch({ type: 'SUBSCRIBE', id })}
+            onUnsubscribe={(id) => dispatch({ type: 'UNSUBSCRIBE', id })}
           />
         </div>
       </div>
