@@ -59,7 +59,7 @@
 - [x] **(2주차)** 오픈 상태에서 해당 언론사 구독 해지 시 동작 — "계속 보기" 정책 확정 ([2-B-3 테스트](../src/test/edge-cases/2-B-3-unsub-while-open.test.tsx))
 - [x] **(2주차)** progress 도중 카테고리 수동 전환 → 진행도 0 리셋 ([2-B-4 테스트](../src/test/edge-cases/2-B-4-progress-reset.test.tsx))
 - [x] **(2주차)** `prefers-reduced-motion` 적용 시 ticker · progress 모두 비활성 확인 ([2-B-5 테스트](../src/test/edge-cases/2-B-5-reduced-motion.test.tsx))
-- [ ] **(2주차)** 키보드 only — Tab 순서, `:focus-within` pill 노출, chevron `aria-disabled`
+- [x] **(2주차)** 키보드 only — Enter/Space 오픈, pill `<button>` 진입, chevron HTML `disabled` ([2-B-6 테스트](../src/test/edge-cases/2-B-6-keyboard.test.tsx))
 
 ### 2-C. 추가 기능 (택 1~2)
 
