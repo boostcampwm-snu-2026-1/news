@@ -22,6 +22,10 @@ export default function NewsStand() {
     (currentPage + 1) * ITEMS_PER_PAGE
   );
 
+  const paddedPageItems = activeTab === 'subscribed' && pageItems.length > 0
+    ? [...pageItems, ...Array(ITEMS_PER_PAGE - pageItems.length).fill(null)]
+    : pageItems;
+
   const handlePageChange = (nextPage) => {
     setDirection(nextPage > currentPage ? 'next' : 'prev');
     setCurrentPage(nextPage);
@@ -37,7 +41,7 @@ export default function NewsStand() {
     <div className={styles.container}>
       <TabBar activeTab={activeTab} onTabChange={handleTabChange} />
       <PressGrid
-        items={pageItems}
+        items={paddedPageItems}
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}

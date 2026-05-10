@@ -5,15 +5,19 @@ import styles from './PressGrid.module.css';
 function Grid({ items, className, isExiting, subscribedIds, onSubscribe, onUnsubscribe }) {
   return (
     <div className={`${isExiting ? styles.exitLayer : ''} ${styles.grid} ${className || ''}`}>
-      {items.map((press) => (
-        <PressCell
-          key={press.id}
-          press={press}
-          isSubscribed={subscribedIds.has(press.id)}
-          onSubscribe={onSubscribe}
-          onUnsubscribe={onUnsubscribe}
-        />
-      ))}
+      {items.map((press, i) =>
+        press ? (
+          <PressCell
+            key={press.id}
+            press={press}
+            isSubscribed={subscribedIds.has(press.id)}
+            onSubscribe={onSubscribe}
+            onUnsubscribe={onUnsubscribe}
+          />
+        ) : (
+          <div key={`empty-${i}`} className={styles.emptyCell} />
+        )
+      )}
     </div>
   );
 }
