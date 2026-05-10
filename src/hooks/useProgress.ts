@@ -4,16 +4,19 @@ interface UseProgressOptions {
   duration: number;
   isPaused?: boolean;
   onComplete: () => void;
-  resetDependency?: any; // 의존성 값이 바뀌면 프로그레스가 0으로 초기화됨
+  resetDependency?: any;
 }
 
 export const useProgress = ({ duration, isPaused = false, onComplete, resetDependency }: UseProgressOptions) => {
+  // 시스템 설정에서 "애니메이션 줄이기"를 켜뒀다면 즉시 100% 처리
+  const prefersReducedMotion = typeof window !== 'undefined'
+    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    : false;
   const [progress, setProgress] = useState(0);
   const startTimeRef = useRef<number | null>(null);
   const pausedTimeRef = useRef<number>(0);
   const requestRef = useRef<number | null>(null);
 
-  // 탭이나 카테고리가 바뀌면(resetDependency 변경) 타이머 초기화
   useEffect(() => {
     setProgress(0);
     startTimeRef.current = null;
@@ -21,6 +24,15 @@ export const useProgress = ({ duration, isPaused = false, onComplete, resetDepen
   }, [resetDependency]);
 
   useEffect(() => {
+    // prefers-reduced-motion: 애니메이션 없이 duration 후 즉시 완료
+    if (prefersReducedMotion) {
+      if (isPaused) return;
+      const timer = setTimeout(() => {
+        onComplete();
+      }, duration);
+      return () => clearTimeout(timer);
+    }
+
     // 일시정지 상태면 애니메이션 프레임 요청 취소
     if (isPaused) {
       if (requestRef.current) {
@@ -32,7 +44,6 @@ export const useProgress = ({ duration, isPaused = false, onComplete, resetDepen
 
     const animate = (time: number) => {
       if (startTimeRef.current === null) {
-        // 일시정지했던 시간(pausedTimeRef)을 반영하여 시작 시간 조정
         startTimeRef.current = time - pausedTimeRef.current;
       }
 
@@ -40,11 +51,10 @@ export const useProgress = ({ duration, isPaused = false, onComplete, resetDepen
       const currentProgress = Math.min((elapsed / duration) * 100, 100);
 
       setProgress(currentProgress);
-      pausedTimeRef.current = elapsed; // 현재까지 진행된 시간 기억
+      pausedTimeRef.current = elapsed;
 
       if (currentProgress >= 100) {
         onComplete();
-        // 콜백 실행 후 다음 사이클을 위해 초기화 (옵션)
         startTimeRef.current = null;
         pausedTimeRef.current = 0;
         setProgress(0);
@@ -60,7 +70,8 @@ export const useProgress = ({ duration, isPaused = false, onComplete, resetDepen
         cancelAnimationFrame(requestRef.current);
       }
     };
-  }, [isPaused, duration, onComplete, resetDependency]);
+  }, [isPaused, duration, onComplete, resetDependency, prefersReducedMotion]);
 
-  return progress;
+  // reduced-motion 모드에서는 progress를 0으로 고정 (프로그레스 바 숨김)
+  return prefersReducedMotion ? 0 : progress;
 };
