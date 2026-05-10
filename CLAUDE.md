@@ -159,8 +159,8 @@
 
 - [x] CSS Variables로 색상·타이포 토큰 정의
 - [x] `<PressWordmark>` — 언론사 객체 기반 렌더링
-- [ ] `<GridCell>` — hover 시 워드마크 ↔ 구독 필 스왑
-- [ ] `<Ticker>` — 2레인 자동 회전 + reduced-motion 대응
-- [ ] `<FieldTab>` — 프로그레스 애니메이션 → 상태 전이
-- [ ] 키보드 접근성 (hover ↔ focus 동등)
+- [x] `<GridCell>` — hover 시 워드마크 ↔ 구독 필 스왑
+- [x] `<Ticker>` — 2레인 자동 회전 + reduced-motion 대응
+- [x] `<FieldTab>` — 프로그레스 애니메이션 → 상태 전이
+- [x] 키보드 접근성 (hover ↔ focus 동등)
 - [x] 1280px 고정 레이아웃
