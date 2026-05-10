@@ -31,3 +31,17 @@
 
 - 2026-05-11: `npm run build` 통과
 - 2026-05-11: `http://127.0.0.1:5173/` 개발 서버 응답 200 확인
+
+## checklist-20 수동 UI 검증 기록
+
+| 시나리오 | 확인 방법 | 결과 |
+| --- | --- | --- |
+| 앱 진입 | `http://127.0.0.1:5173/` 요청 | 200 응답 확인 |
+| 프로덕션 빌드 | `npm run build` 실행 | 통과 |
+| 전체 언론사 셀 클릭 → 리스트 진입 | `GridCell`의 `onOpen` 호출과 `App`의 `viewMode="list"` 전환 경로 확인 | 통과 |
+| 리스트 닫기 → 그리드 복귀 | `PressOpen`의 닫기 버튼이 `handleCloseOpen`을 호출하는 경로 확인 | 통과 |
+| 구독 버튼 클릭 시 리스트가 열리지 않음 | `SubscribePill`에서 `event.stopPropagation()` 적용 확인 | 통과 |
+| FieldTab 키보드 이동 | `ArrowLeft`, `ArrowRight`, `Home`, `End` 처리와 포커스 이동 로직 확인 | 통과 |
+| FieldTab 진행률 순환 | `App`의 100ms interval, 6000ms 진행률, 기사/분야 순환 로직 확인 | 통과 |
+
+브라우저 자동화 도구가 설치되어 있지 않아 클릭 자동화 대신 개발 서버 응답, 빌드, 이벤트 연결 경로를 함께 확인했다. Headless Edge 스크린샷 검증은 Windows 권한 문제로 생성되지 않아 결과에 포함하지 않았다.
