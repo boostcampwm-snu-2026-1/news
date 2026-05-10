@@ -25,13 +25,13 @@
 
 | # | 항목 | 상태 |
 |---|------|------|
-| 11 | `<GridCell>` hover → 구독/해지 필 버튼 스왑 | [ ] |
-| 12 | 구독·해지 액션 — `subscribed` Set 상태 연동 | [ ] |
-| 13 | 구독 탭 전환 — 구독 언론사만 필터링 + 배지 카운트 | [ ] |
-| 14 | 페이지네이션 — 페이지 이동 로직 + Chevron 비활성화 | [ ] |
-| 15 | `<Ticker>` 애니메이션 — 3.2초 crossfade + hover 정지 | [ ] |
-| 16 | `<PressOpen>` — 기사 리스트 뷰 레이아웃 | [ ] |
-| 17 | `<FieldTab>` — 6초 프로그레스 바 + 카테고리 탭 전환 | [ ] |
+| 11 | `<GridCell>` hover → 구독/해지 필 버튼 스왑 | [x] |
+| 12 | 구독·해지 액션 — `subscribed` Set 상태 연동 | [x] |
+| 13 | 구독 탭 전환 — 구독 언론사만 필터링 + 배지 카운트 | [x] |
+| 14 | 페이지네이션 — 페이지 이동 로직 + Chevron 비활성화 | [x] |
+| 15 | `<Ticker>` 애니메이션 — 3.2초 crossfade + hover 정지 | [x] |
+| 16 | `<PressOpen>` — 기사 리스트 뷰 레이아웃 | [x] |
+| 17 | `<FieldTab>` — 6초 프로그레스 바 + 카테고리 탭 전환 | [x] |
 | 18 | 프로그레스 완료 시 다음 언론사 자동 전환 | [ ] |
-| 19 | 키보드 접근성 — `:focus-within` hover 동등 처리 | [ ] |
-| 20 | `prefers-reduced-motion` 대응 + WCAG AA 색상 대비 확인 | [ ] |
+| 19 | 키보드 접근성 — `:focus-within` hover 동등 처리 | [x] |
+| 20 | `prefers-reduced-motion` 대응 + WCAG AA 색상 대비 확인 | [x] |
