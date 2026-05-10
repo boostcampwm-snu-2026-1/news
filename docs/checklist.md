@@ -8,6 +8,8 @@ Use this as the first-pass implementation order. The current priority is to make
 - [x] Create the base newsstand page shell that centers the 930px content column and reserves space for future header/ticker areas.
 - [x] Implement scope tabs for `전체 언론사` and `내가 구독한 언론사`, including the computed subscription-count badge.
 - [x] Implement the list/grid view toggle icons and active/inactive visual states.
+- [x] Connect list view mode to the opened publisher article-list rotation view instead of a placeholder.
+- [x] Select the list view toggle automatically when a publisher is opened from the grid.
 - [x] Implement `PressWordmark` as a data-driven typographic logo component using static Tailwind utilities for layout and CSS variables or inline styles for data-driven color/tracking/accent details.
 - [x] Implement the 6x4 publisher grid shell with 1px divider gaps, responsive fallback, and page-size constants.
 - [x] Render publisher mock data in the grid with stable cell sizing and centered wordmarks.
@@ -43,6 +45,7 @@ Use this as the first-pass implementation order. The current priority is to make
 - [x] Replace direct mock data usage in `App.tsx` with initial server fetch state.
 - [x] Wire subscription toggling to the server response.
 - [x] Add Render blueprint configuration for the API service.
-- [ ] Seed production MongoDB before Render smoke testing.
-- [ ] Deploy the API to Render with `MONGODB_URI`, `MONGODB_DB_NAME`, and `CLIENT_ORIGIN`.
-- [ ] Point the frontend environment to the deployed API URL.
+- [x] Seed production MongoDB before Render smoke testing.
+- [x] Deploy the API to Render with `MONGODB_URI`, `MONGODB_DB_NAME`, and `CLIENT_ORIGIN`.
+- [x] Point the frontend environment to the deployed API URL.
+- [x] Smoke test Render API health, newsstand payload, CORS, and subscription add/remove flow.

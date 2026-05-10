@@ -136,12 +136,6 @@ function NewsstandExperience({
       ) + 1
     : 1
   const gridLabel = scope === 'all' ? '전체 언론사 그리드' : '구독한 언론사 그리드'
-  const placeholderMessage =
-    scope === 'all'
-      ? '전체 언론사 목록 보기 영역입니다.'
-      : subscribedCount > 0
-        ? '구독한 언론사 목록 보기 영역입니다.'
-        : '아직 구독한 언론사가 없습니다.'
 
   useLayoutEffect(() => {
     const focusTarget = pendingGridFocusRef.current
@@ -195,7 +189,17 @@ function NewsstandExperience({
 
   const handleViewModeChange = (nextViewMode: NewsstandViewMode) => {
     setViewMode(nextViewMode)
-    setSelectedPublisherId(null)
+
+    if (nextViewMode === 'grid') {
+      setSelectedPublisherId(null)
+      return
+    }
+
+    const nextPublisher = publishers[0]
+
+    if (nextPublisher) {
+      setSelectedPublisherId(nextPublisher.id)
+    }
   }
 
   const handleTogglePublisherSubscription = (publisherId: Publisher['id']) => {
@@ -219,6 +223,7 @@ function NewsstandExperience({
   }
 
   const handleOpenPublisher = (publisherId: Publisher['id']) => {
+    setViewMode('list')
     setSelectedPublisherId(publisherId)
   }
 
@@ -303,16 +308,9 @@ function NewsstandExperience({
           />
         </div>
       ) : (
-        <div
-          className={`flex min-h-[var(--layout-content-height)] items-center justify-center border border-dashed border-line bg-card px-6 text-center ${CONTENT_TRANSITION_CLASS}`}
-          key="publisher-list-placeholder"
-        >
-          <p className="text-[length:var(--text-caption-size)] font-medium leading-[var(--text-caption-leading)] text-sub">
-            930px 뉴스스탠드 콘텐츠 영역
-            <br />
-            {placeholderMessage}
-          </p>
-        </div>
+        <ContentMessage key="publisher-list-empty">
+          목록 보기로 이동할 언론사가 없습니다.
+        </ContentMessage>
       )}
     </NewsstandShell>
   )

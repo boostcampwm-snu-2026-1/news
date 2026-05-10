@@ -5,7 +5,7 @@ import type {
 } from '../types/newsStand'
 
 const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:4000'
+  import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3000'
 ).replace(/\/$/, '')
 const CLIENT_ID_STORAGE_KEY = 'newsstandClientId'
 
