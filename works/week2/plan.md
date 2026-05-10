@@ -40,7 +40,7 @@ week1 의 18 항목으로 기능 1차 구현은 끝났다. week2 는 그 결과�
 - [x] **4. `useAutoAdvance` 훅 분리** — Newsstand 의 useInterval + 다음 outlet/카테고리 wrap 로직을 `src/hooks/useAutoAdvance.ts` 로 추출. `prefers-reduced-motion` / `isOpened` 가드 포함. Newsstand 는 단순 호출만.
 - [x] **5. 리듀서 엣지케이스 보강 테스트** — 동일 액션 idempotency(같은 tab/set 노옵, 동일 progress 클램프 0/1, 동일 subscribe 노옵 reference equality), page/set 음수 클램프, press/open 뒤 progress=0/currentInTab=1 보장, subscribed/hydrate 가 다른 필드 보존.
 - [x] **6. selectors/시나리오 통합 테스트** — 한 카테고리만 visible 일 때 `findNextCategoryWithOutlets` wrap, sub 탭에서 visible.length==0 시 lastPage=0, 구독 해지로 visible 축소 시 page clamp, opened press 가 unsubscribe 된 후의 catOutlets/curIdx.
-- [ ] **7. a11y 키보드/aria 컴포넌트 테스트** — TabBar `role=tablist` + 활성 탭 `aria-selected=true`, Chevron `aria-label` + 끝 페이지 `disabled`, 구독 카운트 배지 `aria-label="구독 중인 언론사 N곳"`, SubscribePill 키보드(Enter/Space) 활성화.
+- [x] **7. a11y 키보드/aria 컴포넌트 테스트** — TabBar `role=tablist` + 활성 탭 `aria-selected=true`, Chevron `aria-label` + 끝 페이지 `disabled`, 구독 카운트 배지 `aria-label="구독 중인 언론사 N곳"`, SubscribePill 키보드(Enter/Space) 활성화.
 - [ ] **8. 키보드 단축키 (←/→/Esc)** — 그리드: ←/→ 페이지 이동. 리스트뷰: ←/→ 같은 카테고리 안 outlet 이동, Esc 닫기. focus/input 안에서는 무시. `useKeyboardShortcuts` 훅으로 분리.
 - [ ] **9. 검증 보고서 (PR 본문 시드)** — `works/week2/verification.md` 에 추가/보강한 테스트 케이스, 발견한 엣지케이스, a11y 점검 결과, 수동 검증 항목(키보드/reducedMotion/localStorage), 한계점을 정리. PR 본문에 그대로 인용 가능한 형태.
 
