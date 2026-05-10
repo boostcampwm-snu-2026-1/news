@@ -3,12 +3,13 @@ import Header from './components/Header';
 import NewsTicker from './components/NewsTicker';
 import TabBar from './components/TabBar';
 import PressGrid from './components/PressGrid';
+import { useSubscription } from './hooks/useSubscription';
 import type { TabKind, ViewKind } from './types';
 
 function App() {
   const [tab, setTab] = useState<TabKind>('all');
   const [view, setView] = useState<ViewKind>('grid');
-  const subscribedIds = new Set<string>();
+  const { subscribedIds, toggleSubscription, subscribedCount } = useSubscription();
 
   return (
     <div className="bg-white min-h-screen">
@@ -17,7 +18,7 @@ function App() {
       <TabBar
         tab={tab}
         view={view}
-        subscribedCount={subscribedIds.size}
+        subscribedCount={subscribedCount}
         onTabChange={setTab}
         onViewChange={setView}
       />
@@ -26,7 +27,7 @@ function App() {
           key={tab}
           tab={tab}
           subscribedIds={subscribedIds}
-          onToggleSubscription={() => {}}
+          onToggleSubscription={toggleSubscription}
         />
       )}
     </div>
