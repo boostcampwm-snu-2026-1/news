@@ -42,7 +42,9 @@ src/
 │   │   ├── Carousel.tsx            # 3-패널 캐러셀 컨테이너
 │   │   └── CarouselControlBar.tsx  # 자동넘김 토글 + 속도 + n/total
 │   ├── FrontPagePanel/
-│   │   └── FrontPagePanel.tsx      # 신문 1면 (멀티컬럼 그리드)
+│   │   ├── FrontPagePanel.tsx      # 신문 1면 조합 컴포넌트
+│   │   ├── FrontPageHeader.tsx     # 로고 · 구독 버튼 · 편집시각
+│   │   └── HotList.tsx             # HOT 1·2·3 우측 칼럼
 │   ├── PublisherStrip/
 │   │   └── PublisherStrip.tsx      # 하단 썸네일 띠
 │   └── SubscribeModal/
@@ -50,7 +52,8 @@ src/
 ├── data/
 │   ├── publishers.json             # 20개 언론사 메타
 │   └── frontpages.json             # 20개 1면 편성 데이터
-├── hooks/                          # 현재 미사용 — 구독·슬라이드 로직은 App.tsx 인라인
+├── hooks/
+│   └── useNewsStand.ts             # 전체 앱 상태·핸들러·자동슬라이드 이펙트 (App.tsx에서 분리)
 ├── types/
 │   └── index.ts                    # Publisher, FrontPage, Article, FeatureBox 등
 ├── App.tsx

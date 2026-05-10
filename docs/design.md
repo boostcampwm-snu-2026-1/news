@@ -106,13 +106,20 @@
 
 ### FrontPagePanel
 
+`FrontPagePanel.tsx`가 두 서브컴포넌트를 조합하는 구조.
+
+| 파일 | 역할 |
+|------|------|
+| `FrontPageHeader.tsx` | 언론사 로고, 구독 버튼, 편집시각 |
+| `HotList.tsx` | HOT 1·2·3 우측 칼럼 |
+| `FrontPagePanel.tsx` | 메인 이미지·서브기사 + 위 둘을 조합, 푸터 |
+
 - 높이: `450px`
-- **헤더** (`px-3 pt-2.5 pb-2 border-b`):
+- **FrontPageHeader** (`px-3 pt-2.5 pb-2 border-b`):
   - 언론사 로고 (`h-8 object-contain`) + 편집시각 (`text-xs tabular-nums`)
-  - 버튼 행: `구독하기` (구독 상태에 따라 `text-primary border-primary` / `text-text-secondary border-border`) / `이용자 한마디` / `공유`
-- **바디** (`flex divide-x`):
-  - 좌측: 메인 이미지 `200px` + 헤드라인 + 리드 + 서브기사 리스트 (bullet, 최대 5개)
-  - 우측 `w-44`: HOT 뉴스 1·2·3 (랭킹 숫자 + 썸네일 + 제목)
+  - 버튼 행: `구독하기` (구독 상태 → `text-primary border-primary font-bold` / 비구독 → `text-text-secondary border-border`) / `이용자 한마디` / `공유`
+- **좌측 칼럼**: 메인 이미지 `200px` + 헤드라인 + 리드 + 서브기사 리스트 (bullet, 최대 5개)
+- **HotList** (`w-44`): HOT 뉴스 1·2·3 (랭킹 숫자 + 썸네일 + 제목)
 - **푸터**: `{언론사명} 사이트 바로가기 →` (`text-[10px] text-text-secondary`)
 - `isSubscribed` / `onToggleSubscribe` prop으로 구독 상태 관리
 
