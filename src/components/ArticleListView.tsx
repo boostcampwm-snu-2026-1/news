@@ -36,6 +36,10 @@ export function ArticleListView({
   const listArticles = publisher.articles.slice(0, 6)
   const subscriptionLabel = isSubscribed ? '해지하기' : '구독하기'
   const subscriptionPrefix = isSubscribed ? '-' : '+'
+  const imageSeed = encodeURIComponent(
+    `${publisher.id}-${leadArticle?.id ?? 'lead'}`,
+  )
+  const imageSrc = `https://picsum.photos/seed/${imageSeed}/680/376`
 
   useLayoutEffect(() => {
     viewRef.current?.focus()
@@ -124,8 +128,15 @@ export function ArticleListView({
         </div>
         <div className="mt-1 flex min-h-0 flex-1 gap-6">
           <section className="flex w-[340px] shrink-0 flex-col">
-            <div className="flex h-[188px] items-center justify-center border border-line bg-[linear-gradient(135deg,#EFF1F6,#DDE3EC)] text-[length:var(--text-caption-size)] font-medium leading-[var(--text-caption-leading)] text-mute">
-              Headline Image
+            <div className="h-[188px] overflow-hidden border border-line bg-soft">
+              <img
+                alt={leadArticle?.title ?? `${publisher.name} 주요 기사 이미지`}
+                className="size-full object-cover"
+                height="188"
+                loading="lazy"
+                src={imageSrc}
+                width="340"
+              />
             </div>
             <h2
               className="mt-3 text-[length:var(--text-heading-size)] font-bold leading-[1.45] text-ink"
