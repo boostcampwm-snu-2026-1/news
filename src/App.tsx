@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { GlobalHeader } from './components/GlobalHeader/GlobalHeader';
 import { CategoryTabs } from './components/CategoryTabs/CategoryTabs';
 import { Carousel } from './components/Carousel/Carousel';
@@ -23,33 +23,46 @@ function App() {
   const [categoryTab, setCategoryTab] = useState<CategoryTab>('주요언론사');
   const [activeIndex, setActiveIndex] = useState(0);
   const [speed, setSpeed] = useState<SlideSpeed>('off');
+  const [timerKey, setTimerKey] = useState(0);
 
   const publishers = filterPublishers(categoryTab);
   const total = publishers.length;
 
-  const activeIndexRef = useRef(activeIndex);
-  activeIndexRef.current = activeIndex;
-
-  // 자동 슬라이드 타이머
+  // 자동 슬라이드 — 수동 조작 시 timerKey 증가로 interval 리셋
   useEffect(() => {
     if (speed === 'off' || total <= 1) return;
     const id = setInterval(() => {
       setActiveIndex((i) => (i + 1) % total);
     }, SLIDE_INTERVAL_MS[speed]);
     return () => clearInterval(id);
-  }, [speed, total]);
+  }, [speed, total, timerKey]);
+
+  function resetTimer() { setTimerKey((k) => k + 1); }
 
   function handleCategoryChange(tab: CategoryTab) {
     setCategoryTab(tab);
     setActiveIndex(0);
+    resetTimer();
   }
 
   function handlePrev() {
     setActiveIndex((i) => (i - 1 + total) % total);
+    resetTimer();
   }
 
   function handleNext() {
     setActiveIndex((i) => (i + 1) % total);
+    resetTimer();
+  }
+
+  function handleStripSelect(idx: number) {
+    setActiveIndex(idx);
+    resetTimer();
+  }
+
+  function handleCarouselIndexChange(idx: number) {
+    setActiveIndex(idx);
+    resetTimer();
   }
 
   return (
@@ -62,7 +75,7 @@ function App() {
         <Carousel
           count={total}
           activeIndex={activeIndex}
-          onIndexChange={setActiveIndex}
+          onIndexChange={handleCarouselIndexChange}
           prevLabel={publishers[(activeIndex - 1 + total) % total]?.name}
           nextLabel={publishers[(activeIndex + 1) % total]?.name}
           renderPanel={(idx, isActive) => {
@@ -93,7 +106,7 @@ function App() {
           <PublisherStrip
             publishers={publishers}
             activeIndex={activeIndex}
-            onSelect={setActiveIndex}
+            onSelect={handleStripSelect}
           />
         </div>
       </div>
