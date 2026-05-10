@@ -1,4 +1,3 @@
-import type { TabKey } from '../TabBar/TabBar'
 import type { Press } from '../../data/presses'
 import { Chevron } from '../Chevron/Chevron'
 import { GridCell } from '../GridCell/GridCell'
@@ -7,7 +6,6 @@ import styles from './PressGrid.module.css'
 interface PressGridProps {
   items: Press[]
   subscribedIds: Set<string>
-  tab: TabKey
   page: number
   lastPage: number
   onPagePrev: () => void
@@ -20,7 +18,6 @@ interface PressGridProps {
 export function PressGrid({
   items,
   subscribedIds,
-  tab,
   page,
   lastPage,
   onPagePrev,
@@ -38,7 +35,6 @@ export function PressGrid({
             key={press.id}
             press={press}
             isSubscribed={subscribedIds.has(press.id)}
-            tab={tab}
             onOpen={onOpen}
             onSubscribe={onSubscribe}
             onUnsubscribe={onUnsubscribe}

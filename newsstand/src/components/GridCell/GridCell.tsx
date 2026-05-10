@@ -1,4 +1,3 @@
-import type { TabKey } from '../TabBar/TabBar'
 import type { Press } from '../../data/presses'
 import { PressWordmark } from '../PressWordmark/PressWordmark'
 import styles from './GridCell.module.css'
@@ -6,13 +5,12 @@ import styles from './GridCell.module.css'
 interface GridCellProps {
   press: Press
   isSubscribed: boolean
-  tab: TabKey
   onOpen: (id: string) => void
   onSubscribe: (id: string) => void
   onUnsubscribe: (id: string) => void
 }
 
-export function GridCell({ press, isSubscribed, tab, onOpen, onSubscribe, onUnsubscribe }: GridCellProps) {
+export function GridCell({ press, isSubscribed, onOpen, onSubscribe, onUnsubscribe }: GridCellProps) {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
@@ -22,7 +20,7 @@ export function GridCell({ press, isSubscribed, tab, onOpen, onSubscribe, onUnsu
 
   const handlePill = (e: React.MouseEvent) => {
     e.stopPropagation()
-    if (tab === 'sub') {
+    if (isSubscribed) {
       onUnsubscribe(press.id)
     } else {
       onSubscribe(press.id)
@@ -50,9 +48,9 @@ export function GridCell({ press, isSubscribed, tab, onOpen, onSubscribe, onUnsu
         onClick={handlePill}
         onKeyDown={handlePillKeyDown}
         tabIndex={0}
-        aria-label={tab === 'sub' ? `${press.name} 구독 해지` : `${press.name} 구독하기`}
+        aria-label={isSubscribed ? `${press.name} 구독 해지` : `${press.name} 구독하기`}
       >
-        {tab === 'sub' ? '− 해지하기' : '+ 구독하기'}
+        {isSubscribed ? '− 해지하기' : '+ 구독하기'}
       </button>
       {isSubscribed && (
         <span className={styles.subscribedBadge} aria-hidden="true" />

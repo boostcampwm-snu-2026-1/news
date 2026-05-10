@@ -162,15 +162,24 @@ export function Newsstand() {
             tabKey={state.tabKey}
             progress={state.progress}
             currentInTab={state.currentInTab}
+            isSubscribed={state.subscribed.has(openedPress.id)}
             onClose={() => dispatch({ type: 'CLOSE_PRESS' })}
             onCategoryChange={(key) => dispatch({ type: 'SET_CATEGORY', key })}
+            onSubscribe={(id) => dispatch({ type: 'SUBSCRIBE', id })}
+            onUnsubscribe={(id) => dispatch({ type: 'UNSUBSCRIBE', id })}
+            onNextPress={
+              (() => {
+                const idx = visiblePresses.findIndex((p) => p.id === state.opened)
+                const next = visiblePresses[idx + 1]
+                return next ? () => dispatch({ type: 'OPEN_PRESS', id: next.id }) : undefined
+              })()
+            }
           />
         ) : (
           <div className={styles.gridArea}>
             <PressGrid
               items={pageItems}
               subscribedIds={state.subscribed}
-              tab={state.tab}
               page={state.page}
               lastPage={lastPage}
               onPagePrev={() => dispatch({ type: 'SET_PAGE', page: state.page - 1 })}
@@ -178,6 +187,7 @@ export function Newsstand() {
               onOpen={(id) => dispatch({ type: 'OPEN_PRESS', id })}
               onSubscribe={(id) => dispatch({ type: 'SUBSCRIBE', id })}
               onUnsubscribe={(id) => dispatch({ type: 'UNSUBSCRIBE', id })}
+
             />
           </div>
         )}
