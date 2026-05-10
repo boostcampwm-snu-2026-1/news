@@ -5,6 +5,10 @@ import { cleanup } from '@testing-library/react';
 afterEach(() => {
   cleanup();
   vi.useRealTimers();
+  // 같은 파일 내 테스트들이 localStorage를 공유하므로 매 테스트 후 초기화
+  if (typeof window !== 'undefined' && window.localStorage) {
+    window.localStorage.clear();
+  }
 });
 
 if (!window.matchMedia) {

@@ -63,7 +63,7 @@
 
 ### 2-C. 추가 기능 (택 1~2)
 
-- [ ] **(2주차)** 구독 정보 localStorage 영속화
+- [x] **(2주차)** 구독 정보 localStorage 영속화 ([useSubscriptions](../src/hooks/useSubscriptions.ts) · [2-C-1 테스트](../src/test/edge-cases/2-C-1-localstorage.test.tsx))
 - [ ] **(2주차)** 그리드 셀 키보드 네비게이션 (방향키 이동 + Enter 오픈)
 - [ ] **(2주차)** 구독/해지 시 토스트 알림 (자동 dismiss)
 
