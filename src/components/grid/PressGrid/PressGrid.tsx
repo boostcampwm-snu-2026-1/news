@@ -45,7 +45,7 @@ const PressGrid = () => {
           <span className="text-[var(--color-mute)] font-medium">구독한 언론사가 없습니다.</span>
         </div>
       ) : (
-        <div className="grid grid-cols-6 grid-rows-[repeat(4,96px)] bg-[var(--color-line)] border border-[var(--color-line)] gap-[1px] w-full h-[388px]">
+        <div className="grid grid-cols-6 grid-rows-[repeat(4,96px)] bg-[var(--color-line)] border border-[var(--color-line)] gap-[1px] w-full">
           {cells.map((press, index) => (
             <GridCell 
               key={press ? press.id : `empty-${index}`} 
