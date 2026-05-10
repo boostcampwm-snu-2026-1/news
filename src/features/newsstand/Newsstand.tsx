@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Header } from "./components/Header";
+import { OpenedPress } from "./components/OpenedPress";
 import { PressGrid } from "./components/PressGrid";
 import { TabBar, type NewsstandTab, type ViewerMode } from "./components/TabBar";
 import { Ticker } from "./components/Ticker";
@@ -18,6 +19,7 @@ export function Newsstand() {
   const [subscribed, setSubscribed] = useState<Set<string>>(
     () => new Set(presses.filter((press) => press.subscribed).map((press) => press.id)),
   );
+  const [selectedPressId, setSelectedPressId] = useState<string | null>(null);
 
   const toggleSubscribe = useCallback((pressId: string) => {
     setSubscribed((prev) => {
@@ -49,6 +51,16 @@ export function Newsstand() {
   const goPrev = () => setPageByTab((prev) => ({ ...prev, [activeTab]: currentPage - 1 }));
   const goNext = () => setPageByTab((prev) => ({ ...prev, [activeTab]: currentPage + 1 }));
 
+  const selectedPress = useMemo(
+    () => (selectedPressId ? presses.find((press) => press.id === selectedPressId) ?? null : null),
+    [selectedPressId],
+  );
+
+  const handleTabChange = (tab: NewsstandTab) => {
+    setActiveTab(tab);
+    setSelectedPressId(null);
+  };
+
   return (
     <main className="newsstand-shell" aria-label="뉴스스탠드">
       <section className="newsstand-canvas">
@@ -59,37 +71,51 @@ export function Newsstand() {
           activeTab={activeTab}
           subCount={subscribed.size}
           viewer={viewer}
-          onTabChange={setActiveTab}
+          onTabChange={handleTabChange}
           onViewerChange={setViewer}
         />
         <div className="newsstand-content-slot" aria-label="뉴스스탠드 구현 영역">
-          <PressGrid
-            action={isSubscribedTab ? "unsubscribe" : "subscribe"}
-            items={gridItems}
-            pageSize={PAGE_SIZE}
-            ariaLabel={isSubscribedTab ? "내가 구독한 언론사" : "전체 언론사"}
-            onToggle={toggleSubscribe}
-          />
+          {selectedPress ? (
+            <OpenedPress
+              press={selectedPress}
+              isSubscribed={subscribed.has(selectedPress.id)}
+              onToggleSubscribe={toggleSubscribe}
+              onClose={() => setSelectedPressId(null)}
+            />
+          ) : (
+            <PressGrid
+              action={isSubscribedTab ? "unsubscribe" : "subscribe"}
+              items={gridItems}
+              pageSize={PAGE_SIZE}
+              ariaLabel={isSubscribedTab ? "내가 구독한 언론사" : "전체 언론사"}
+              onToggle={toggleSubscribe}
+              onOpen={setSelectedPressId}
+            />
+          )}
         </div>
 
-        <button
-          className="newsstand-chevron newsstand-chevron-left"
-          type="button"
-          aria-label={`이전 페이지 (${currentPage} / ${totalPages})`}
-          disabled={!canPrev}
-          onClick={goPrev}
-        >
-          <ChevronLeft aria-hidden="true" size={24} strokeWidth={1.4} />
-        </button>
-        <button
-          className="newsstand-chevron newsstand-chevron-right"
-          type="button"
-          aria-label={`다음 페이지 (${currentPage + 2} / ${totalPages})`}
-          disabled={!canNext}
-          onClick={goNext}
-        >
-          <ChevronRight aria-hidden="true" size={24} strokeWidth={1.4} />
-        </button>
+        {!selectedPress && (
+          <>
+            <button
+              className="newsstand-chevron newsstand-chevron-left"
+              type="button"
+              aria-label={`이전 페이지 (${currentPage} / ${totalPages})`}
+              disabled={!canPrev}
+              onClick={goPrev}
+            >
+              <ChevronLeft aria-hidden="true" size={24} strokeWidth={1.4} />
+            </button>
+            <button
+              className="newsstand-chevron newsstand-chevron-right"
+              type="button"
+              aria-label={`다음 페이지 (${currentPage + 2} / ${totalPages})`}
+              disabled={!canNext}
+              onClick={goNext}
+            >
+              <ChevronRight aria-hidden="true" size={24} strokeWidth={1.4} />
+            </button>
+          </>
+        )}
       </section>
     </main>
   );
