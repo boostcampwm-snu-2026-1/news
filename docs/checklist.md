@@ -77,11 +77,11 @@
   - 종합/경제, 방송/통신, IT, 스포츠/연예, 매거진/전문지, 지역 탭 strip을 만든다.
   - 완료 기준: active tab은 accent 배경, inactive는 soft 배경과 border 구조를 유지한다.
 
-- [ ] 17. 6초 프로그레스와 자동 전환 구현
+- [x] 17. 6초 프로그레스와 자동 전환 구현
   - active category tab의 progress fill을 6초 linear로 채우고, 완료 시 `currentInTab` 증가 및 category overflow 전환을 처리한다.
   - 완료 기준: `1 / 81`에서 진행되고 마지막 항목 이후 다음 카테고리 또는 첫 카테고리로 순환한다.
 
-- [ ] 18. 열린 언론사 기사 리스트 레이아웃 구현
+- [x] 18. 열린 언론사 기사 리스트 레이아웃 구현
   - 930x388 카드, 내부 padding 24/32, head row, headline image placeholder, headline, 6개 기사 목록, footnote를 구현한다.
   - 완료 기준: SBS Biz/아시아경제 예시 프레임처럼 편집 시각, 구독 pill, 기사 목록, footnote가 배치된다.
 
