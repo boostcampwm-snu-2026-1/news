@@ -43,7 +43,11 @@
 ├──────────────────────────────────────────────────────────┤
 │  CategoryTabs   (주요언론사 · 종합/경제 · 방송/통신 · IT)        │
 ├──────────────────────────────────────────────────────────┤
-│  (캐러셀 영역 — 미구현)                                       │
+│  Carousel  [◀  FrontPagePanel(peek) | FrontPagePanel | FrontPagePanel(peek)  ▶]  │
+├──────────────────────────────────────────────────────────┤
+│  CarouselControlBar  (자동넘김 토글 + 속도 선택 / n·total / ◁▷)  │
+├──────────────────────────────────────────────────────────┤
+│  PublisherStrip  (언론사 썸네일 띠 — 클릭 시 캐러셀 점프)         │
 └──────────────────────────────────────────────────────────┘
 ```
 
@@ -69,8 +73,8 @@
 
 - `flex gap-2 justify-center py-3`
 - 탭 4개: `주요언론사` / `종합/경제` / `방송/통신` / `IT`
-- 활성: `bg-tab-active text-white rounded-full px-4 py-1.5 text-sm font-bold`
-- 비활성: `text-text-secondary hover:text-text-primary rounded-full px-4 py-1.5 text-sm font-bold`
+- 활성: `bg-tab-active text-white px-4 py-1.5 text-sm font-bold` (사각형, 둥글기 없음)
+- 비활성: `text-text-secondary hover:text-text-primary px-4 py-1.5 text-sm font-bold`
 
 ### Carousel (3-패널)
 
@@ -99,6 +103,18 @@
 - 너비: 중앙 패널과 동일 (`736px`, `mx-auto`)
 - **좌측**: 자동넘김 토글 버튼 (`border border-text-primary` 활성 / `border-border` 비활성) + 자동넘김 ON일 때 속도 드롭다운 노출 (`느리게(30초)` / `보통(20초)` / `빠르게(15초)`)
 - **우측**: `{n} / {total}` (`tabular-nums`) + ◁ ▷ 미세이동 버튼
+
+### FrontPagePanel
+
+- 높이: `450px`
+- **헤더** (`px-3 pt-2.5 pb-2 border-b`):
+  - 언론사 로고 (`h-8 object-contain`) + 편집시각 (`text-xs tabular-nums`)
+  - 버튼 행: `구독하기` (구독 상태에 따라 `text-primary border-primary` / `text-text-secondary border-border`) / `이용자 한마디` / `공유`
+- **바디** (`flex divide-x`):
+  - 좌측: 메인 이미지 `200px` + 헤드라인 + 리드 + 서브기사 리스트 (bullet, 최대 5개)
+  - 우측 `w-44`: HOT 뉴스 1·2·3 (랭킹 숫자 + 썸네일 + 제목)
+- **푸터**: `{언론사명} 사이트 바로가기 →` (`text-[10px] text-text-secondary`)
+- `isSubscribed` / `onToggleSubscribe` prop으로 구독 상태 관리
 
 ### PublisherStrip
 

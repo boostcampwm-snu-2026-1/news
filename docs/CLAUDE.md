@@ -50,9 +50,7 @@ src/
 ├── data/
 │   ├── publishers.json             # 20개 언론사 메타
 │   └── frontpages.json             # 20개 1면 편성 데이터
-├── hooks/
-│   ├── useSubscription.ts          # 1주차에서 유지 (localStorage)
-│   └── useAutoSlide.ts             # 자동슬라이드 타이머
+├── hooks/                          # 현재 미사용 — 구독·슬라이드 로직은 App.tsx 인라인
 ├── types/
 │   └── index.ts                    # Publisher, FrontPage, Article, FeatureBox 등
 ├── App.tsx
