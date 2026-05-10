@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 
 const PANEL_W = 736;
 const HALF = PANEL_W / 2;      // 368
-const BTN_GAP  = 80;   // 버튼 ~ 중앙 패널 경계 간격 (이 값만 바꾸면 버튼만 이동)
+const BTN_GAP  = 25;   // 버튼 ~ 중앙 패널 경계 간격 (이 값만 바꾸면 버튼만 이동)
 const PEEK_PAD = 48;   // peek 카드 내부 패딩 (독립 조절)
 
 // 트랙 translateX — 중앙 패널(index 1)이 화면 정중앙에 오도록

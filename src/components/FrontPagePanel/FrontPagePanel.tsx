@@ -21,7 +21,7 @@ export function FrontPagePanel({ publisher, frontPage }: FrontPagePanelProps) {
   return (
     <div
       className="bg-surface flex flex-col rounded-sm overflow-hidden"
-      style={{ height: 416 }}
+      style={{ height: 450 }}
     >
       {/* 헤더 — 로고 + 편집시각 / 버튼 */}
       <div className="flex flex-col px-3 pt-2.5 pb-2 border-b border-border shrink-0 gap-1.5">
@@ -58,7 +58,7 @@ export function FrontPagePanel({ publisher, frontPage }: FrontPagePanelProps) {
         {/* 좌측 — 메인 기사 + 서브 기사 리스트 */}
         <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
           {/* 메인 이미지 */}
-          <div className="relative bg-border shrink-0" style={{ height: 148 }}>
+          <div className="relative bg-border shrink-0" style={{ height: 200 }}>
             {mainArticle.imageUrl ? (
               <img
                 src={mainArticle.imageUrl}
