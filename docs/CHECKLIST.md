@@ -19,7 +19,7 @@
 
 ### 리스트 뷰
 
-- [ ] #10 CategoryTabBar 컴포넌트 — 카테고리 탭 (종합/경제, 방송/통신, IT, 스포츠/연예, 매거진/전문지, 지역)
+- [x] #10 CategoryTabBar 컴포넌트 — 카테고리 탭 (종합/경제, 방송/통신, IT, 스포츠/연예, 매거진/전문지, 지역)
 - [ ] #11 ProgressBar 컴포넌트 — 활성 탭 하단 6초 주기 프로그레스 바, 완료 시 다음 언론사 자동 전환
 - [ ] #12 PressNewsCard 컴포넌트 — 언론사 로고 + 편집일시 + 헤드라인 이미지(placeholder) + 기사 목록 + 메인 기사 제목
 - [ ] #13 ListView 조립 — CategoryTabBar + ProgressBar + PressNewsCard + 수동 페이지네이션 연결
