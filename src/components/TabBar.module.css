@@ -1,0 +1,66 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 24px;
+  margin-bottom: 24px;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--mute);
+  cursor: pointer;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+.tabActive {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--r-badge);
+  background: var(--accent);
+  color: var(--badge-ink);
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.viewerToggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.iconBtn {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mute);
+  cursor: pointer;
+}
+
+.iconBtnActive {
+  color: var(--ink);
+}

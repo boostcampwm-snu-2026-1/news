@@ -1,0 +1,16 @@
+.root {
+  width: var(--canvas-w);
+  margin: 0 auto;
+  padding-top: 58px;
+  position: relative;
+}
+
+.content {
+  width: var(--content-w);
+  margin: 0 auto;
+  position: relative;
+}
+
+.contentBlock {
+  position: relative;
+}

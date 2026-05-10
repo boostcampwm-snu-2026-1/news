@@ -1,0 +1,26 @@
+.root {
+  position: absolute;
+  top: 174px;
+  width: 24px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mute);
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+}
+
+.left {
+  left: -72px;
+}
+
+.right {
+  right: -72px;
+}
+
+.disabled {
+  opacity: 0;
+  pointer-events: none;
+}

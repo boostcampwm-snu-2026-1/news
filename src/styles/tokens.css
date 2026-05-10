@@ -1,0 +1,35 @@
+:root {
+  /* Color tokens */
+  --ink: #14212b;
+  --ink-alt: #14202b;
+  --sub: #5f6e76;
+  --mute: #879298;
+  --line: #d2dae0;
+  --soft: #f5f7f9;
+  --soft-alt: #f7f7fc;
+  --card: #ffffff;
+  --page: #fefefe;
+  --accent: #7890e7;
+  --accent-deep: #4362d0;
+  --badge-ink: rgba(255, 255, 255, 0.7);
+
+  /* Font families */
+  --font-sans: 'Pretendard Variable', Pretendard, 'Noto Sans KR',
+    -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-serif: 'Noto Serif KR', serif;
+
+  /* Radii */
+  --r-0: 0;
+  --r-sub: 2px;
+  --r-pill: 14px;
+  --r-badge: 10px;
+
+  /* Layout */
+  --canvas-w: 1280px;
+  --content-w: 930px;
+  --gutter: 175px;
+
+  /* Component pill shadow */
+  --shadow-pill: 0 1px 2px rgba(20, 33, 43, 0.04);
+}
