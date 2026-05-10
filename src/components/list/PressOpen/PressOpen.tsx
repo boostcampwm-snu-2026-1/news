@@ -1,15 +1,22 @@
 import { useState } from 'react';
 import FieldTab from '../FieldTab/FieldTab';
+import PressHeader from './PressHeader';
+import PressBody from './PressBody';
 import { CATEGORIES } from '../../../data/categories';
 import type { Category } from '../../../data/categories';
+import { mockPressData } from '../../../data/pressData';
+import { useNewsstandStore } from '../../../store/NewsstandContext';
 
 const PressOpen = () => {
   const [activeCategory, setActiveCategory] = useState<Category>(CATEGORIES[0]);
   const [isPaused, setIsPaused] = useState(false);
+  const { subscribedIds, toggleSubscription } = useNewsstandStore();
 
-  // 진행률이 100%가 되었을 때 다음 기사나 언론사로 넘어가는 로직
+  // 테스트를 위해 첫 번째 기사 데이터를 렌더링
+  const currentPress = mockPressData[0];
+  const isSubscribed = subscribedIds.has(currentPress.id);
+
   const handleProgressComplete = () => {
-    // 지금은 테스트용으로 100% 도달 시 단순히 카테고리만 다음으로 넘겨봅니다.
     setActiveCategory(prev => {
       const currentIndex = CATEGORIES.indexOf(prev);
       const nextIndex = (currentIndex + 1) % CATEGORIES.length;
@@ -23,19 +30,23 @@ const PressOpen = () => {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* 탭 헤더 영역 */}
       <FieldTab 
         activeCategory={activeCategory}
         onCategoryChange={setActiveCategory}
         isPaused={isPaused}
         onProgressComplete={handleProgressComplete}
         currentInTab={1}
-        totalInTab={81} // 추후 실제 데이터 개수로 교체
+        totalInTab={81}
       />
       
-      {/* 기사 본문 영역 자리표시자 */}
-      <div className="w-full h-[348px] bg-[var(--color-card)] border border-[var(--color-line)] flex items-center justify-center text-[var(--color-sub)]">
-        본문 영역 (구현 예정)
+      {/* 본문 컨테이너 */}
+      <div className="w-full bg-[var(--color-card)] border border-[var(--color-line)] border-t-0 flex flex-col">
+        <PressHeader 
+          press={currentPress} 
+          isSubscribed={isSubscribed} 
+          onToggleSubscription={toggleSubscription} 
+        />
+        <PressBody press={currentPress} />
       </div>
     </main>
   );

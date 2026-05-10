@@ -9,8 +9,18 @@ export interface PressStyle {
   flag?: boolean;
 }
 
+export interface PressArticle {
+  editTime: string;
+  headline: {
+    title: string;
+    imageUrl?: string;
+  };
+  subArticles: string[];
+}
+
 export interface Press {
   id: string;
   name: string;
   style: PressStyle;
+  articles?: PressArticle;
 }
