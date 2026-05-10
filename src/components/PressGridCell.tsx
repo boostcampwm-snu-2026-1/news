@@ -15,7 +15,7 @@ export default function PressGridCell({
   className = '',
 }: PressGridCellProps) {
   if (!press) {
-    return <div className={`h-[98px] border border-[#e0e0e0] bg-white ${className}`} aria-hidden="true" />;
+    return <div className={`h-[98px] border-r border-b border-[#e0e0e0] bg-white ${className}`} aria-hidden="true" />;
   }
 
   const buttonLabel = isSubscribed ? '− 해지하기' : '+ 구독하기';
@@ -23,7 +23,7 @@ export default function PressGridCell({
 
   return (
     <div
-      className={`group relative flex h-[98px] min-w-0 items-center justify-center overflow-hidden border border-[#e0e0e0] bg-white ${className}`}
+      className={`group relative flex h-[98px] min-w-0 items-center justify-center overflow-hidden border-r border-b border-[#e0e0e0] bg-white ${className}`}
     >
       <div className="h-16 w-[132px] transition-opacity duration-150 group-hover:opacity-20 group-focus-within:opacity-20">
         <PressLogo pressId={press.id} fallbackName={press.name} />
