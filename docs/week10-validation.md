@@ -45,3 +45,16 @@
 | FieldTab 진행률 순환 | `App`의 100ms interval, 6000ms 진행률, 기사/분야 순환 로직 확인 | 통과 |
 
 브라우저 자동화 도구가 설치되어 있지 않아 클릭 자동화 대신 개발 서버 응답, 빌드, 이벤트 연결 경로를 함께 확인했다. Headless Edge 스크린샷 검증은 Windows 권한 문제로 생성되지 않아 결과에 포함하지 않았다.
+
+## checklist-21 접근성 점검 기록
+
+| 점검 항목 | 확인 및 보완 |
+| --- | --- |
+| 상단 탭 구조 | `TabBar`가 `role="tablist"`, `role="tab"`, `aria-selected`, `aria-controls`를 사용함 |
+| 콘텐츠 패널 연결 | 상단 탭 패널은 `aria-labelledby`로 현재 범위 탭과 연결됨 |
+| 분야 탭 구조 | `FieldTab`이 `role="tablist"`, `role="tab"`, `aria-selected`, `aria-controls`를 사용함 |
+| 분야 탭 패널 연결 | `PressOpen` 기사 패널에 활성 `FieldTab` id를 `aria-labelledby`로 연결함 |
+| 키보드 이동 | 상단 탭과 분야 탭 모두 `ArrowLeft`, `ArrowRight`, `Home`, `End` 이동을 지원함 |
+| 그리드 셀 조작 | 언론사 셀은 `tabIndex={0}`와 `Enter`/`Space`로 리스트 열기를 지원함 |
+| 구독/해지 버튼 의미 | 구독 버튼은 `aria-pressed`로 구독 상태를 알리고, 해지 버튼은 단일 실행 버튼으로 읽히도록 보완함 |
+| 현재 기사 표시 | 현재 강조 기사는 `aria-current="true"`로 표시함 |

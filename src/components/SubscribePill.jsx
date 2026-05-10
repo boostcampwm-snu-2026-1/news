@@ -19,7 +19,7 @@ export default function SubscribePill({ isSubscribed, mode, pressName, onClick }
       className={`subscribe-pill subscribe-pill--${action}`}
       type="button"
       aria-label={ariaLabel}
-      aria-pressed={isSubscribed}
+      aria-pressed={isUnsubscribeAction ? undefined : isSubscribed}
       data-action={action}
       onClick={handleClick}
     >

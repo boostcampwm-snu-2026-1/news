@@ -21,7 +21,7 @@ export default function GridCell({ press, isSubscribed, mode, onSubscribe, onOpe
     <article
       className={`grid-cell ${isSubscribed ? 'grid-cell--subscribed' : ''}`}
       role="gridcell"
-      tabIndex="0"
+      tabIndex={0}
       aria-label={`${press.name} 기사 목록 열기`}
       onClick={() => onOpen(press.id)}
       onKeyDown={handleKeyDown}

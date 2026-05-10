@@ -20,6 +20,7 @@ export default function PressOpen({
 
   const tabs = getPressArticleDeck(press)
   const activeTab = tabs.find((tab) => tab.key === tabKey) ?? tabs[0]
+  const activeTabIndex = Math.max(0, tabs.findIndex((tab) => tab.key === activeTab.key))
   const activeArticleIndex = Math.min(currentInTab, activeTab.articles.length - 1)
 
   return (
@@ -43,7 +44,7 @@ export default function PressOpen({
         className="press-open__article-panel"
         id="press-open-panel"
         role="tabpanel"
-        aria-label={`${activeTab.label} 기사`}
+        aria-labelledby={`field-tab-${activeTabIndex}`}
       >
         <ol className="press-open__articles">
           {activeTab.articles.map((article, index) => {

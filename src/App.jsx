@@ -229,7 +229,7 @@ export default function App() {
         className="content-area"
         id="press-panel"
         role="tabpanel"
-        tabIndex="0"
+        tabIndex={0}
         aria-labelledby={`tab-${state.tab}`}
       >
         <Chevron 
