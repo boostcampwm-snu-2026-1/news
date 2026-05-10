@@ -7,7 +7,6 @@ import {
   newsstandReducer,
 } from "../../state/newsstandReducer";
 import {
-  findNextCategoryWithOutlets,
   getCatOutlets,
   getCount,
   getCurIdxInCat,
@@ -18,8 +17,7 @@ import {
   getVisible,
 } from "../../state/selectors";
 import { loadFromStorage, saveToStorage } from "../../hooks/useLocalStorage";
-import { useInterval } from "../../hooks/useInterval";
-import { useReducedMotion } from "../../hooks/useReducedMotion";
+import { useAutoAdvance } from "../../hooks/useAutoAdvance";
 import { Header } from "../Header/Header";
 import { Ticker } from "../Ticker/Ticker";
 import { TabBar, type ViewerId } from "../TabBar/TabBar";
@@ -28,9 +26,6 @@ import { PressOpen } from "../PressOpen/PressOpen";
 import { Chevron } from "../Chevron/Chevron";
 
 const STORAGE_KEY = "newsstand:subscribed";
-const PROGRESS_TICK_MS = 100;
-const PROGRESS_TOTAL_MS = 6000;
-const PROGRESS_DELTA = PROGRESS_TICK_MS / PROGRESS_TOTAL_MS;
 
 const ALL_PRESS = pressData as Press[];
 const ALL_ARTICLES = articlesData as PressArticles[];
@@ -51,7 +46,6 @@ export function Newsstand() {
     (init) => ({ ...init, subscribed: loadFromStorage<PressId[]>(STORAGE_KEY, []) }),
   );
   const [viewer, setViewer] = useState<ViewerId>("grid");
-  const reduced = useReducedMotion();
   const today = useMemo(() => formatToday(), []);
 
   useEffect(() => {
@@ -106,35 +100,15 @@ export function Newsstand() {
     });
   }, [isOpened, curIdxInCat, catOutlets]);
 
-  useInterval(
-    () => {
-      const next = state.progress + PROGRESS_DELTA;
-      if (next < 1) {
-        dispatch({ type: "progress/set", progress: next });
-        return;
-      }
-      // 같은 섹터 안에서 다음 outlet → 섹터 끝이면 다음 섹터의 첫 outlet (wrap).
-      if (curIdxInCat >= 0 && curIdxInCat + 1 < catOutlets.length) {
-        const nextOutlet = catOutlets[curIdxInCat + 1];
-        dispatch({
-          type: "press/open",
-          pressId: nextOutlet.id,
-          primaryCategory: nextOutlet.primaryCategory,
-        });
-        return;
-      }
-      const nextCat = findNextCategoryWithOutlets(visible, state.tabKey);
-      if (!nextCat) return;
-      const first = visible.find((p) => p.primaryCategory === nextCat);
-      if (!first) return;
-      dispatch({
-        type: "press/open",
-        pressId: first.id,
-        primaryCategory: first.primaryCategory,
-      });
-    },
-    isOpened && !reduced ? PROGRESS_TICK_MS : null,
-  );
+  useAutoAdvance({
+    isOpened,
+    progress: state.progress,
+    visible,
+    catOutlets,
+    curIdxInCat,
+    tabKey: state.tabKey,
+    dispatch,
+  });
 
   const onTabChange = (tab: "all" | "sub") => {
     if (isOpened) dispatch({ type: "press/close" });
