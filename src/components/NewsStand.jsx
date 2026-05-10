@@ -9,9 +9,11 @@ const ITEMS_PER_PAGE = 24;
 
 export default function NewsStand() {
   const [activeTab, setActiveTab] = useState('all');
-  const [currentPage, setCurrentPage] = useState(0);
+  const [pageByTab, setPageByTab] = useState({ all: 0, subscribed: 0 });
   const [direction, setDirection] = useState(null);
   const { subscribedIds, subscribe, unsubscribe } = useSubscriptions();
+
+  const currentPage = pageByTab[activeTab];
 
   const displayList = activeTab === 'all'
     ? pressList
@@ -28,12 +30,11 @@ export default function NewsStand() {
 
   const handlePageChange = (nextPage) => {
     setDirection(nextPage > currentPage ? 'next' : 'prev');
-    setCurrentPage(nextPage);
+    setPageByTab((prev) => ({ ...prev, [activeTab]: nextPage }));
   };
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    setCurrentPage(0);
     setDirection(null);
   };
 
