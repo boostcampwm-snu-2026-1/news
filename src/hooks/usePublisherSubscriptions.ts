@@ -1,35 +1,64 @@
 import { useState } from 'react'
-import { INITIAL_SUBSCRIBED_PUBLISHER_IDS } from '../data/newsStand'
 import type { Publisher } from '../types/newsStand'
 
 type PublisherId = Publisher['id']
 
-export function usePublisherSubscriptions(
-  initialPublisherIds: readonly PublisherId[] = INITIAL_SUBSCRIBED_PUBLISHER_IDS,
-) {
+interface UsePublisherSubscriptionsOptions {
+  initialPublisherIds: readonly PublisherId[]
+  onUpdatePublisherSubscription?: (
+    publisherId: PublisherId,
+    subscribed: boolean,
+  ) => Promise<readonly PublisherId[]>
+}
+
+export function usePublisherSubscriptions({
+  initialPublisherIds,
+  onUpdatePublisherSubscription,
+}: UsePublisherSubscriptionsOptions) {
   const [subscribedPublisherIds, setSubscribedPublisherIds] = useState<
     ReadonlySet<PublisherId>
   >(() => new Set<PublisherId>(initialPublisherIds))
+  const [subscriptionError, setSubscriptionError] = useState<string | null>(null)
 
   const isPublisherSubscribed = (publisherId: PublisherId) =>
     subscribedPublisherIds.has(publisherId)
 
   const togglePublisherSubscription = (publisherId: PublisherId) => {
-    setSubscribedPublisherIds((currentPublisherIds) => {
-      const nextPublisherIds = new Set(currentPublisherIds)
+    const subscribed = !subscribedPublisherIds.has(publisherId)
 
-      if (nextPublisherIds.has(publisherId)) {
-        nextPublisherIds.delete(publisherId)
-      } else {
-        nextPublisherIds.add(publisherId)
-      }
+    setSubscriptionError(null)
 
-      return nextPublisherIds
-    })
+    if (!onUpdatePublisherSubscription) {
+      setSubscribedPublisherIds((currentPublisherIds) => {
+        const nextPublisherIds = new Set(currentPublisherIds)
+
+        if (subscribed) {
+          nextPublisherIds.add(publisherId)
+        } else {
+          nextPublisherIds.delete(publisherId)
+        }
+
+        return nextPublisherIds
+      })
+      return
+    }
+
+    void onUpdatePublisherSubscription(publisherId, subscribed)
+      .then((publisherIds) => {
+        setSubscribedPublisherIds(new Set<PublisherId>(publisherIds))
+      })
+      .catch((error: unknown) => {
+        setSubscriptionError(
+          error instanceof Error
+            ? error.message
+            : '구독 상태를 저장하지 못했습니다.',
+        )
+      })
   }
 
   return {
     isPublisherSubscribed,
+    subscriptionError,
     subscribedCount: subscribedPublisherIds.size,
     subscribedPublisherIds,
     togglePublisherSubscription,

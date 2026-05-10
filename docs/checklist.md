@@ -29,3 +29,20 @@ Use this as the first-pass implementation order. The current priority is to make
 - [ ] Add unit tests or lightweight behavior tests when a test runner exists: subscription toggling, filtering, pagination, and timer cleanup.
 - [ ] Run `npm run build`, `npm run lint` if available, and any available tests.
 - [ ] Update docs if implementation decisions intentionally differ from `docs/design-notes.md`.
+
+## Backend API Migration
+
+- [x] Add `/server` as a separate TypeScript Express package.
+- [x] Add MongoDB connection setup and required environment variables.
+- [x] Add publisher seed data and a seed script that upserts current mock publishers.
+- [x] Implement `GET /api/health` for local and Render health checks.
+- [x] Implement `GET /api/newsstand` for categories, publishers, and ticker items.
+- [x] Implement subscription persistence with MongoDB keyed by anonymous `clientId`.
+- [x] Implement `GET /api/subscriptions` and `PUT /api/subscriptions/:publisherId`.
+- [x] Add frontend API client with `VITE_API_BASE_URL` and localStorage-backed `clientId`.
+- [x] Replace direct mock data usage in `App.tsx` with initial server fetch state.
+- [x] Wire subscription toggling to the server response.
+- [x] Add Render blueprint configuration for the API service.
+- [ ] Seed production MongoDB before Render smoke testing.
+- [ ] Deploy the API to Render with `MONGODB_URI`, `MONGODB_DB_NAME`, and `CLIENT_ORIGIN`.
+- [ ] Point the frontend environment to the deployed API URL.

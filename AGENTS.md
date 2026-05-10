@@ -3,14 +3,29 @@
 ## Project Summary
 
 - Build a React news-stand web service with Vite + React + TypeScript + Tailwind CSS.
+- Serve newsstand data through an Express + MongoDB API in `/server`.
 - Use `docs/design-notes.md` as the current design source of truth.
 - Keep ordered implementation work in `docs/checklist.md`.
 
 ## How To Run
 
+Client:
+
 - `npm run dev`
 - `npm run build`
 - `npm run lint`
+
+Server:
+
+- `cd server && npm run dev`
+- `cd server && npm run build`
+- `cd server && npm run lint`
+- `cd server && npm run seed`
+
+Required local env:
+
+- Client: `VITE_API_BASE_URL`
+- Server: `MONGODB_URI`, `MONGODB_DB_NAME`, `CLIENT_ORIGIN`
 
 ## Required Checks
 
@@ -18,7 +33,9 @@ Run the strongest available checks before final response:
 
 1. `npm run build`
 2. `npm run lint` if a lint script exists
-3. Any test command if a test runner has been added
+3. `cd server && npm run build` if server code changed
+4. `cd server && npm run lint` if server code changed and a lint script exists
+5. Any test command if a test runner has been added
 
 If a check cannot be run, state the exact reason in the final response.
 
@@ -36,6 +53,9 @@ src/
     newsStand.ts
   types/
     newsStand.ts
+  api/
+    newsStand.ts
+  hooks/
   components/
     Header.tsx
     NewsTicker.tsx
@@ -47,13 +67,22 @@ src/
     ArticleListView.tsx
     CategoryTabs.tsx
     ProgressBar.tsx
+server/
+  src/
+    app.ts
+    index.ts
+    data/
+    db/
+    models/
+    routes/
+    scripts/
 ```
 
 ## Coding Rules
 
 - Prefer minimal, localized changes.
 - Preserve existing structure unless a refactor is explicitly requested or clearly necessary.
-- Use deterministic mock data first; do not block UI implementation on real APIs.
+- Use deterministic seed data first; do not block UI implementation on real news APIs.
 - Use Tailwind utilities for layout, spacing, responsive behavior, states, and common visual styling.
 - Put reusable design values in CSS custom properties or Tailwind theme tokens before using one-off arbitrary values broadly.
 - Keep data-driven wordmark styling in CSS variables or inline style objects when Tailwind static class extraction cannot safely see the values.
@@ -61,6 +90,8 @@ src/
 - Subscription state must be keyed by publisher ID.
 - Timer effects must clean up on unmount and when dependencies change.
 - Hover-only controls must also be available on keyboard focus.
+- Server APIs must return typed JSON payloads that match `src/types/newsStand.ts`.
+- MongoDB writes for subscription state must be keyed by stable `clientId` and publisher ID.
 
 ## Accessibility Rules
 
@@ -73,7 +104,7 @@ src/
 ## Do Not
 
 - Do not integrate real news APIs in the first pass.
-- Do not add login, backend persistence, SSR, or admin tooling unless explicitly requested.
+- Do not add login or admin tooling unless explicitly requested.
 - Do not attempt pixel-perfect static reproduction; prioritize user flows, state transitions, and design-token fidelity.
 - Do not hide subscription actions behind hover only; keyboard focus must expose the same actions.
 - Do not hard-code page totals from sample values; compute them from data and page size.

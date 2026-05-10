@@ -9,10 +9,6 @@ export const PUBLISHER_CATEGORIES = [
 
 export type PublisherCategory = (typeof PUBLISHER_CATEGORIES)[number]
 
-export type PublisherScope = 'all' | 'subscribed'
-
-export type NewsstandViewMode = 'grid' | 'list'
-
 export type WordmarkFamily = 'sans' | 'serif'
 
 export type WordmarkWeight = 400 | 500 | 700
@@ -63,29 +59,8 @@ export interface TickerItem {
   headline: string
 }
 
-export interface NewsstandData {
+export interface NewsstandPayload {
   categories: readonly CategoryMeta[]
   publishers: readonly Publisher[]
   tickerItems: readonly TickerItem[]
-}
-
-export interface SubscriptionPayload {
-  publisherIds: readonly Publisher['id'][]
-}
-
-export interface NewsstandState {
-  scope: PublisherScope
-  viewMode: NewsstandViewMode
-  pageIndex: number
-  selectedPublisherId: Publisher['id'] | null
-  selectedCategory: PublisherCategory
-  progress: number
-  currentInCategory: number
-  subscribedPublisherIds: ReadonlySet<Publisher['id']>
-}
-
-export interface PaginationState {
-  pageIndex: number
-  pageSize: number
-  totalItems: number
 }
