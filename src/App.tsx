@@ -4,6 +4,7 @@ import NewsTicker from './components/NewsTicker';
 import TabBar from './components/TabBar';
 import PressGrid from './components/PressGrid';
 import CategoryTabBar from './components/CategoryTabBar';
+import PressNewsCard from './components/PressNewsCard';
 import { useSubscription } from './hooks/useSubscription';
 import { useListView } from './hooks/useListView';
 import type { TabKind, ViewKind } from './types';
@@ -34,13 +35,23 @@ function App() {
         />
       )}
       {view === 'list' && (
-        <CategoryTabBar
-          activeCategory={listView.activeCategory}
-          pressIndex={listView.pressIndex}
-          pressTotal={listView.pressTotal}
-          progress={listView.progress}
-          onCategoryChange={listView.onCategoryChange}
-        />
+        <>
+          <CategoryTabBar
+            activeCategory={listView.activeCategory}
+            pressIndex={listView.pressIndex}
+            pressTotal={listView.pressTotal}
+            progress={listView.progress}
+            onCategoryChange={listView.onCategoryChange}
+          />
+          {listView.currentPress && (
+            <PressNewsCard
+              press={listView.currentPress}
+              isSubscribed={subscribedIds.has(listView.currentPress.id)}
+              onToggleSubscription={toggleSubscription}
+              onNext={listView.advancePressIndex}
+            />
+          )}
+        </>
       )}
     </div>
   );
