@@ -1,11 +1,16 @@
 import { useState } from 'react';
-import { mockPressData } from '../../data/pressData';
+import { mockPressData } from '../../../data/pressData';
 import GridCell from './GridCell';
-import styles from './PressGrid.module.css';
+import type { Press } from '../../../types/press';
 
 const ITEMS_PER_PAGE = 24;
 
-const PressGrid = ({ subscribedIds, onToggleSubscription }) => {
+interface PressGridProps {
+  subscribedIds: Set<string>;
+  onToggleSubscription: (id: string) => void;
+}
+
+const PressGrid = ({ subscribedIds, onToggleSubscription }: PressGridProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const totalPages = Math.ceil(mockPressData.length / ITEMS_PER_PAGE);
 
@@ -14,7 +19,7 @@ const PressGrid = ({ subscribedIds, onToggleSubscription }) => {
     (currentPage + 1) * ITEMS_PER_PAGE
   );
 
-  const cells = Array.from({ length: ITEMS_PER_PAGE }, (_, i) => currentItems[i] || null);
+  const cells: (Press | null)[] = Array.from({ length: ITEMS_PER_PAGE }, (_, i) => currentItems[i] || null);
 
   const handlePrevPage = () => {
     if (currentPage > 0) setCurrentPage(currentPage - 1);
@@ -25,8 +30,8 @@ const PressGrid = ({ subscribedIds, onToggleSubscription }) => {
   };
 
   return (
-    <main className={styles.gridContainer}>
-      <div className={styles.grid}>
+    <main className="relative w-[var(--width-content)] mt-[var(--spacing-48)]">
+      <div className="grid grid-cols-6 grid-rows-[repeat(4,96px)] bg-[var(--color-line)] border border-[var(--color-line)] gap-[1px] w-full h-[388px]">
         {cells.map((press, index) => (
           <GridCell 
             key={press ? press.id : `empty-${index}`} 
@@ -38,7 +43,10 @@ const PressGrid = ({ subscribedIds, onToggleSubscription }) => {
       </div>
       
       {currentPage > 0 && (
-        <button className={`${styles.chevron} ${styles.left}`} onClick={handlePrevPage}>
+        <button 
+          className="absolute top-1/2 -translate-y-1/2 text-[var(--color-mute)] flex items-center justify-center cursor-pointer -left-[60px]" 
+          onClick={handlePrevPage}
+        >
           <svg width="24" height="40" viewBox="0 0 24 40" fill="none" stroke="currentColor" strokeWidth="1.4">
             <path d="M18 34L6 20L18 6" />
           </svg>
@@ -46,7 +54,10 @@ const PressGrid = ({ subscribedIds, onToggleSubscription }) => {
       )}
       
       {currentPage < totalPages - 1 && (
-        <button className={`${styles.chevron} ${styles.right}`} onClick={handleNextPage}>
+        <button 
+          className="absolute top-1/2 -translate-y-1/2 text-[var(--color-mute)] flex items-center justify-center cursor-pointer -right-[60px]" 
+          onClick={handleNextPage}
+        >
           <svg width="24" height="40" viewBox="0 0 24 40" fill="none" stroke="currentColor" strokeWidth="1.4">
             <path d="M6 34L18 20L6 6" />
           </svg>

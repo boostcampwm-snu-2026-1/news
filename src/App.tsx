@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import Header from './components/Header/Header';
-import Ticker from './components/Ticker/Ticker';
-import TabBar from './components/TabBar/TabBar';
-import PressGrid from './components/PressGrid/PressGrid';
+import Header from './components/layout/Header/Header';
+import Ticker from './components/ticker/Ticker';
+import TabBar from './components/layout/TabBar/TabBar';
+import PressGrid from './components/grid/PressGrid/PressGrid';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('all');
-  const [viewMode, setViewMode] = useState('grid');
-  const [subscribedIds, setSubscribedIds] = useState(new Set());
+  const [activeTab, setActiveTab] = useState<'all' | 'sub'>('all');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [subscribedIds, setSubscribedIds] = useState<Set<string>>(new Set());
 
-  const toggleSubscription = (id) => {
+  const toggleSubscription = (id: string) => {
     setSubscribedIds((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(id)) {
@@ -22,7 +22,7 @@ function App() {
   };
 
   return (
-    <div className="newsstand">
+    <div className="flex flex-col items-center w-[var(--width-layout)] min-h-screen">
       <Header />
       <Ticker />
       <TabBar 

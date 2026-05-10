@@ -1,9 +1,37 @@
-@import './styles/tokens.css';
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #14212B;
+  --color-sub: #5F6E76;
+  --color-mute: #879298;
+  --color-line: #D2DAE0;
+  --color-soft: #F5F7F9;
+  --color-card: #FFFFFF;
+  --color-page: #FEFEFE;
+  --color-accent: #7890E7;
+  --color-accent-deep: #4362D0;
+  --color-badge-ink: rgba(255, 255, 255, 0.7);
+
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+
+  --font-primary: "Pretendard Variable", Pretendard, "Noto Sans KR", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-serif: "Noto Serif KR", serif;
+
+  --width-layout: 1280px;
+  --width-content: 930px;
+}
 
 /* CSS Reset & Global Styles */
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -43,6 +71,6 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: var(--layout-width); /* 1280px */
+  width: var(--width-layout);
   min-height: 100vh;
 }

@@ -1,4 +1,6 @@
-export const mockPressData = Array.from({ length: 72 }, (_, i) => ({
+import type { Press } from '../types/press';
+
+export const mockPressData: Press[] = Array.from({ length: 72 }, (_, i) => ({
   id: `press-${i + 1}`,
   name: i % 2 === 0 ? `언론사 ${i + 1}` : `News ${i + 1}`,
   style: { 
