@@ -207,6 +207,11 @@
   background: var(--color-line);
 }
 
+.press-grid-cell,
+.press-grid-cell-empty {
+  background: var(--color-card);
+}
+
 .press-grid-cell {
   position: relative;
   display: flex;
@@ -215,7 +220,6 @@
   min-width: 0;
   min-height: 0;
   padding: var(--space-8);
-  background: var(--color-card);
   border: 0;
   cursor: pointer;
 }

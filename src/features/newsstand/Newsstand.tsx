@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Header } from "./components/Header";
@@ -9,10 +9,34 @@ import { presses } from "./data/presses";
 import { tickerItems } from "./data/tickerItems";
 import "./Newsstand.css";
 
+const PAGE_SIZE = 24;
+
 export function Newsstand() {
   const [activeTab, setActiveTab] = useState<NewsstandTab>("all");
   const [viewer, setViewer] = useState<ViewerMode>("grid");
-  const subscribedCount = presses.filter((press) => press.subscribed).length;
+  const [subscribed, setSubscribed] = useState<Set<string>>(
+    () => new Set(presses.filter((press) => press.subscribed).map((press) => press.id)),
+  );
+
+  const toggleSubscribe = useCallback((pressId: string) => {
+    setSubscribed((prev) => {
+      const next = new Set(prev);
+      if (next.has(pressId)) {
+        next.delete(pressId);
+      } else {
+        next.add(pressId);
+      }
+      return next;
+    });
+  }, []);
+
+  const subscribedPresses = useMemo(
+    () => presses.filter((press) => subscribed.has(press.id)),
+    [subscribed],
+  );
+
+  const isSubscribedTab = activeTab === "subscribed";
+  const gridItems = isSubscribedTab ? subscribedPresses.slice(0, PAGE_SIZE) : presses.slice(0, PAGE_SIZE);
 
   return (
     <main className="newsstand-shell" aria-label="뉴스스탠드">
@@ -22,15 +46,19 @@ export function Newsstand() {
         <Ticker items={tickerItems} />
         <TabBar
           activeTab={activeTab}
-          subCount={subscribedCount}
+          subCount={subscribed.size}
           viewer={viewer}
           onTabChange={setActiveTab}
           onViewerChange={setViewer}
         />
         <div className="newsstand-content-slot" aria-label="뉴스스탠드 구현 영역">
           <PressGrid
-            action={activeTab === "subscribed" ? "unsubscribe" : "subscribe"}
-            items={presses.slice(0, 24)}
+            action={isSubscribedTab ? "unsubscribe" : "subscribe"}
+            items={gridItems}
+            sparse={isSubscribedTab}
+            pageSize={PAGE_SIZE}
+            ariaLabel={isSubscribedTab ? "내가 구독한 언론사" : "전체 언론사"}
+            onToggle={toggleSubscribe}
           />
         </div>
 

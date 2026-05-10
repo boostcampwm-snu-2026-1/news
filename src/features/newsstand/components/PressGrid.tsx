@@ -8,18 +8,34 @@ type PressGridAction = "subscribe" | "unsubscribe";
 type PressGridProps = {
   action: PressGridAction;
   items: Press[];
+  ariaLabel: string;
+  onToggle: (pressId: string) => void;
+  sparse?: boolean;
+  pageSize?: number;
 };
 
-export function PressGrid({ action, items }: PressGridProps) {
+export function PressGrid({ action, items, ariaLabel, onToggle, sparse = false, pageSize = 24 }: PressGridProps) {
+  const emptyCount = sparse ? Math.max(0, pageSize - items.length) : 0;
+
   return (
-    <div className="press-grid" role="grid" aria-label="전체 언론사">
+    <div className="press-grid" role="grid" aria-label={ariaLabel}>
       {items.map((press) => (
-        <button className="press-grid-cell" type="button" role="gridcell" aria-label={getCellLabel(action, press.name)} key={press.id}>
+        <button
+          className="press-grid-cell"
+          type="button"
+          role="gridcell"
+          aria-label={getCellLabel(action, press.name)}
+          key={press.id}
+          onClick={() => onToggle(press.id)}
+        >
           <span className="press-grid-wordmark">
             <PressWordmark press={press} />
           </span>
           <SubscribePill action={action} />
         </button>
+      ))}
+      {Array.from({ length: emptyCount }).map((_, index) => (
+        <div className="press-grid-cell-empty" role="gridcell" aria-hidden="true" key={`empty-${index}`} />
       ))}
     </div>
   );
