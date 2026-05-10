@@ -88,6 +88,14 @@
 | 패널 높이 | `416px` (520 × 0.8) |
 | 전체 가시 너비 | `PEEK_W * 2 + PANEL_W = 1088px` |
 
+파일 구성:
+
+| 파일 | 역할 |
+|------|------|
+| `Carousel.tsx` | 슬라이드 로직, forwardRef(`slideNext`/`slidePrev`) |
+| `NavButton.tsx` | ◀ ▶ 버튼 + hover 툴팁 (prev/next 공용 컴포넌트) |
+| `carouselLayout.ts` | `PANEL_W`, `BASE`/`NEXT`/`PREV`, `BTN_LEFT`/`BTN_RIGHT` 상수 |
+
 - 슬라이드 트랙: `flex`, 3개 패널(`[prevIdx, activeIndex, nextIdx]`)을 항상 렌더
 - 이동 애니메이션: `transform translateX`, `250ms ease-out`
 - 전환 중 `onTransitionEnd`에서 `activeIndex` 업데이트 후 위치 즉시 리셋 (transition 비활성화)

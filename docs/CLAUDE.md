@@ -39,7 +39,9 @@ src/
 │   ├── CategoryTabs/
 │   │   └── CategoryTabs.tsx        # 4개 카테고리 탭
 │   ├── Carousel/
-│   │   ├── Carousel.tsx            # 3-패널 캐러셀 컨테이너
+│   │   ├── Carousel.tsx            # 3-패널 캐러셀 컨테이너 (forwardRef, 슬라이드 로직)
+│   │   ├── NavButton.tsx           # ◀ ▶ 화살표 버튼 + 툴팁 (prev/next 공용)
+│   │   ├── carouselLayout.ts       # PANEL_W, BTN_LEFT/RIGHT 등 레이아웃 상수
 │   │   └── CarouselControlBar.tsx  # 자동넘김 토글 + 속도 + n/total
 │   ├── FrontPagePanel/
 │   │   ├── FrontPagePanel.tsx      # 신문 1면 조합 컴포넌트
