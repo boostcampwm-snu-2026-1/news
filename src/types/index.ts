@@ -14,13 +14,13 @@ export const CATEGORY_TABS: CategoryTab[] = [
 // 상단 세그먼트 토글
 export type TabType = 'all' | 'subscribed'; // 전체언론사 / MY뉴스
 
-// 자동슬라이드 속도
-export type SlideSpeed = 'slow' | 'normal' | 'fast'; // 30s / 20s / 15s
+// 자동슬라이드 속도 ('off' = 자동넘김 꺼짐)
+export type SlideSpeed = 'fast' | 'normal' | 'slow' | 'off';
 
-export const SLIDE_INTERVAL_MS: Record<SlideSpeed, number> = {
-  slow: 30_000,
-  normal: 20_000,
+export const SLIDE_INTERVAL_MS: Record<Exclude<SlideSpeed, 'off'>, number> = {
   fast: 15_000,
+  normal: 35_000,
+  slow: 60_000,
 };
 
 // ────────────────────────────────────────────────────────────

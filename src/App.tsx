@@ -22,8 +22,7 @@ function App() {
   const [viewTab, setViewTab] = useState<TabType>('all');
   const [categoryTab, setCategoryTab] = useState<CategoryTab>('주요언론사');
   const [activeIndex, setActiveIndex] = useState(0);
-  const [autoPlay, setAutoPlay] = useState(false);
-  const [speed, setSpeed] = useState<SlideSpeed>('normal');
+  const [speed, setSpeed] = useState<SlideSpeed>('off');
 
   const publishers = filterPublishers(categoryTab);
   const total = publishers.length;
@@ -33,12 +32,12 @@ function App() {
 
   // 자동 슬라이드 타이머
   useEffect(() => {
-    if (!autoPlay || total <= 1) return;
+    if (speed === 'off' || total <= 1) return;
     const id = setInterval(() => {
       setActiveIndex((i) => (i + 1) % total);
     }, SLIDE_INTERVAL_MS[speed]);
     return () => clearInterval(id);
-  }, [autoPlay, speed, total]);
+  }, [speed, total]);
 
   function handleCategoryChange(tab: CategoryTab) {
     setCategoryTab(tab);
@@ -83,11 +82,9 @@ function App() {
           <CarouselControlBar
             activeIndex={activeIndex}
             total={total}
-            autoPlay={autoPlay}
             speed={speed}
             onPrev={handlePrev}
             onNext={handleNext}
-            onAutoPlayToggle={() => setAutoPlay((v) => !v)}
             onSpeedChange={setSpeed}
           />
         </div>
