@@ -1,3 +1,8 @@
+"use strict";
+
+const { useEffect, useMemo, useState } = React;
+const h = React.createElement;
+
 const presses = [
   { name: "SBS Biz", category: "방송/통신", style: "biz", flag: "S" },
   { name: "아주경제", category: "종합/경제", style: "underline", flag: "A" },
@@ -74,105 +79,17 @@ const presses = [
 ];
 
 const pageSize = 24;
-let page = 0;
-let selectedIndex = 0;
-let activeView = "grid";
-let activeArticleTab = 0;
-let progress = 0;
-const subscribed = new Set([0, 1, 10, 20, 35, 53, 64, 68, 70]);
+const articleTabs = ["주요뉴스", "많이 본 뉴스", "최신"];
+const defaultSubscribed = [0, 1, 10, 20, 35, 53, 64, 68, 70];
+const savedSubscribed = readSavedSubscribed();
 
-const grid = document.querySelector("#press-grid");
-const dots = document.querySelector("#page-dots");
-const pageLabel = document.querySelector("#page-label");
-const gridTitle = document.querySelector("#grid-title");
-const count = document.querySelector("#subscribed-count");
-const selectedFlag = document.querySelector("#selected-flag");
-const selectedCategory = document.querySelector("#selected-category");
-const selectedName = document.querySelector("#selected-name");
-const subscribeButton = document.querySelector("#toggle-subscribe");
-const progressTabs = document.querySelector("#progress-tabs");
-const articleList = document.querySelector("#article-list");
-
-function visiblePresses() {
-  if (activeView === "subscribed") {
-    return presses.filter((_, index) => subscribed.has(index));
+function readSavedSubscribed() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("newsstand.subscribed") || "null");
+    return Array.isArray(saved) ? saved : null;
+  } catch {
+    return null;
   }
-  return presses;
-}
-
-function renderGrid() {
-  const list = visiblePresses();
-  const totalPages = Math.max(1, Math.ceil(list.length / pageSize));
-  page = Math.min(page, totalPages - 1);
-  const offset = page * pageSize;
-  const pageItems = list.slice(offset, offset + pageSize);
-
-  gridTitle.textContent = activeView === "subscribed" ? "내가 구독한 언론사" : "전체 언론사";
-  pageLabel.textContent = `${page + 1} / ${totalPages}`;
-  grid.innerHTML = "";
-
-  pageItems.forEach((press) => {
-    const realIndex = presses.indexOf(press);
-    const item = document.createElement("div");
-    const action = subscribed.has(realIndex) ? "해지하기" : "구독하기";
-    item.className = `press-cell${subscribed.has(realIndex) ? " subscribed" : ""}${realIndex === selectedIndex ? " selected" : ""}`;
-    item.dataset.index = realIndex;
-    item.innerHTML = `
-      <button class="press-select" type="button">
-        <span class="wordmark ${press.style}">
-          <span class="flag">${press.flag}</span>
-          ${press.name}
-        </span>
-      </button>
-      <button class="cell-action" type="button">${action}</button>
-    `;
-    item.querySelector(".press-select").addEventListener("click", () => {
-      selectedIndex = realIndex;
-      activeArticleTab = 0;
-      progress = 0;
-      render();
-    });
-    item.querySelector(".cell-action").addEventListener("click", () => toggleSubscribed(realIndex));
-    grid.append(item);
-  });
-
-  dots.innerHTML = "";
-  Array.from({ length: totalPages }, (_, index) => {
-    const dot = document.createElement("span");
-    dot.className = `dot${index === page ? " active" : ""}`;
-    dots.append(dot);
-  });
-}
-
-function renderArticles() {
-  const press = presses[selectedIndex];
-  selectedFlag.textContent = press.flag;
-  selectedCategory.textContent = press.category;
-  selectedName.textContent = press.name;
-  subscribeButton.textContent = subscribed.has(selectedIndex) ? "구독 중" : "구독하기";
-  subscribeButton.classList.toggle("active", subscribed.has(selectedIndex));
-
-  progressTabs.innerHTML = "";
-  ["주요뉴스", "많이 본 뉴스", "최신"].forEach((label, index) => {
-    const tab = document.createElement("button");
-    tab.type = "button";
-    tab.className = `progress-tab${index === activeArticleTab ? " active" : ""}`;
-    tab.textContent = label;
-    tab.style.setProperty("--progress", `${index === activeArticleTab ? progress : 0}%`);
-    tab.addEventListener("click", () => {
-      activeArticleTab = index;
-      progress = 0;
-      renderArticles();
-    });
-    progressTabs.append(tab);
-  });
-
-  articleList.innerHTML = "";
-  makeArticles(press, activeArticleTab).forEach((title, index) => {
-    const item = document.createElement("li");
-    item.innerHTML = `<span>${String(index + 1).padStart(2, "0")}</span><a href="#">${title}</a>`;
-    articleList.append(item);
-  });
 }
 
 function makeArticles(press, tab) {
@@ -200,55 +117,319 @@ function makeArticles(press, tab) {
   return [lead, popular, latest][tab];
 }
 
-function toggleSubscribed(index = selectedIndex) {
-  if (subscribed.has(index)) {
-    subscribed.delete(index);
-  } else {
-    subscribed.add(index);
-  }
-  if (activeView === "subscribed" && !subscribed.size) {
-    activeView = "grid";
-  }
-  render();
+function pressClassName(press) {
+  return `wordmark ${press.style}`.trim();
 }
 
-function render() {
-  count.textContent = subscribed.size;
-  document.querySelectorAll(".tab-button").forEach((button) => {
-    button.classList.toggle("active", button.dataset.view === activeView);
-  });
-  renderGrid();
-  renderArticles();
+function App() {
+  const [activeView, setActiveView] = useState("grid");
+  const [page, setPage] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [activeArticleTab, setActiveArticleTab] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [subscribed, setSubscribed] = useState(
+    () => new Set(Array.isArray(savedSubscribed) ? savedSubscribed : defaultSubscribed),
+  );
+
+  const isListView = activeView === "list";
+  const visiblePresses = useMemo(() => {
+    if (activeView === "subscribed") {
+      return presses.filter((_, index) => subscribed.has(index));
+    }
+    return presses;
+  }, [activeView, subscribed]);
+
+  const totalPages = Math.max(1, Math.ceil(visiblePresses.length / pageSize));
+  const pageItems = visiblePresses.slice(page * pageSize, page * pageSize + pageSize);
+  const selectedPress = presses[selectedIndex] || presses[0];
+  const selectedArticles = makeArticles(selectedPress, activeArticleTab);
+
+  useEffect(() => {
+    localStorage.setItem("newsstand.subscribed", JSON.stringify([...subscribed]));
+  }, [subscribed]);
+
+  useEffect(() => {
+    setPage((currentPage) => Math.min(currentPage, totalPages - 1));
+  }, [totalPages]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setProgress((currentProgress) => {
+        if (currentProgress >= 100) {
+          setActiveArticleTab((currentTab) => (currentTab + 1) % articleTabs.length);
+          return 0;
+        }
+        return currentProgress + 2;
+      });
+    }, 160);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  function changeView(nextView) {
+    setActiveView(nextView);
+    setPage(0);
+  }
+
+  function selectPress(index) {
+    setSelectedIndex(index);
+    setActiveArticleTab(0);
+    setProgress(0);
+  }
+
+  function toggleSubscribed(index = selectedIndex) {
+    setSubscribed((current) => {
+      const next = new Set(current);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
+  }
+
+  function changeArticleTab(index) {
+    setActiveArticleTab(index);
+    setProgress(0);
+  }
+
+  return h(
+    "main",
+    { className: "app-shell" },
+    h(Header, { subscribedCount: subscribed.size }),
+    h(ViewTabs, { activeView, onChangeView: changeView }),
+    h(
+      "section",
+      { className: "portal-layout", "aria-live": "polite" },
+      h(
+        "section",
+        { className: "press-panel", "aria-label": "언론사 목록" },
+        h(PanelHead, {
+          activeView,
+          page,
+          totalPages,
+          totalCount: visiblePresses.length,
+        }),
+        isListView
+          ? h(PressList, {
+              subscribed,
+              onSelectPress: selectPress,
+              onToggleSubscribed: toggleSubscribed,
+              selectedIndex,
+            })
+          : pageItems.length === 0
+            ? h("div", { className: "empty-state" }, "구독한 언론사가 없습니다.")
+            : h(PressGrid, {
+                pageItems,
+                subscribed,
+                selectedIndex,
+                onSelectPress: selectPress,
+                onToggleSubscribed: toggleSubscribed,
+              }),
+        !isListView &&
+          h(Pager, {
+            page,
+            totalPages,
+            onPrev: () => setPage((currentPage) => Math.max(0, currentPage - 1)),
+            onNext: () => setPage((currentPage) => Math.min(totalPages - 1, currentPage + 1)),
+          }),
+      ),
+      h(ArticlePanel, {
+        activeArticleTab,
+        articles: selectedArticles,
+        isSubscribed: subscribed.has(selectedIndex),
+        onChangeArticleTab: changeArticleTab,
+        onToggleSubscribed: () => toggleSubscribed(selectedIndex),
+        press: selectedPress,
+        progress,
+      }),
+    ),
+  );
 }
 
-document.querySelector("#prev-page").addEventListener("click", () => {
-  page = Math.max(0, page - 1);
-  renderGrid();
-});
+function Header({ subscribedCount }) {
+  return h(
+    "header",
+    { className: "topbar" },
+    h("div", null, h("p", { className: "eyebrow" }, "NEWSSTAND"), h("h1", null, "뉴스스탠드")),
+    h("div", { className: "summary" }, h("span", null, subscribedCount), h("small", null, "구독 중")),
+  );
+}
 
-document.querySelector("#next-page").addEventListener("click", () => {
-  const totalPages = Math.max(1, Math.ceil(visiblePresses().length / pageSize));
-  page = Math.min(totalPages - 1, page + 1);
-  renderGrid();
-});
+function ViewTabs({ activeView, onChangeView }) {
+  const tabs = [
+    ["grid", "전체 언론사"],
+    ["subscribed", "내가 구독한 언론사"],
+    ["list", "리스트 보기"],
+  ];
+  return h(
+    "nav",
+    { className: "view-tabs", "aria-label": "뉴스스탠드 보기 방식" },
+    tabs.map(([view, label]) =>
+      h(
+        "button",
+        {
+          key: view,
+          className: `tab-button${activeView === view ? " active" : ""}`,
+          type: "button",
+          "aria-pressed": activeView === view,
+          onClick: () => onChangeView(view),
+        },
+        label,
+      ),
+    ),
+  );
+}
 
-document.querySelectorAll(".tab-button").forEach((button) => {
-  button.addEventListener("click", () => {
-    activeView = button.dataset.view;
-    page = 0;
-    render();
-  });
-});
+function PanelHead({ activeView, page, totalPages, totalCount }) {
+  const title = {
+    grid: "전체 언론사",
+    subscribed: "내가 구독한 언론사",
+    list: "언론사 리스트",
+  }[activeView];
+  return h(
+    "div",
+    { className: "panel-head" },
+    h("strong", null, title),
+    h("span", null, activeView === "list" ? `${totalCount}개` : `${page + 1} / ${totalPages}`),
+  );
+}
 
-subscribeButton.addEventListener("click", () => toggleSubscribed());
+function PressGrid({ pageItems, subscribed, selectedIndex, onSelectPress, onToggleSubscribed }) {
+  return h(
+    "div",
+    { className: "press-grid" },
+    pageItems.map((press) => {
+      const realIndex = presses.indexOf(press);
+      const isSubscribed = subscribed.has(realIndex);
+      return h(PressCell, {
+        key: press.name,
+        isSelected: realIndex === selectedIndex,
+        isSubscribed,
+        onSelect: () => onSelectPress(realIndex),
+        onToggleSubscribed: () => onToggleSubscribed(realIndex),
+        press,
+      });
+    }),
+  );
+}
 
-setInterval(() => {
-  progress += 2;
-  if (progress > 100) {
-    progress = 0;
-    activeArticleTab = (activeArticleTab + 1) % 3;
-  }
-  renderArticles();
-}, 160);
+function PressCell({ isSelected, isSubscribed, onSelect, onToggleSubscribed, press }) {
+  return h(
+    "div",
+    { className: `press-cell${isSubscribed ? " subscribed" : ""}${isSelected ? " selected" : ""}` },
+    h(
+      "button",
+      { className: "press-select", type: "button", onClick: onSelect },
+      h("span", { className: pressClassName(press) }, h("span", { className: "flag" }, press.flag), press.name),
+    ),
+    h(
+      "button",
+      {
+        className: "cell-action",
+        type: "button",
+        onClick: onToggleSubscribed,
+        "aria-label": `${press.name} ${isSubscribed ? "구독 해지" : "구독"}`,
+      },
+      isSubscribed ? "해지하기" : "구독하기",
+    ),
+  );
+}
 
-render();
+function PressList({ subscribed, selectedIndex, onSelectPress, onToggleSubscribed }) {
+  return h(
+    "ul",
+    { className: "press-list" },
+    presses.map((press, index) =>
+      h(
+        "li",
+        { key: press.name, className: index === selectedIndex ? "selected" : "" },
+        h(
+          "button",
+          { className: "list-press-button", type: "button", onClick: () => onSelectPress(index) },
+          h("span", { className: pressClassName(press) }, h("span", { className: "flag" }, press.flag), press.name),
+          h("small", null, press.category),
+        ),
+        h(
+          "button",
+          {
+            className: `subscribe-button small${subscribed.has(index) ? " active" : ""}`,
+            type: "button",
+            onClick: () => onToggleSubscribed(index),
+          },
+          subscribed.has(index) ? "구독 중" : "구독",
+        ),
+      ),
+    ),
+  );
+}
+
+function Pager({ page, totalPages, onPrev, onNext }) {
+  return h(
+    "div",
+    { className: "pager", "aria-label": "페이지 이동" },
+    h("button", { className: "icon-button", type: "button", "aria-label": "이전 페이지", disabled: page === 0, onClick: onPrev }, "‹"),
+    h(
+      "div",
+      { className: "dots" },
+      Array.from({ length: totalPages }, (_, index) =>
+        h("span", { key: index, className: `dot${index === page ? " active" : ""}` }),
+      ),
+    ),
+    h(
+      "button",
+      { className: "icon-button", type: "button", "aria-label": "다음 페이지", disabled: page === totalPages - 1, onClick: onNext },
+      "›",
+    ),
+  );
+}
+
+function ArticlePanel({ activeArticleTab, articles, isSubscribed, onChangeArticleTab, onToggleSubscribed, press, progress }) {
+  return h(
+    "aside",
+    { className: "article-panel", "aria-label": "선택한 언론사 기사" },
+    h(
+      "div",
+      { className: "selected-press" },
+      h("span", { className: "press-flag" }, press.flag),
+      h("div", null, h("p", null, press.category), h("h2", null, press.name)),
+      h(
+        "button",
+        {
+          className: `subscribe-button${isSubscribed ? " active" : ""}`,
+          type: "button",
+          onClick: onToggleSubscribed,
+        },
+        isSubscribed ? "구독 중" : "구독하기",
+      ),
+    ),
+    h(
+      "div",
+      { className: "progress-tabs", role: "tablist", "aria-label": "기사 분류" },
+      articleTabs.map((label, index) =>
+        h(
+          "button",
+          {
+            key: label,
+            className: `progress-tab${index === activeArticleTab ? " active" : ""}`,
+            type: "button",
+            role: "tab",
+            "aria-selected": index === activeArticleTab,
+            style: { "--progress": `${index === activeArticleTab ? progress : 0}%` },
+            onClick: () => onChangeArticleTab(index),
+          },
+          label,
+        ),
+      ),
+    ),
+    h(
+      "ol",
+      { className: "article-list" },
+      articles.map((title, index) =>
+        h("li", { key: title }, h("span", null, String(index + 1).padStart(2, "0")), h("a", { href: "#" }, title)),
+      ),
+    ),
+  );
+}
+
+ReactDOM.createRoot(document.querySelector("#root")).render(h(App));
