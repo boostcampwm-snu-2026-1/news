@@ -1,0 +1,70 @@
+/* 뉴스스탠드 디자인 시스템 토큰 (디자인시스템 PDF 기준) */
+:root {
+  /* ── 컬러 ── */
+  --ink:          #14212B;   /* body text, bold labels */
+  --ink-alt:      #14202B;
+  --sub:          #5F6E76;   /* secondary text (dates, captions) */
+  --mute:         #879298;   /* inactive tab labels, empty chevron */
+  --line:         #D2DAE0;   /* 1px dividers, card borders, grid strokes */
+  --soft:         #F5F7F9;   /* ticker bg, hover bg, field-tab bg */
+  --soft-alt:     #F7F7FC;
+  --card:         #FFFFFF;   /* grid cell, opened-press body, subscribe pill */
+  --page:         #FEFEFE;   /* page background */
+  --accent:       #7890E7;   /* subscribed badge, active tab fill */
+  --accent-deep:  #4362D0;   /* progress fill inside active tab */
+  --badge-ink:    rgba(255, 255, 255, 0.7);
+  --danger:       #FFD1CF;
+
+  /* ── 컴포넌트 별칭 (하위 호환) ── */
+  --color-bg:             var(--page);
+  --color-surface:        var(--card);
+  --color-surface-hover:  var(--soft);
+  --color-border:         var(--line);
+  --color-border-hover:   #C4CDD5;
+  --color-primary:        var(--accent);
+  --color-primary-deep:   var(--accent-deep);
+  --color-text-primary:   var(--ink);
+  --color-text-secondary: var(--sub);
+  --color-text-muted:     var(--mute);
+  --color-text-on-primary: #FFFFFF;
+  --color-overlay-bg:     var(--card);
+  --color-overlay-border: var(--line);
+  --color-ticker-bg:      var(--soft);
+  --color-ticker-border:  var(--line);
+
+  /* ── 간격 (8px 기반) ── */
+  --spacing-xs:  4px;
+  --spacing-sm:  8px;
+  --spacing-md:  16px;
+  --spacing-lg:  24px;
+  --spacing-xl:  32px;
+  --spacing-2xl: 40px;
+  --spacing-3xl: 48px;
+  --spacing-4xl: 64px;
+
+  /* ── Radii ── */
+  --radius-none: 0;
+  --radius-sub:  2px;   /* press logo background chips */
+  --radius-pill: 14px;  /* subscribe pill (height 28) */
+  --radius-badge: 10px; /* subscribed-count badge (20×20) */
+
+  /* ── 레이아웃 ── */
+  --layout-content-width: 930px;
+  --layout-canvas-width:  1280px;
+  --layout-gutter:        175px;
+
+  /* ── 높이 ── */
+  --height-header:  29px;
+  --height-ticker:  49px;
+  --height-tabbar:  24px;
+  --height-content: 388px;
+  --height-chevron: 40px;
+
+  /* ── 그림자 ── */
+  --shadow-pill: 0 1px 2px rgba(20, 33, 43, 0.04);
+
+  /* ── 타이포그래피 ── */
+  --font-sans:  'Pretendard Variable', 'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;
+  --font-serif: 'Noto Serif KR', Georgia, serif;
+  --font-mono:  'IBM Plex Mono', monospace;
+}

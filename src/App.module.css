@@ -1,0 +1,17 @@
+.app {
+  min-height: 100vh;
+  min-width: 1024px;
+  background-color: var(--page);
+}
+
+.contentWrapper {
+  max-width: var(--layout-canvas-width);
+  margin: 0 auto;
+  padding: 0 var(--layout-gutter);
+}
+
+.main {
+  max-width: var(--layout-canvas-width);
+  margin: 0 auto;
+  padding: 0 var(--layout-gutter);
+}
