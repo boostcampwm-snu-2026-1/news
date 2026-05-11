@@ -1,5 +1,6 @@
+/* 이 파일(대문자 Ticker)을 표준으로 사용합니다. */
 .tickerContainer {
   display: flex;
-  gap: 10px;
+  gap: var(--space-8);
   width: 100%;
 }

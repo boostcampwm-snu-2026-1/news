@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 48px 0; /* 8px * 6 */
+  padding: var(--space-48) 0;
 }
 
 .logoArea {
@@ -13,7 +13,7 @@
 .logoLink {
   display: flex;
   align-items: center;
-  gap: 8px; /* 로고 아이콘과 텍스트 사이 간격 */
+  gap: var(--space-8);
   text-decoration: none;
   color: inherit;
 }

@@ -1,0 +1,47 @@
+.tab {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-12);
+  cursor: pointer;
+  background-color: var(--color-soft);
+  color: var(--color-sub);
+  font-family: var(--font-main); /* design.md: list-item */
+  font-size: var(--font-size-list-item);
+  overflow: hidden;
+}
+
+.tab.active {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  font-weight: bold;
+}
+
+.progressBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: var(--color-accent-deep);
+  z-index: 0;
+}
+
+.name {
+  position: relative;
+  z-index: 1;
+}
+
+.counter {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-caption);
+  display: flex;
+  gap: calc(var(--base-unit) * 0.25); /* 2px */
+}
+
+.divider {
+  opacity: 0.5;
+}

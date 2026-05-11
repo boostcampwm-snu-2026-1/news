@@ -2,12 +2,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: var(--space-4);
   background-color: var(--color-accent);
-  color: #ffffff;
+  color: var(--color-white);
   border: none;
   border-radius: 50px; /* Pill shape */
-  padding: 6px 12px;
+  padding: 6px var(--space-12);
   cursor: pointer;
   transition: background-color 0.2s ease;
 }

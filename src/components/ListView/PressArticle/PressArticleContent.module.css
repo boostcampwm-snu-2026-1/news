@@ -1,0 +1,101 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pressInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.editTime {
+  font-size: 12px;
+  color: var(--color-sub);
+}
+
+.mainArea {
+  display: flex;
+  gap: var(--space-32);
+}
+
+.mainArticle {
+  flex: 1;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.thumbnailWrapper {
+  width: calc(var(--base-unit) * 40); /* 320px */
+  height: calc(var(--base-unit) * 25); /* 200px */
+  background-color: var(--color-soft);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.geminiIcon {
+  width: var(--space-64);
+  height: var(--space-64);
+  color: var(--color-accent);
+  filter: drop-shadow(0 0 var(--space-8) rgba(120, 144, 231, 0.3));
+  animation: sparkle var(--animation-sparkle-duration) infinite ease-in-out;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(10deg);
+    filter: drop-shadow(0 0 var(--space-16) rgba(120, 144, 231, 0.6));
+  }
+}
+
+.mainTitle {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+  color: var(--color-ink);
+}
+
+.subArticles {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.articleList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.articleItem a {
+  font-size: 14px;
+  color: var(--color-sub);
+  text-decoration: none;
+}
+
+.articleItem a:hover {
+  text-decoration: underline;
+  color: var(--color-ink);
+}
+
+.footerNote {
+  font-size: 12px;
+  color: var(--color-mute);
+}

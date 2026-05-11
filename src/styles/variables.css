@@ -8,18 +8,45 @@
   --color-card: #FFFFFF;
   --color-accent: #7890E7;
   --color-accent-deep: #4362D0;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
 
   /* Typography Specs */
   --font-main: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
   --font-serif: 'Noto Serif KR', serif;
+  --font-size-display: 24px; /* 헤더 로고 */
+  --font-size-heading: 16px; /* 활성 탭, 기사 제목 */
+  --font-size-body: 16px;    /* 비활성 탭, 날짜 */
+  --font-size-list-item: 14px; /* 기사 리스트 */
+  --font-size-caption: 12px; /* 구독 버튼, 배지 숫자 */
+
+  /* Wordmark Specific Tokens (Magic Numbers to Variables) */
+  --font-weight-bold: 700;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  
+  --tracking-tight: -0.05em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.02em;
 
   /* Spacing */
   --base-unit: 8px;
+  /* design.md: 8px 배수 원칙에 따른 스페이싱 스케일 정의 */
+  --space-4:  calc(var(--base-unit) * 0.5);
+  --space-8:  var(--base-unit);
+  --space-12: calc(var(--base-unit) * 1.5);
+  --space-16: calc(var(--base-unit) * 2);
+  --space-24: calc(var(--base-unit) * 3);
+  --space-32: calc(var(--base-unit) * 4);
+  --space-48: calc(var(--base-unit) * 6);
+  --space-64: calc(var(--base-unit) * 8);
+
   --max-width: 1280px;
   --content-width: 930px;
 
   /* Animation */
+  --animation-sparkle-duration: 3s;
   --ticker-transition-duration: 0.55s;
 }
 
@@ -33,4 +60,13 @@ body {
   font-family: var(--font-main);
   background-color: var(--color-soft);
   color: var(--color-ink);
+  /* spacing 변수 적용: 데스크톱 퍼스트 기준 최소 너비 설정 */
+  min-width: var(--max-width);
+  padding: var(--space-8) 0;
+}
+
+.container {
+  /* design.md: 중앙 컨텐츠 영역 930px 준수 */
+  width: var(--content-width);
+  margin: 0 auto;
 }

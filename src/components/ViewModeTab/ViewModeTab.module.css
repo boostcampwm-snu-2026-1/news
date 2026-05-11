@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-16);
+}
+
+.tabGroup {
+  display: flex;
+  gap: var(--space-16);
+}
+
+.tab {
+  font-size: var(--font-size-body); /* design.md: body */
+  font-family: var(--font-main);
+  color: var(--color-mute);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.tab.active {
+  color: var(--color-ink);
+  font-weight: bold;
+}
+
+.toggleGroup {
+  display: flex;
+  gap: var(--space-12);
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-mute);
+}
+
+.iconButton.activeIcon {
+  color: var(--color-accent-deep);
+}
