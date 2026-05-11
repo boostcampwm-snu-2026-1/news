@@ -256,10 +256,16 @@ button {
   justify-content: center;
   overflow: hidden;
   background: var(--card);
+  cursor: pointer;
+  outline: none;
 }
 
 .press-cell:not(.is-empty):hover {
   background: var(--soft);
+}
+
+.press-cell:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--accent);
 }
 
 .press-cell:hover .wordmark {
@@ -424,29 +430,38 @@ button {
 }
 
 .field-tab {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  border: 0;
+  background: var(--soft);
   color: var(--mute);
   font-size: 14px;
   font-weight: 500;
+  cursor: pointer;
 }
 
 .field-tab.is-active {
-  position: relative;
   color: var(--ink);
   font-weight: 700;
 }
 
-.field-tab.is-active::after {
+.field-tab:disabled {
+  cursor: default;
+  opacity: 0.48;
+}
+
+.field-progress {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 42%;
+  width: 100%;
   height: 3px;
   background: var(--accent-deep);
-  content: "";
+  transform-origin: left center;
+  animation: tab-progress 6s linear;
 }
 
 .field-tab b {
@@ -494,13 +509,21 @@ button {
 }
 
 .headline-image {
-  display: flex;
+  display: grid;
   height: 150px;
-  align-items: center;
-  justify-content: center;
+  align-content: space-between;
   background: var(--soft);
-  color: var(--mute);
+  color: var(--sub);
   font-size: 12px;
+  padding: 18px 20px;
+}
+
+.headline-image strong {
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
 }
 
 .opened-body ul {
@@ -528,6 +551,27 @@ button {
   line-height: 1;
 }
 
+.list-empty-state {
+  display: grid;
+  height: calc(100% - 48px);
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  color: var(--sub);
+  text-align: center;
+}
+
+.list-empty-state strong {
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1;
+}
+
+.list-empty-state p {
+  margin: 0;
+  font-size: 13px;
+}
+
 @keyframes ticker-fade {
   from {
     opacity: 0;
@@ -537,6 +581,16 @@ button {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes tab-progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
   }
 }
 

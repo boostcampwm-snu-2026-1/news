@@ -1,7 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import type { Press, TickerItem } from "../_data/newsstand";
+import { useEffect, useReducer, useState } from "react";
+import {
+  pressCategories,
+  type Press,
+  type TickerItem,
+} from "../_data/newsstand";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -10,7 +14,13 @@ import {
   NewspaperIcon,
 } from "./newsstand/icons";
 import { ListPreview } from "./newsstand/list-preview";
-import { PAGE_SIZE, PressGrid } from "./newsstand/press-grid";
+import { PressGrid } from "./newsstand/press-grid";
+import {
+  AUTO_ROTATE_MS,
+  createInitialNewsstandState,
+  deriveNewsstandState,
+  newsstandReducer,
+} from "./newsstand/state";
 
 type NewsstandProps = {
   initialPresses: Press[];
@@ -20,120 +30,157 @@ type NewsstandProps = {
 const fixedDate = "2026. 01. 14. 수요일";
 
 export function Newsstand({ initialPresses, tickerItems }: NewsstandProps) {
-  const [presses, setPresses] = useState(initialPresses);
-  const [activeTab, setActiveTab] = useState<"all" | "subscribed">("all");
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [page, setPage] = useState(0);
-
-  const subscribedCount = presses.filter((press) => press.subscribed).length;
-  const visiblePresses =
-    activeTab === "all" ? presses : presses.filter((press) => press.subscribed);
-  const totalPages = Math.max(1, Math.ceil(visiblePresses.length / PAGE_SIZE));
-  const safePage = Math.min(page, totalPages - 1);
-  const pagePresses = visiblePresses.slice(
-    safePage * PAGE_SIZE,
-    safePage * PAGE_SIZE + PAGE_SIZE,
+  const [state, dispatch] = useReducer(
+    newsstandReducer,
+    initialPresses,
+    createInitialNewsstandState,
   );
+  const [tickerSeed, setTickerSeed] = useState(0);
 
-  const pageLabel = useMemo(
-    () => `${safePage + 1} / ${totalPages}`,
-    [safePage, totalPages],
-  );
+  const derived = deriveNewsstandState(state);
+  const selectedPressId = derived.selectedPress?.id;
 
-  const changeTab = (nextTab: "all" | "subscribed") => {
-    setActiveTab(nextTab);
-    setPage(0);
-  };
+  useEffect(() => {
+    if (state.viewMode !== "list" || !selectedPressId) {
+      return;
+    }
 
-  const toggleSubscription = (id: string) => {
-    setPresses((current) =>
-      current.map((press) =>
-        press.id === id ? { ...press, subscribed: !press.subscribed } : press,
-      ),
-    );
-  };
+    const timer = window.setTimeout(() => {
+      dispatch({ type: "advance-list" });
+    }, AUTO_ROTATE_MS);
+
+    return () => window.clearTimeout(timer);
+  }, [
+    selectedPressId,
+    state.activeCategory,
+    state.listTick,
+    state.viewMode,
+  ]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setTickerSeed((current) => current + 1);
+    }, 3200);
+
+    return () => window.clearInterval(timer);
+  }, []);
 
   return (
     <main className="newsstand-shell">
       <Header />
-      <Ticker items={tickerItems} />
+      <Ticker items={tickerItems} tickerSeed={tickerSeed} />
       <section className="control-row" aria-label="뉴스스탠드 보기 설정">
         <div className="tab-cluster" role="tablist" aria-label="언론사 범위">
           <button
-            className={activeTab === "all" ? "tab is-active" : "tab"}
+            className={state.activeTab === "all" ? "tab is-active" : "tab"}
+            data-scope-tab="all"
             type="button"
             role="tab"
-            aria-selected={activeTab === "all"}
-            onClick={() => changeTab("all")}
+            aria-selected={state.activeTab === "all"}
+            onClick={() => dispatch({ type: "change-tab", tab: "all" })}
           >
             전체 언론사
           </button>
           <button
-            className={activeTab === "subscribed" ? "tab is-active" : "tab"}
+            className={
+              state.activeTab === "subscribed" ? "tab is-active" : "tab"
+            }
+            data-scope-tab="subscribed"
             type="button"
             role="tab"
-            aria-selected={activeTab === "subscribed"}
-            onClick={() => changeTab("subscribed")}
+            aria-selected={state.activeTab === "subscribed"}
+            onClick={() =>
+              dispatch({ type: "change-tab", tab: "subscribed" })
+            }
           >
             내가 구독한 언론사
-            <span className="count-badge">{subscribedCount}</span>
+            <span className="count-badge">{derived.subscribedCount}</span>
           </button>
         </div>
         <div className="view-toggle" aria-label="보기 방식">
           <button
             className={
-              viewMode === "list" ? "icon-button is-active" : "icon-button"
+              state.viewMode === "list" ? "icon-button is-active" : "icon-button"
             }
+            data-view-toggle="list"
             type="button"
             aria-label="리스트 보기"
             title="리스트 보기"
-            onClick={() => setViewMode("list")}
+            onClick={() => dispatch({ type: "change-view", viewMode: "list" })}
           >
             <ListIcon />
           </button>
           <button
             className={
-              viewMode === "grid" ? "icon-button is-active" : "icon-button"
+              state.viewMode === "grid" ? "icon-button is-active" : "icon-button"
             }
+            data-view-toggle="grid"
             type="button"
             aria-label="그리드 보기"
             title="그리드 보기"
-            onClick={() => setViewMode("grid")}
+            onClick={() => dispatch({ type: "change-view", viewMode: "grid" })}
           >
             <GridIcon />
           </button>
         </div>
       </section>
       <section className="content-stage" aria-label="언론사 목록">
-        <button
-          className="chevron chevron-left"
-          type="button"
-          aria-label="이전 페이지"
-          disabled={safePage === 0}
-          onClick={() => setPage((current) => Math.max(0, current - 1))}
-        >
-          <ChevronLeftIcon />
-        </button>
-        {viewMode === "grid" ? (
-          <PressGrid
-            mode={activeTab}
-            presses={pagePresses}
-            onToggleSubscription={toggleSubscription}
-          />
+        {state.viewMode === "grid" ? (
+          <>
+            <button
+              className="chevron chevron-left"
+              type="button"
+              aria-label="이전 페이지"
+              disabled={derived.safePage === 0}
+              onClick={() =>
+                dispatch({ type: "change-page", page: derived.safePage - 1 })
+              }
+            >
+              <ChevronLeftIcon />
+            </button>
+            <PressGrid
+              mode={state.activeTab}
+              presses={derived.pagePresses}
+              onOpenPress={(id) => dispatch({ type: "open-press", id })}
+              onToggleSubscription={(id) =>
+                dispatch({ type: "toggle-subscription", id })
+              }
+            />
+            <button
+              className="chevron chevron-right"
+              type="button"
+              aria-label="다음 페이지"
+              disabled={derived.safePage >= derived.totalPages - 1}
+              onClick={() =>
+                dispatch({ type: "change-page", page: derived.safePage + 1 })
+              }
+            >
+              <ChevronRightIcon />
+            </button>
+          </>
         ) : (
-          <ListPreview presses={pagePresses} pageLabel={pageLabel} />
+          <ListPreview
+            activeCategory={state.activeCategory}
+            categories={pressCategories.map((category) => ({
+              category,
+              count: derived.pressesByCategory[category].length,
+            }))}
+            emptyStateLabel={
+              state.activeTab === "subscribed"
+                ? "구독한 언론사가 없어 리스트 뷰를 표시할 수 없습니다."
+                : "선택 가능한 언론사가 없어 리스트 뷰를 표시할 수 없습니다."
+            }
+            onSelectCategory={(category) =>
+              dispatch({ type: "select-category", category })
+            }
+            onToggleSubscription={(id) =>
+              dispatch({ type: "toggle-subscription", id })
+            }
+            progressKey={derived.progressKey}
+            progressLabel={derived.progressLabel}
+            selectedPress={derived.selectedPress}
+          />
         )}
-        <button
-          className="chevron chevron-right"
-          type="button"
-          aria-label="다음 페이지"
-          disabled={safePage >= totalPages - 1}
-          onClick={() =>
-            setPage((current) => Math.min(totalPages - 1, current + 1))
-          }
-        >
-          <ChevronRightIcon />
-        </button>
       </section>
     </main>
   );
@@ -151,31 +198,36 @@ function Header() {
   );
 }
 
-function Ticker({ items }: { items: TickerItem[] }) {
+function Ticker({
+  items,
+  tickerSeed,
+}: {
+  items: TickerItem[];
+  tickerSeed: number;
+}) {
   return (
     <section className="ticker" aria-label="자동 롤링 뉴스">
-      <TickerLane items={items} offset={0} />
-      <TickerLane items={items} offset={1} />
+      <TickerLane items={items} tickerSeed={tickerSeed} offset={0} />
+      <TickerLane items={items} tickerSeed={tickerSeed} offset={1} />
     </section>
   );
 }
 
-function TickerLane({ items, offset }: { items: TickerItem[]; offset: number }) {
-  const [index, setIndex] = useState(offset % items.length);
-  const item = items[index];
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setIndex((current) => (current + 1) % items.length);
-    }, 3200);
-
-    return () => window.clearInterval(timer);
-  }, [items.length]);
+function TickerLane({
+  items,
+  tickerSeed,
+  offset,
+}: {
+  items: TickerItem[];
+  tickerSeed: number;
+  offset: number;
+}) {
+  const item = items[(tickerSeed + offset) % items.length];
 
   return (
     <article className="ticker-lane">
       <strong>{item.press}</strong>
-      <span key={`${item.press}-${item.title}`} className="ticker-title">
+      <span key={`${tickerSeed}-${item.press}-${item.title}`} className="ticker-title">
         {item.title}
       </span>
     </article>

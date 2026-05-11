@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "tsc --module commonjs --moduleResolution node --target es2022 --outDir /tmp/news-state-tests src/app/_components/newsstand/state.test.ts && node /tmp/news-state-tests/_components/newsstand/state.test.js",
+    "verify:ui": "node scripts/verify-newsstand.mjs"
   },
   "dependencies": {
     "next": "16.2.4",
