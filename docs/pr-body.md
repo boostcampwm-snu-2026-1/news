@@ -24,3 +24,18 @@
 - UI 구조: 리스트 뷰 탭, 헤드라인 카드, 기사 목록 배치
 - 회귀 위험: 구독 탭에서 데이터가 줄어들 때 페이지/선택 상태가 깨지지 않는지
 - 검증 방법: `npm run lint`, `npm run test`, `npm run build`, Chrome hover/클릭/탭 전환/자동 진행 확인
+
+## 검증 결과
+
+- `npm run test`: reducer 기반 상태 전이 4개 통과
+- `npm run lint`: ESLint 통과
+- `npm run build`: Next.js production build 통과
+- `npm run verify:ui`: Chrome DevTools Protocol로 hover, 구독 클릭, 구독 탭 필터, 해지 버튼 문구, 그리드 셀 클릭 리스트 진입, 카테고리 탭 전환, 6초 자동 진행 확인
+- 화면 증거: `/tmp/newsstand-verify.png`
+
+## 검증한 엣지 케이스
+
+- 구독 탭에서 모든 구독 언론사를 해지해도 page와 selectedPress가 안전하게 보정된다.
+- 활성 카테고리 마지막 언론사에서 자동 진행이 돌면 첫 번째 언론사로 wrap된다.
+- 구독 탭에서 비어 있는 카테고리는 클릭해도 activeCategory를 바꾸지 않는다.
+- hover pill이 셀 중앙을 덮는 구조를 고려해 리스트 진입은 셀의 비버튼 영역 클릭으로 검증했다.
