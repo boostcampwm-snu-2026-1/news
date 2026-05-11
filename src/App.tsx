@@ -1,6 +1,3 @@
-import Newsstand from './Newsstand'
-import './App.css'
+import { Newsstand } from './Newsstand'
 
-export default function App() {
-  return <Newsstand />
-}
+export const App = () => <Newsstand />
