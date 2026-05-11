@@ -1,20 +1,24 @@
 import { useEffect, useMemo, useReducer, useState } from "react";
 import pressData from "../../data/press.json";
 import articlesData from "../../data/articles.json";
-import {
-  CATEGORY_ORDER,
-  type CategoryKey,
-  type Press,
-  type PressArticles,
-  type PressId,
-} from "../../state/types";
+import type { Press, PressArticles, PressId } from "../../state/types";
 import {
   initialNewsstandState,
   newsstandReducer,
 } from "../../state/newsstandReducer";
+import {
+  getCatOutlets,
+  getCount,
+  getCurIdxInCat,
+  getCurrentInTab,
+  getLastPage,
+  getPageItems,
+  getSafePage,
+  getVisible,
+} from "../../state/selectors";
 import { loadFromStorage, saveToStorage } from "../../hooks/useLocalStorage";
-import { useInterval } from "../../hooks/useInterval";
-import { useReducedMotion } from "../../hooks/useReducedMotion";
+import { useAutoAdvance } from "../../hooks/useAutoAdvance";
+import { useKeyboardShortcuts } from "../../hooks/useKeyboardShortcuts";
 import { Header } from "../Header/Header";
 import { Ticker } from "../Ticker/Ticker";
 import { TabBar, type ViewerId } from "../TabBar/TabBar";
@@ -23,10 +27,6 @@ import { PressOpen } from "../PressOpen/PressOpen";
 import { Chevron } from "../Chevron/Chevron";
 
 const STORAGE_KEY = "newsstand:subscribed";
-const PER_PAGE = 24;
-const PROGRESS_TICK_MS = 100;
-const PROGRESS_TOTAL_MS = 6000;
-const PROGRESS_DELTA = PROGRESS_TICK_MS / PROGRESS_TOTAL_MS;
 
 const ALL_PRESS = pressData as Press[];
 const ALL_ARTICLES = articlesData as PressArticles[];
@@ -40,23 +40,6 @@ function formatToday(d: Date = new Date()): string {
   return `${year}. ${month}. ${day}. ${DAY_NAMES[d.getDay()]}`;
 }
 
-/**
- * Find the next category (in CATEGORY_ORDER) whose visible outlets list is
- * non-empty, starting from `from` exclusive and wrapping around. Returns
- * null when no category in `visible` has any outlets.
- */
-function findNextCategoryWithOutlets(
-  visible: Press[],
-  from: CategoryKey,
-): CategoryKey | null {
-  const idx = CATEGORY_ORDER.indexOf(from);
-  for (let i = 1; i <= CATEGORY_ORDER.length; i++) {
-    const next = CATEGORY_ORDER[(idx + i) % CATEGORY_ORDER.length];
-    if (visible.some((p) => p.primaryCategory === next)) return next;
-  }
-  return null;
-}
-
 export function Newsstand() {
   const [state, dispatch] = useReducer(
     newsstandReducer,
@@ -64,29 +47,25 @@ export function Newsstand() {
     (init) => ({ ...init, subscribed: loadFromStorage<PressId[]>(STORAGE_KEY, []) }),
   );
   const [viewer, setViewer] = useState<ViewerId>("grid");
-  const reduced = useReducedMotion();
   const today = useMemo(() => formatToday(), []);
 
   useEffect(() => {
     saveToStorage(STORAGE_KEY, state.subscribed);
   }, [state.subscribed]);
 
-  const visible = useMemo(() => {
-    if (state.tab === "all") return ALL_PRESS;
-    const byId = new Map(ALL_PRESS.map((p) => [p.id, p]));
-    return state.subscribed
-      .map((id) => byId.get(id))
-      .filter((p): p is Press => p !== undefined);
-  }, [state.tab, state.subscribed]);
+  const visible = useMemo(
+    () => getVisible(ALL_PRESS, state.tab, state.subscribed),
+    [state.tab, state.subscribed],
+  );
 
-  const lastPage = Math.max(0, Math.ceil(visible.length / PER_PAGE) - 1);
-  const safePage = Math.min(state.page, lastPage);
+  const lastPage = getLastPage(visible.length);
+  const safePage = getSafePage(state.page, lastPage);
   useEffect(() => {
     if (state.page > lastPage) dispatch({ type: "page/set", page: lastPage });
   }, [state.page, lastPage]);
 
   const pageItems = useMemo(
-    () => visible.slice(safePage * PER_PAGE, (safePage + 1) * PER_PAGE),
+    () => getPageItems(visible, safePage),
     [visible, safePage],
   );
 
@@ -101,13 +80,12 @@ export function Newsstand() {
   // 섹터(=카테고리) 안에서 visible 한 outlet 들. 한 카테고리 안에서만 자동
   // 전환·페이지 이동·count 가 정의된다.
   const catOutlets = useMemo(
-    () => visible.filter((p) => p.primaryCategory === state.tabKey),
+    () => getCatOutlets(visible, state.tabKey),
     [visible, state.tabKey],
   );
-  const curIdxInCat =
-    state.opened !== null ? catOutlets.findIndex((p) => p.id === state.opened) : -1;
-  const currentInTab = curIdxInCat >= 0 ? curIdxInCat + 1 : 1;
-  const count = Math.max(1, catOutlets.length);
+  const curIdxInCat = getCurIdxInCat(catOutlets, state.opened);
+  const currentInTab = getCurrentInTab(curIdxInCat);
+  const count = getCount(catOutlets);
 
   // 사용자가 섹터 탭을 클릭해 tabKey 만 바뀐 경우, 현재 opened 가 새 섹터에
   // 없으면 그 섹터의 첫 outlet 으로 자동 이동한다.
@@ -123,35 +101,15 @@ export function Newsstand() {
     });
   }, [isOpened, curIdxInCat, catOutlets]);
 
-  useInterval(
-    () => {
-      const next = state.progress + PROGRESS_DELTA;
-      if (next < 1) {
-        dispatch({ type: "progress/set", progress: next });
-        return;
-      }
-      // 같은 섹터 안에서 다음 outlet → 섹터 끝이면 다음 섹터의 첫 outlet (wrap).
-      if (curIdxInCat >= 0 && curIdxInCat + 1 < catOutlets.length) {
-        const nextOutlet = catOutlets[curIdxInCat + 1];
-        dispatch({
-          type: "press/open",
-          pressId: nextOutlet.id,
-          primaryCategory: nextOutlet.primaryCategory,
-        });
-        return;
-      }
-      const nextCat = findNextCategoryWithOutlets(visible, state.tabKey);
-      if (!nextCat) return;
-      const first = visible.find((p) => p.primaryCategory === nextCat);
-      if (!first) return;
-      dispatch({
-        type: "press/open",
-        pressId: first.id,
-        primaryCategory: first.primaryCategory,
-      });
-    },
-    isOpened && !reduced ? PROGRESS_TICK_MS : null,
-  );
+  useAutoAdvance({
+    isOpened,
+    progress: state.progress,
+    visible,
+    catOutlets,
+    curIdxInCat,
+    tabKey: state.tabKey,
+    dispatch,
+  });
 
   const onTabChange = (tab: "all" | "sub") => {
     if (isOpened) dispatch({ type: "press/close" });
@@ -184,6 +142,12 @@ export function Newsstand() {
       dispatch({ type: "page/next" });
     }
   };
+
+  useKeyboardShortcuts({
+    onLeft: leftDisabled ? undefined : onLeft,
+    onRight: rightDisabled ? undefined : onRight,
+    onEscape: isOpened ? () => dispatch({ type: "press/close" }) : undefined,
+  });
 
   return (
     <main className="canvas" aria-label="뉴스스탠드">

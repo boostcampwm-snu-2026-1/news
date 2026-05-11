@@ -137,4 +137,135 @@ describe("newsstandReducer", () => {
       expect(next.subscribed).toEqual(["a", "b"]);
     });
   });
+
+  describe("edge cases — idempotency / clamping / boundary", () => {
+    it("tab/set with same tab returns identical reference (idempotency guard)", () => {
+      const seeded = { ...initialNewsstandState, tab: "all" as const, page: 2 };
+      const next = newsstandReducer(seeded, { type: "tab/set", tab: "all" });
+      expect(next).toBe(seeded);
+      // page must NOT be reset because the action was a no-op
+      expect(next.page).toBe(2);
+    });
+
+    it("subscribe with already-subscribed press returns identical reference", () => {
+      const seeded = { ...initialNewsstandState, subscribed: ["a", "b"] };
+      const next = newsstandReducer(seeded, { type: "subscribe", pressId: "a" });
+      expect(next).toBe(seeded);
+      expect(next.subscribed).toBe(seeded.subscribed);
+    });
+
+    it("unsubscribe of a non-subscribed press returns identical reference", () => {
+      const seeded = { ...initialNewsstandState, subscribed: ["a", "b"] };
+      const next = newsstandReducer(seeded, { type: "unsubscribe", pressId: "ghost" });
+      expect(next).toBe(seeded);
+      expect(next.subscribed).toBe(seeded.subscribed);
+    });
+
+    it("page/set clamps negative values to 0", () => {
+      const next = newsstandReducer(initialNewsstandState, {
+        type: "page/set",
+        page: -3,
+      });
+      expect(next.page).toBe(0);
+    });
+
+    it("page/prev at page 0 keeps page at 0 (no negative)", () => {
+      const next = newsstandReducer(initialNewsstandState, { type: "page/prev" });
+      expect(next.page).toBe(0);
+    });
+
+    it("progress/set above 1 clamps to 1.0", () => {
+      const next = newsstandReducer(initialNewsstandState, {
+        type: "progress/set",
+        progress: 99,
+      });
+      expect(next.progress).toBe(1);
+    });
+
+    it("progress/set below 0 clamps to 0.0", () => {
+      const seeded = { ...initialNewsstandState, progress: 0.5 };
+      const next = newsstandReducer(seeded, {
+        type: "progress/set",
+        progress: -10,
+      });
+      expect(next.progress).toBe(0);
+    });
+
+    it("press/open forces progress=0 and currentInTab=1 even from mid values", () => {
+      const seeded = {
+        ...initialNewsstandState,
+        progress: 0.7,
+        currentInTab: 30,
+      };
+      const next = newsstandReducer(seeded, {
+        type: "press/open",
+        pressId: "sbs-biz",
+        primaryCategory: "it",
+      });
+      expect(next.progress).toBe(0);
+      expect(next.currentInTab).toBe(1);
+    });
+
+    it("press/open preserves subscribed list", () => {
+      const seeded = { ...initialNewsstandState, subscribed: ["a", "b"] };
+      const next = newsstandReducer(seeded, {
+        type: "press/open",
+        pressId: "sbs-biz",
+        primaryCategory: "it",
+      });
+      expect(next.subscribed).toEqual(["a", "b"]);
+      // and the same reference — press/open does not touch subscribed
+      expect(next.subscribed).toBe(seeded.subscribed);
+    });
+
+    it("subscribed/hydrate preserves all other fields", () => {
+      const seeded = {
+        ...initialNewsstandState,
+        page: 2,
+        tab: "sub" as const,
+        tabKey: "it" as const,
+        opened: "x",
+        progress: 0.4,
+        currentInTab: 3,
+      };
+      const next = newsstandReducer(seeded, {
+        type: "subscribed/hydrate",
+        subscribed: ["a", "b"],
+      });
+      expect(next.page).toBe(2);
+      expect(next.tab).toBe("sub");
+      expect(next.tabKey).toBe("it");
+      expect(next.opened).toBe("x");
+      expect(next.progress).toBe(0.4);
+      expect(next.currentInTab).toBe(3);
+      expect(next.subscribed).toEqual(["a", "b"]);
+    });
+
+    it("field-tab/advance-current preserves opened / subscribed / tab / page", () => {
+      const seeded = {
+        ...initialNewsstandState,
+        opened: "sbs-biz",
+        subscribed: ["a", "b"],
+        tab: "sub" as const,
+        page: 1,
+        currentInTab: 5,
+        progress: 0.9,
+      };
+      const next = newsstandReducer(seeded, { type: "field-tab/advance-current" });
+      expect(next.opened).toBe("sbs-biz");
+      expect(next.subscribed).toBe(seeded.subscribed);
+      expect(next.tab).toBe("sub");
+      expect(next.page).toBe(1);
+      // and the touched fields are still correct
+      expect(next.currentInTab).toBe(6);
+      expect(next.progress).toBe(0);
+    });
+
+    it("unknown action falls through default and returns identical reference", () => {
+      const seeded = { ...initialNewsstandState, page: 2 };
+      // Cast to any to bypass the discriminated-union — we want to exercise default.
+      const next = newsstandReducer(seeded, { type: "unknown/no-op" } as never);
+      expect(next).toBe(seeded);
+    });
+  });
 });
