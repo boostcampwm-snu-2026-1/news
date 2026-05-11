@@ -1,0 +1,42 @@
+/*
+ * PressCell — 워드마크 + hover 시 SubscribePill로 전환 (frame 02/03).
+ * 셀은 PressGrid 내부 grid item이라 width/height 직접 설정하지 않음.
+ */
+
+.cell {
+  width: 100%;
+  height: 100%;
+  background: var(--card);
+  position: relative;
+  overflow: hidden;
+}
+
+.openTarget {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.openTarget:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: -2px;
+}
+
+.pillOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card);
+  /* 시각적으로만 워드마크를 덮을 것 — 클릭은 아래의 openTarget으로 통과시킨다.
+     (pill 자체는 pointer-events: auto로 다시 살린다.) */
+  pointer-events: none;
+}

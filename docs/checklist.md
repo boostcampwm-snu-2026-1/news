@@ -31,12 +31,17 @@
 
 ---
 
-## Week 2 — 상호작용 (다음 주 예정)
+## Week 2 — 상호작용 (이번 주)
 
-- ◻ **#10 구독 상태 관리 + Cell hover → 구독/해지 pill** — `Set<pressId>`, 셀 hover 시 wordmark ↔ pill 전환
-- ◻ **#11 내가 구독한 언론사 탭** — sparse grid, 동적 페이지 수 (≤24/page)
-- ◻ **#12 오픈 프레스 뷰** — 필드 탭 + 6초 progress + 자동 진행 + 리스트 뷰 (헤드라인 이미지 + 6개 기사)
-- ◻ **#13 접근성** — `role="tablist"`, focus parity, `prefers-reduced-motion`, aria-label
+- ✅ **#10 구독 상태 관리 + Cell hover → 구독/해지 pill** — `Set<pressId>` reducer, 셀 hover/focus 시 wordmark ↔ pill 전환, 토스트
+- ✅ **#11 내가 구독한 언론사 탭** — 정의 순서로 정렬된 dense grid, 동적 페이지 수 (≤24/page), clamp 보호
+- ✅ **#12 오픈 프레스 뷰** — 필드 탭 + 6초 progress + 자동 진행 + 리스트 뷰 (헤드라인 이미지 + 6개 기사) + ESC 닫기
+- ✅ **#13 접근성** — `role="tablist"`, focus-visible, `prefers-reduced-motion`, aria-label, ESC, 빈 상태
+
+### 검증 체계 (Week 2 새 스펙)
+
+- ✅ **lib/ 분리 + vitest 단위 테스트 28건** — `subscriptions`, `pagination`, `articleSequence`의 엣지케이스를 자동화. `npm test`로 회귀 방지.
+- 검증 항목 상세는 PR 본문 "어떻게 검증했는가" 섹션 참조.
 
 ---
 

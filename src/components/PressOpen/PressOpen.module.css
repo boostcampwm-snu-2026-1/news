@@ -1,0 +1,66 @@
+/*
+ * 오픈 프레스 frame (디자인 시스템 §6.10).
+ * 930 × 388, white card, 1px line border. content 영역 안에 배치되므로 상위에서 위치 결정.
+ */
+
+.frame {
+  width: var(--content-w);
+  height: var(--content-h);
+  background: var(--card);
+  border: var(--border-line);
+  display: grid;
+  grid-template-rows: 40px 36px 1fr;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.headStrip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+  border-bottom: var(--border-line);
+  background: var(--card);
+}
+
+.headLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.update {
+  font-size: var(--type-caption-size);
+  color: var(--sub);
+  letter-spacing: var(--track-kr-body);
+}
+
+.headRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.close {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: none;
+  color: var(--sub);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.close:hover {
+  color: var(--ink);
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 1px;
+}

@@ -290,5 +290,4 @@ if (PRESSES.length !== 72) {
   throw new Error(`PRESSES must have 72 outlets, got ${PRESSES.length}`);
 }
 
-/** 페이지당 셀 수 (디자인 시스템 §7: 6×4 = 24) */
-export const CELLS_PER_PAGE = 24;
+export { CELLS_PER_PAGE } from '@/lib/pagination';

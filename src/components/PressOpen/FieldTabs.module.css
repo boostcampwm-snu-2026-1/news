@@ -1,0 +1,93 @@
+/*
+ * Field tabs (디자인 시스템 §6.9)
+ *  - 6개 균등 분할, height 36
+ *  - inactive: --soft bg, --sub 글씨
+ *  - active: --accent base + --accent-deep fill (left-to-right)
+ *  - counter: mono 12/500
+ */
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  height: 36px;
+  background: var(--soft);
+  border-bottom: var(--border-line);
+}
+
+.tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  background: var(--soft);
+  color: var(--sub);
+  border: 0;
+  border-right: var(--border-line);
+  cursor: pointer;
+  overflow: hidden;
+  font-size: var(--type-caption-size);
+  font-weight: 500;
+  letter-spacing: var(--track-kr-body);
+}
+
+.tab:last-child {
+  border-right: 0;
+}
+
+.tabActive {
+  color: var(--card);
+  background: var(--accent);
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+  background: var(--accent-deep);
+  transform-origin: left center;
+  /* tick(100ms)마다 React가 transform을 갱신하므로 transition은 0 — 누적 지터 방지 */
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    /* reduced-motion에선 자동 진행이 멈추므로 fill도 0에서 정지 */
+    transform: scaleX(0) !important;
+  }
+}
+
+.label {
+  position: relative;
+  z-index: 1;
+  font-weight: 500;
+  letter-spacing: var(--track-kr-body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.counter {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-tab-size);
+  font-weight: var(--type-mono-tab-weight);
+  letter-spacing: 0;
+  color: var(--badge-ink);
+  flex-shrink: 0;
+}
+
+.counterMute {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono-tab-size);
+  color: var(--mute);
+  flex-shrink: 0;
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: -2px;
+}

@@ -26,7 +26,15 @@
 ├── public/
 ├── src/
 │   ├── components/           # 컴포넌트 + 컴포넌트별 .module.css
-│   ├── data/                 # mock 데이터 (presses, ticker)
+│   │   ├── Chevron, Header, Ticker, TabBar, PressWordmark
+│   │   ├── PressGrid, PressCell, SubscribePill, Toast
+│   │   └── PressOpen/        # PressOpen + FieldTabs + ArticleBody
+│   ├── data/                 # mock (presses, ticker, articles)
+│   ├── hooks/                # useReducedMotion, useSubscriptions
+│   ├── lib/                  # 순수 로직 + 단위 테스트
+│   │   ├── subscriptions.ts (.test.ts)
+│   │   ├── pagination.ts    (.test.ts)
+│   │   └── articleSequence.ts (.test.ts)
 │   ├── styles/
 │   │   ├── tokens.css        # :root 디자인 토큰
 │   │   └── global.css        # reset / base
@@ -35,6 +43,7 @@
 │   └── main.tsx
 ├── CLAUDE.md                 # 이 문서
 ├── docs/checklist.md         # 체크리스트
+├── vitest.config.ts          # 테스트 설정
 └── week9*.pdf                # 스펙 원본
 ```
 
@@ -138,11 +147,13 @@ feat: #N <기능명>
 ## 명령어
 
 ```bash
-npm install      # 의존성 설치
-npm run dev      # 개발 서버 (default :5173)
-npm run build    # 프로덕션 빌드
-npm run preview  # 빌드 결과 미리보기
-npm run lint     # ESLint
+npm install         # 의존성 설치
+npm run dev         # 개발 서버 (default :5173)
+npm run build       # 프로덕션 빌드 (tsc -b + vite build)
+npm run preview     # 빌드 결과 미리보기
+npm run lint        # ESLint
+npm test            # vitest 단위 테스트 1회
+npm run test:watch  # vitest watch 모드
 ```
 
 ## 참고 문서
