@@ -26,31 +26,49 @@
 
 ---
 
-## 디렉터리 구조 (목표 상태)
+## 디렉터리 구조 (2주차 목표 상태)
+
+> 1주차의 `NewsGrid`, `NewsCard`, `TabBar`(그리드/리스트 토글 포함), `Pagination`,
+> `CategoryFilter`, ListView 사이드바는 **폐기**. 캐러셀 기반 컴포넌트로 교체된다.
 
 ```
 src/
 ├── components/
-│   ├── Header/
-│   │   └── Header.tsx
-│   ├── NewsGrid/
-│   │   └── NewsGrid.tsx
-│   ├── NewsCard/
-│   │   └── NewsCard.tsx
-│   ├── TabBar/
-│   │   └── TabBar.tsx
+│   ├── GlobalHeader/
+│   │   └── GlobalHeader.tsx        # NEWSSTAND 로고 + MY뉴스/전체언론사 토글
+│   ├── CategoryTabs/
+│   │   └── CategoryTabs.tsx        # 4개 카테고리 탭
+│   ├── Carousel/
+│   │   ├── Carousel.tsx            # 3-패널 캐러셀 컨테이너 (forwardRef, 슬라이드 로직)
+│   │   ├── NavButton.tsx           # ◀ ▶ 화살표 버튼 + 툴팁 (prev/next 공용)
+│   │   ├── carouselLayout.ts       # PANEL_W, BTN_LEFT/RIGHT 등 레이아웃 상수
+│   │   └── CarouselControlBar.tsx  # 자동넘김 토글 + 속도 + n/total
+│   ├── FrontPagePanel/
+│   │   ├── FrontPagePanel.tsx      # 신문 1면 조합 컴포넌트
+│   │   ├── FrontPageHeader.tsx     # 로고 · 구독 버튼 · 편집시각
+│   │   └── HotList.tsx             # HOT 1·2·3 우측 칼럼
+│   ├── PublisherStrip/
+│   │   └── PublisherStrip.tsx      # 하단 썸네일 띠
 │   └── SubscribeModal/
-│       └── SubscribeModal.tsx
+│       └── SubscribeModal.tsx      # 1주차에서 유지
 ├── data/
-│   └── publishers.json
+│   ├── publishers.json             # 20개 언론사 메타
+│   └── frontpages.json             # 20개 1면 편성 데이터
 ├── hooks/
-│   └── useSubscription.ts
+│   └── useNewsStand.ts             # 전체 앱 상태·핸들러·자동슬라이드 이펙트 (App.tsx에서 분리)
 ├── types/
-│   └── index.ts
+│   └── index.ts                    # Publisher, FrontPage, Article, FeatureBox 등
 ├── App.tsx
 ├── main.tsx
-├── index.css      ← Tailwind @import + @theme + @layer
+├── index.css                       # Tailwind @import + @theme + @layer
 └── vite-env.d.ts
+
+scripts/
+└── validate-data.ts                # publishers ↔ frontpages 정합성 검증
+
+public/
+├── logos/                          # 언론사 로고
+└── thumbs/                         # 1면 썸네일 / 메인 이미지
 ```
 
 - **파일 당 하나의 컴포넌트** 원칙을 반드시 지킨다.
@@ -61,38 +79,7 @@ src/
 
 ## 디자인 시스템
 
-### 색상 팔레트
-
-```css
-:root {
-  --color-primary: #03c75a;      /* 네이버 그린 계열 포인트 */
-  --color-bg: #f7f8fa;           /* 페이지 배경 */
-  --color-surface: #ffffff;      /* 카드 배경 */
-  --color-border: #e5e8eb;       /* 구분선 */
-  --color-text-primary: #1a1a1a; /* 본문 */
-  --color-text-secondary: #6b7280; /* 부제, 날짜 */
-}
-```
-
-### 타이포그래피
-
-- 기본 폰트: 시스템 폰트 스택 (`-apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif`)
-- 헤더 제목: `18px / font-weight: 700`
-- 카드 제목: `14px / font-weight: 600`
-- 보조 텍스트: `12px / color: var(--color-text-secondary)`
-
-### 레이아웃
-
-- 최대 너비: `1200px`, 중앙 정렬
-- 카드 그리드: `repeat(auto-fill, minmax(160px, 1fr))`
-- 카드 간격: `16px`
-- 모바일 브레이크포인트: `768px`
-
-### 컴포넌트 규칙
-
-- 버튼은 `border-radius: 4px`, hover 시 `opacity: 0.85`
-- 카드는 `box-shadow: 0 1px 3px rgba(0,0,0,0.08)`, hover 시 `translateY(-2px)`
-- 모달은 오버레이 배경 `rgba(0,0,0,0.4)`, 내부 `border-radius: 12px`
+> 색상, 타이포그래피, 레이아웃, 컴포넌트 규칙 등 디자인 관련 사항은 **[design.md](design.md)** 를 참조한다.
 
 ---
 
@@ -103,17 +90,6 @@ src/
 ```bash
 npm run dev   # http://localhost:5173
 npm run build # TypeScript 타입 검사 + 번들링
-```
-
-### Tailwind v4 핵심 규칙
-
-```css
-/* index.css — 디자인 토큰은 @theme 블록에 선언 */
-@theme {
-  --color-primary: #03c75a;
-}
-/* bg-primary, text-primary 등 유틸리티 클래스 자동 생성됨 */
-/* 복잡한 컴포넌트 스타일은 @layer components 에 정의 */
 ```
 
 ### 금지 사항
@@ -177,14 +153,33 @@ export default class NewsCard extends React.Component<any> { ... }
 
 ## 커밋 메시지 규칙
 
-```
-feat: #이슈번호 기능명
+> 커밋 메시지는 **간결하게** 작성한다. 제목 한 줄 + 필요 시 짧은 bullet 1~2개.
 
-확인내용: 구현된 화면/로직 동작 확인 결과
-이해 안 됐던 부분: AI가 추천한 패턴 중 추가로 공부한 내용
+### 포맷
+
+```
+<prefix>: #<항목번호> <기능명>
 ```
 
-**Prefix 종류**
+본문이 필요한 경우에만 한 줄 추가:
+
+```
+<prefix>: #<항목번호> <기능명>
+
+- <핵심 변경사항 한 줄>
+```
+
+### 예시
+
+```
+feat: #3 NewsCard component
+
+feat: #9 subscription state with localStorage
+
+fix: #12 reset pagination on tab change
+```
+
+### Prefix 종류
 
 | prefix | 사용 시점 |
 |--------|----------|
@@ -194,3 +189,4 @@ feat: #이슈번호 기능명
 | `refactor` | 기능 변화 없는 코드 개선 |
 | `chore` | 설정, 패키지 변경 |
 | `docs` | 문서 작성/수정 |
+| `test` | 테스트 코드 추가/수정 |

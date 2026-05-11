@@ -3,27 +3,31 @@
 /* ────────────────────────────────────────
    디자인 토큰 (CSS 커스텀 프로퍼티)
    Tailwind v4: @theme 블록으로 유틸리티 클래스 자동 생성
-   예) bg-primary, text-text-primary, border-border 등
 ──────────────────────────────────────── */
 @theme {
   /* 색상 */
   --color-primary: #03c75a;
   --color-primary-hover: #02a84a;
-  --color-bg: #f7f8fa;
+  --color-bg: #efe7d7;
   --color-surface: #ffffff;
   --color-border: #e5e8eb;
   --color-text-primary: #1a1a1a;
   --color-text-secondary: #6b7280;
+  --color-tab-active: #1a1a1a;
 
   /* 폰트 */
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Malgun Gothic',
+               'Apple SD Gothic Neo', sans-serif;
 
   /* 그림자 */
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.08);
-  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-panel: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-panel-peek: 0 1px 4px rgba(0, 0, 0, 0.06);
 
   /* 레이아웃 */
-  --spacing-page-max: 1200px;
+  --spacing-page-max: 1400px;
+  --carousel-panel-w: 920px;
+  --carousel-peek-w: 220px;
+  --strip-thumb-w: 96px;
 }
 
 /* ────────────────────────────────────────
@@ -45,49 +49,9 @@ body {
    공통 컴포넌트 레이어
 ──────────────────────────────────────── */
 @layer components {
-  /* 페이지 너비 컨테이너 */
   .container-page {
     max-width: var(--spacing-page-max);
     margin-inline: auto;
     padding-inline: 1rem;
-  }
-
-  /* 뉴스 카드 */
-  .card {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    box-shadow: var(--shadow-card);
-    transition: transform 150ms ease, box-shadow 150ms ease;
-  }
-
-  .card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-card-hover);
-  }
-
-  /* 구독 버튼 */
-  .btn-subscribe {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 10px;
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: 4px;
-    border: 1px solid var(--color-primary);
-    color: var(--color-primary);
-    background: transparent;
-    cursor: pointer;
-    transition: opacity 150ms ease;
-  }
-
-  .btn-subscribe:hover {
-    opacity: 0.75;
-  }
-
-  .btn-subscribe.subscribed {
-    background-color: var(--color-primary);
-    color: #fff;
   }
 }

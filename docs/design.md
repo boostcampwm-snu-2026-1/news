@@ -1,0 +1,178 @@
+# design.md — 뉴스스탠드 디자인 시스템
+
+> 구현된 내용만 기록한다. 미구현 컴포넌트는 구현 완료 후 추가한다.
+> 코딩·환경 설정은 `CLAUDE.md` 참조.
+
+---
+
+## 디자인 토큰 (`@theme`)
+
+```css
+/* 색상 */
+--color-primary: #03c75a;
+--color-primary-hover: #02a84a;
+--color-bg: #efe7d7;            /* 페이지 배경 — 우드/크라프트 톤 */
+--color-surface: #ffffff;       /* 카드·패널 배경 */
+--color-border: #e5e8eb;
+--color-text-primary: #1a1a1a;
+--color-text-secondary: #6b7280;
+--color-tab-active: #1a1a1a;    /* 활성 탭·토글 배경 */
+
+/* 폰트 */
+--font-sans: -apple-system, BlinkMacSystemFont, 'Malgun Gothic',
+             'Apple SD Gothic Neo', sans-serif;
+
+/* 그림자 */
+--shadow-panel: 0 2px 8px rgba(0, 0, 0, 0.08);
+--shadow-panel-peek: 0 1px 4px rgba(0, 0, 0, 0.06);
+
+/* 레이아웃 */
+--spacing-page-max: 1400px;
+--carousel-panel-w: 920px;
+--carousel-peek-w: 220px;
+--strip-thumb-w: 96px;
+```
+
+---
+
+## 페이지 전체 구조
+
+```
+┌──────────────────────────────────────────────────────────┐
+│  GlobalHeader   (NEWSSTAND / MY뉴스·전체언론사 토글 / 아이콘)  │
+├──────────────────────────────────────────────────────────┤
+│  CategoryTabs   (주요언론사 · 종합/경제 · 방송/통신 · IT)        │
+├──────────────────────────────────────────────────────────┤
+│  Carousel  [◀  FrontPagePanel(peek) | FrontPagePanel | FrontPagePanel(peek)  ▶]  │
+├──────────────────────────────────────────────────────────┤
+│  CarouselControlBar  (자동넘김 토글 + 속도 선택 / n·total / ◁▷)  │
+├──────────────────────────────────────────────────────────┤
+│  PublisherStrip  (언론사 썸네일 띠 — 클릭 시 캐러셀 점프)         │
+└──────────────────────────────────────────────────────────┘
+```
+
+- 최대 너비: `1400px` (`.container-page`)
+- 페이지 배경: `--color-bg` (#efe7d7, 우드 톤)
+
+---
+
+## 컴포넌트 명세
+
+### GlobalHeader
+
+- 높이 `56px` (`h-14`)
+- 배경: `bg-bg` (페이지 배경과 동일), 하단 `border-b border-border`
+- **좌측**: `NEWSSTAND` 텍스트 로고 (`text-lg font-bold`)
+- **중앙**: MY뉴스 / 전체언론사 세그먼트 토글
+  - 외곽: `border border-border rounded overflow-hidden` (사각형)
+  - 활성: `bg-tab-active text-white px-4 py-1.5 text-sm font-bold`
+  - 비활성: `text-text-secondary hover:text-text-primary px-4 py-1.5 text-sm font-bold`
+- **우측**: 새로고침 / 설정 아이콘 (`20×20`, `text-text-secondary`, hover 시 `text-text-primary`)
+
+### CategoryTabs
+
+- `flex gap-2 justify-center py-3`
+- 탭 4개: `주요언론사` / `종합/경제` / `방송/통신` / `IT`
+- 활성: `bg-tab-active text-white px-4 py-1.5 text-sm font-bold` (사각형, 둥글기 없음)
+- 비활성: `text-text-secondary hover:text-text-primary px-4 py-1.5 text-sm font-bold`
+
+### Carousel (3-패널)
+
+레이아웃 상수:
+
+| 변수 | 값 |
+|------|----|
+| `PANEL_W` | `736px` (920 × 0.8) |
+| `PEEK_W` | `176px` (220 × 0.8) |
+| `BASE_X` | `PEEK_W - PANEL_W = -560px` |
+| 패널 높이 | `416px` (520 × 0.8) |
+| 전체 가시 너비 | `PEEK_W * 2 + PANEL_W = 1088px` |
+
+파일 구성:
+
+| 파일 | 역할 |
+|------|------|
+| `Carousel.tsx` | 슬라이드 로직, forwardRef(`slideNext`/`slidePrev`) |
+| `NavButton.tsx` | ◀ ▶ 버튼 + hover 툴팁 (prev/next 공용 컴포넌트) |
+| `carouselLayout.ts` | `PANEL_W`, `BASE`/`NEXT`/`PREV`, `BTN_LEFT`/`BTN_RIGHT` 상수 |
+
+- 슬라이드 트랙: `flex`, 3개 패널(`[prevIdx, activeIndex, nextIdx]`)을 항상 렌더
+- 이동 애니메이션: `transform translateX`, `250ms ease-out`
+- 전환 중 `onTransitionEnd`에서 `activeIndex` 업데이트 후 위치 즉시 리셋 (transition 비활성화)
+- 끝에서 순환 (`% count`)
+- peek 패널: `opacity-60 scale-95 pointer-events-none`
+- **화살표**: 원형 배경 없음, `‹` `›` SVG 아이콘만, hover 시 인접 언론사명 툴팁 표시
+- 패널 렌더: `renderPanel(index, isActive)` render prop으로 외부에서 주입
+- `prevLabel` / `nextLabel` prop으로 툴팁 텍스트 주입
+
+### CarouselControlBar
+
+- `flex items-center justify-between text-xs text-text-secondary px-2 py-1.5`
+- 너비: 중앙 패널과 동일 (`736px`, `mx-auto`)
+- **좌측**: 자동넘김 토글 버튼 (`border border-text-primary` 활성 / `border-border` 비활성) + 자동넘김 ON일 때 속도 드롭다운 노출 (`느리게(30초)` / `보통(20초)` / `빠르게(15초)`)
+- **우측**: `{n} / {total}` (`tabular-nums`) + ◁ ▷ 미세이동 버튼
+
+### FrontPagePanel
+
+`FrontPagePanel.tsx`가 두 서브컴포넌트를 조합하는 구조.
+
+| 파일 | 역할 |
+|------|------|
+| `FrontPageHeader.tsx` | 언론사 로고, 구독 버튼, 편집시각 |
+| `HotList.tsx` | HOT 1·2·3 우측 칼럼 |
+| `FrontPagePanel.tsx` | 메인 이미지·서브기사 + 위 둘을 조합, 푸터 |
+
+- 높이: `450px`
+- **FrontPageHeader** (`px-3 pt-2.5 pb-2 border-b`):
+  - 언론사 로고 (`h-8 object-contain`) + 편집시각 (`text-xs tabular-nums`)
+  - 버튼 행: `구독하기` (구독 상태 → `text-primary border-primary font-bold` / 비구독 → `text-text-secondary border-border`) / `이용자 한마디` / `공유`
+- **좌측 칼럼**: 메인 이미지 `200px` + 헤드라인 + 리드 + 서브기사 리스트 (bullet, 최대 5개)
+- **HotList** (`w-44`): HOT 뉴스 1·2·3 (랭킹 숫자 + 썸네일 + 제목)
+- **푸터**: `{언론사명} 사이트 바로가기 →` (`text-[10px] text-text-secondary`)
+- `isSubscribed` / `onToggleSubscribe` prop으로 구독 상태 관리
+
+### PublisherStrip
+
+- `flex justify-center gap-1 pt-1 pb-2` — 가로 정렬, 스크롤 없음
+- 썸네일: `64 × 40px`, 20개 × 64px + 19 × 4px = 1356px (container-page 1368px 이내)
+- 활성: `border-2 border-text-primary opacity-100`
+- 비활성: `border border-border opacity-55 hover:opacity-85`
+- 이름 표시: hover 툴팁 (`bg-text-primary text-white rounded px-2 py-0.5`)
+- 클릭 시 캐러셀 `activeIndex` 점프 + `scrollIntoView` 자동 스크롤
+
+---
+
+## 색상 팔레트
+
+| 역할 | 색상 코드 | Tailwind 클래스 |
+|------|----------|----------------|
+| Primary (초록) | `#03c75a` | `text-primary` `bg-primary` |
+| 페이지 배경 (우드) | `#efe7d7` | `bg-bg` |
+| 패널 배경 | `#ffffff` | `bg-surface` |
+| 활성 탭·토글 배경 | `#1a1a1a` | `bg-tab-active` |
+| 본문 텍스트 | `#1a1a1a` | `text-text-primary` |
+| 보조 텍스트 | `#6b7280` | `text-text-secondary` |
+| 테두리 | `#e5e8eb` | `border-border` |
+
+---
+
+## 타이포그래피
+
+| 용도 | 클래스 |
+|------|--------|
+| 서비스 로고 | `text-lg font-bold tracking-tight` |
+| 카테고리 탭 | `text-sm font-bold` |
+| 토글 라벨 | `text-sm font-bold` |
+
+---
+
+## 공통 레이아웃 클래스
+
+```css
+/* @layer components */
+.container-page {
+  max-width: var(--spacing-page-max); /* 1400px */
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+```
