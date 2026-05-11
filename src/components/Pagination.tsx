@@ -3,6 +3,10 @@ interface PaginationProps {
   pageCount: number
   onPrevious: () => void
   onNext: () => void
+  previousLabel?: string
+  nextLabel?: string
+  previousDisabled?: boolean
+  nextDisabled?: boolean
 }
 
 export function Pagination({
@@ -10,15 +14,19 @@ export function Pagination({
   pageCount,
   onPrevious,
   onNext,
+  previousLabel,
+  nextLabel,
+  previousDisabled,
+  nextDisabled,
 }: PaginationProps) {
-  const isPreviousDisabled = pageIndex <= 0
-  const isNextDisabled = pageIndex >= pageCount - 1
+  const isPreviousDisabled = previousDisabled ?? pageIndex <= 0
+  const isNextDisabled = nextDisabled ?? pageIndex >= pageCount - 1
   const pageStatus = pageCount > 0 ? `${pageIndex + 1}/${pageCount}` : '0/0'
 
   return (
     <>
       <button
-        aria-label={`이전 페이지 (${pageStatus})`}
+        aria-label={previousLabel ?? `이전 페이지 (${pageStatus})`}
         className="absolute top-1/2 left-2 flex h-10 w-6 -translate-y-1/2 items-center justify-center text-mute transition-[color,opacity] hover:text-sub focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent disabled:pointer-events-none disabled:opacity-0 lg:-left-[72px]"
         disabled={isPreviousDisabled}
         onClick={onPrevious}
@@ -27,7 +35,7 @@ export function Pagination({
         <ChevronIcon direction="previous" />
       </button>
       <button
-        aria-label={`다음 페이지 (${pageStatus})`}
+        aria-label={nextLabel ?? `다음 페이지 (${pageStatus})`}
         className="absolute top-1/2 right-2 flex h-10 w-6 -translate-y-1/2 items-center justify-center text-mute transition-[color,opacity] hover:text-sub focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent disabled:pointer-events-none disabled:opacity-0 lg:-right-[72px]"
         disabled={isNextDisabled}
         onClick={onNext}
