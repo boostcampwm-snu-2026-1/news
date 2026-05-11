@@ -16,7 +16,7 @@ export default function Header() {
           <path d="M7 12H17" stroke="#14212B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           <path d="M7 16H13" stroke="#14212B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
-        <h1 className="font-serif text-2xl font-bold text-ink">뉴스스탠드</h1>
+        <h1 className="text-2xl font-bold text-ink">뉴스스탠드</h1>
       </div>
       <div className="text-sub font-medium">{dateString}</div>
     </header>

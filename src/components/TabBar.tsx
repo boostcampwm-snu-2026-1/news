@@ -9,13 +9,13 @@ export default function TabBar() {
       <div className="flex items-center gap-6 font-bold text-lg">
         <button 
           onClick={() => setTab('all')}
-          className={`transition-colors ${tab === 'all' ? 'text-ink' : 'text-mute hover:text-sub'}`}
+          className={`transition-colors outline-none rounded-sm focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 ${tab === 'all' ? 'text-ink' : 'text-mute hover:text-sub'}`}
         >
           전체 언론사
         </button>
         <button 
           onClick={() => setTab('sub')}
-          className={`flex items-center gap-2 transition-colors ${tab === 'sub' ? 'text-ink' : 'text-mute hover:text-sub'}`}
+          className={`flex items-center gap-2 transition-colors outline-none rounded-sm focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 ${tab === 'sub' ? 'text-ink' : 'text-mute hover:text-sub'}`}
         >
           내가 구독한 언론사
           {subscribed.length > 0 && (
@@ -30,7 +30,7 @@ export default function TabBar() {
       <div className="flex items-center gap-2">
         <button 
           onClick={() => setViewMode('list')}
-          className={`w-6 h-6 rounded-sm flex items-center justify-center transition-colors ${
+          className={`w-6 h-6 rounded-sm flex items-center justify-center transition-colors outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${
             viewMode === 'list' ? 'bg-accent text-card' : 'bg-line text-card hover:bg-sub'
           }`}
           aria-label="리스트 보기"
@@ -42,7 +42,7 @@ export default function TabBar() {
         </button>
         <button 
           onClick={() => setViewMode('grid')}
-          className={`w-6 h-6 rounded-sm flex items-center justify-center transition-colors ${
+          className={`w-6 h-6 rounded-sm flex items-center justify-center transition-colors outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${
             viewMode === 'grid' ? 'bg-accent text-card' : 'bg-line text-card hover:bg-sub'
           }`}
           aria-label="그리드 보기"
