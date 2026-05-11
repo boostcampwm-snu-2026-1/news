@@ -1,6 +1,10 @@
-import styles from './PressWordmark.module.css';
+import type { Press } from '../../../types/press';
 
-const PressWordmark = ({ press }) => {
+interface PressWordmarkProps {
+  press: Press;
+}
+
+const PressWordmark = ({ press }: PressWordmarkProps) => {
   const { name, style } = press;
 
   const renderName = () => {
@@ -24,14 +28,14 @@ const PressWordmark = ({ press }) => {
 
   return (
     <div 
-      className={styles.wordmark}
+      className="inline-flex items-center justify-center font-[var(--font-primary)] text-[14px] leading-[1.15] select-none gap-[2px]"
       style={{
         fontWeight: style.weight,
         fontStyle: style.italic ? 'italic' : 'normal',
       }}
     >
       {renderName()}
-      {style.flag && <span className={styles.flag}>🚩</span>}
+      {style.flag && <span className="text-[10px] ml-[2px]">🚩</span>}
     </div>
   );
 };

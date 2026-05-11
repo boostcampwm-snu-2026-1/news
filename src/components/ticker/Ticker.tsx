@@ -1,7 +1,16 @@
 import { useState, useEffect } from 'react';
-import styles from './Ticker.module.css';
 
-const TickerLane = ({ items, delay = 0 }) => {
+interface TickerItem {
+  press: string;
+  title: string;
+}
+
+interface TickerLaneProps {
+  items: TickerItem[];
+  delay?: number;
+}
+
+const TickerLane = ({ items, delay = 0 }: TickerLaneProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -22,9 +31,15 @@ const TickerLane = ({ items, delay = 0 }) => {
   const currentItem = items[currentIndex];
 
   return (
-    <div className={styles.lane}>
-      <span className={styles.press}>{currentItem.press}</span>
-      <p className={`${styles.title} ${isTransitioning ? styles.fadeOut : ''}`}>
+    <div className="flex-1 flex items-center h-[49px] px-[24px] bg-[var(--color-soft)] gap-[var(--spacing-16)]">
+      <span className="text-[14px] font-bold text-[var(--color-ink)] w-[56px] shrink-0">
+        {currentItem.press}
+      </span>
+      <p 
+        className={`text-[14px] font-medium text-[var(--color-ink)] whitespace-nowrap overflow-hidden text-ellipsis transition-opacity duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+          isTransitioning ? 'opacity-0' : 'opacity-100'
+        }`}
+      >
         {currentItem.title}
       </p>
     </div>
@@ -42,7 +57,7 @@ const Ticker = () => {
   ];
 
   return (
-    <div className={styles.tickerContainer}>
+    <div className="flex w-[var(--width-content)] gap-[var(--spacing-8)] mt-[var(--spacing-40)]">
       <TickerLane items={leftItems} />
       <TickerLane items={rightItems} delay={1000} />
     </div>

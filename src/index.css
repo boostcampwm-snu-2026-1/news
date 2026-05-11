@@ -1,9 +1,37 @@
-@import './styles/tokens.css';
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #14212B;
+  --color-sub: #5F6E76;
+  --color-mute: #879298;
+  --color-line: #D2DAE0;
+  --color-soft: #F5F7F9;
+  --color-card: #FFFFFF;
+  --color-page: #FEFEFE;
+  --color-accent: #7890E7;
+  --color-accent-deep: #4362D0;
+  --color-badge-ink: rgba(255, 255, 255, 0.7);
+
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+
+  --font-primary: "Pretendard Variable", Pretendard, "Noto Sans KR", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-serif: "Noto Serif KR", serif;
+
+  --width-layout: 1280px;
+  --width-content: 930px;
+}
 
 /* CSS Reset & Global Styles */
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -43,6 +71,33 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: var(--layout-width); /* 1280px */
+  width: var(--width-layout);
   min-height: 100vh;
+}
+/* ================================
+   반응형 스케일링 (1280px 고정 너비)
+   뷰포트가 1280px보다 좁아지면 전체 레이아웃을 비율에 맞게 축소합니다.
+   단순히 잘리거나 가로 스크롤이 생기는 대신, 화면에 꽉 차게 줄어듭니다.
+   ================================ */
+@media (max-width: 1280px) {
+  #root {
+    transform-origin: top center;
+    transform: scale(calc(100vw / 1280));
+    width: 1280px;
+    min-height: calc(100vh * (1280 / 100vw));
+  }
+}
+
+/* ================================
+   prefers-reduced-motion
+   사용자가 시스템 "애니메이션 줄이기" 설정을 켰을 때,
+   CSS transition/animation을 모두 제거합니다.
+   (useProgress 훅에서도 JS 레벨로 처리하므로 이중 방어입니다)
+   ================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
