@@ -1,7 +1,7 @@
 import GridCell from './GridCell'
 import { PRESS_PAGE_SIZE } from '../data/pressData'
 
-export default function PressGrid({ items, subscribed, mode, isEmpty, onSubscribe }) {
+export default function PressGrid({ items, subscribed, mode, isEmpty, onSubscribe, onOpen }) {
   const slots = Array.from({ length: PRESS_PAGE_SIZE }, (_, index) => items[index] ?? null)
   const gridLabel = mode === 'sub' ? '내가 구독한 언론사 목록' : '전체 언론사 목록'
 
@@ -19,6 +19,7 @@ export default function PressGrid({ items, subscribed, mode, isEmpty, onSubscrib
           isSubscribed={press ? subscribed.has(press.id) : false}
           mode={mode}
           onSubscribe={onSubscribe}
+          onOpen={onOpen}
         />
       ))}
     </section>

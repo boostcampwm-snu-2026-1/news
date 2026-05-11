@@ -9,7 +9,8 @@ export default function SubscribePill({ isSubscribed, mode, pressName, onClick }
       ? `${pressName} 이미 구독 중, 구독 상태 유지`
       : `${pressName} 구독하기`
 
-  const handleClick = () => {
+  const handleClick = (event) => {
+    event.stopPropagation()
     onClick(action)
   }
 
@@ -18,7 +19,7 @@ export default function SubscribePill({ isSubscribed, mode, pressName, onClick }
       className={`subscribe-pill subscribe-pill--${action}`}
       type="button"
       aria-label={ariaLabel}
-      aria-pressed={isSubscribed}
+      aria-pressed={isUnsubscribeAction ? undefined : isSubscribed}
       data-action={action}
       onClick={handleClick}
     >
