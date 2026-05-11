@@ -11,6 +11,8 @@ interface PressGridProps {
   onPagePrev: () => void
   onPageNext: () => void
   onOpen: (id: string) => void
+  onSubscribe: (id: string) => void
+  onUnsubscribe: (id: string) => void
 }
 
 export function PressGrid({
@@ -21,6 +23,8 @@ export function PressGrid({
   onPagePrev,
   onPageNext,
   onOpen,
+  onSubscribe,
+  onUnsubscribe,
 }: PressGridProps) {
   return (
     <div className={styles.wrapper}>
@@ -32,6 +36,8 @@ export function PressGrid({
             press={press}
             isSubscribed={subscribedIds.has(press.id)}
             onOpen={onOpen}
+            onSubscribe={onSubscribe}
+            onUnsubscribe={onUnsubscribe}
           />
         ))}
       </div>

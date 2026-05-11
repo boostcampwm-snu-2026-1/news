@@ -6,6 +6,12 @@
   background: var(--card);
   cursor: pointer;
   transition: background 0.12s;
+  user-select: none;
+}
+
+.cell:hover,
+.cell:focus-within {
+  background: var(--soft);
 }
 
 .cell:focus-visible {
@@ -14,6 +20,55 @@
   z-index: 1;
 }
 
+/* 워드마크: hover/focus-within 시 사라짐 */
+.wordmark {
+  opacity: 1;
+  transition: opacity 0.15s;
+  pointer-events: none;
+}
+
+.cell:hover .wordmark,
+.cell:focus-within .wordmark {
+  opacity: 0;
+}
+
+/* 구독/해지 필 버튼 */
+.pill {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1.5px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cell:hover .pill,
+.cell:focus-within .pill {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pill:hover {
+  background: var(--accent);
+  color: var(--card);
+}
+
+.pill:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 2px;
+}
+
+/* 구독 배지 */
 .subscribedBadge {
   position: absolute;
   top: var(--sp-2);

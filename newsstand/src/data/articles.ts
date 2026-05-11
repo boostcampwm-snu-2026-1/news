@@ -82,7 +82,16 @@ export const PRESS_CONTENTS: Record<string, PressContent> = Object.fromEntries(
   ['chosun', 'joongang', 'donga', 'hani', 'khan', 'mk', 'hankyung',
     'moneytoday', 'edaily', 'sedaily', 'yonhap', 'ytn', 'mbc', 'kbs',
     'sbs', 'jtbc', 'tvchosun', 'channela', 'mbn', 'newsis', 'news1',
-    'ohmynews', 'sisain', 'hankookilbo'].map((pressId) => [
+    'ohmynews', 'sisain', 'hankookilbo',
+    'kukmin', 'segye', 'munhwa', 'seoul', 'asiae', 'asiatoday', 'heraldcorp',
+    'fnews', 'etoday', 'bizwatch', 'etnews', 'dt', 'zdnet', 'bloter', 'techm',
+    'nocutnews', 'yonhaptv', 'tbs', 'koreaherald', 'koreatimes', 'joongangeng',
+    'sisajournal', 'weekly', 'economist',
+    'forbes', 'busan', 'daegu', 'gwangju', 'jeonbuk', 'gangwon', 'jeju',
+    'gyeongin', 'incheon', 'chungcheong', 'chungtoday', 'gyeongnam', 'yeongnam',
+    'newstapa', 'pressian', 'minjoong', 'ntn', 'greenpost', 'topstarnews',
+    'sportschosun', 'sportsdonga', 'osen', 'tenasia', 'dispatch',
+  ].map((pressId) => [
     pressId,
     {
       pressId,
