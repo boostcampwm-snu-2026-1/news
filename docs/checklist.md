@@ -13,13 +13,13 @@
 - [x] Wire the primary typography, spacing, and border treatments so the page matches the dense, calm visual style.
 
 ## Week 2
-- [ ] Add hover behavior on grid cells to reveal the subscribe/unsubscribe pill.
-- [ ] Implement the subscribed-state grid for `내가 구독한 언론사`, including sparse cells and empty white slots.
-- [ ] Add tab progress overlays for the opened-press view with the 6-second linear fill animation.
-- [ ] Implement automatic tab/category advancement when the progress bar completes.
-- [ ] Add ticker rotation timing, crossfade behavior, and pause-on-hover/focus logic.
-- [ ] Connect page-level navigation and state changes between grid view and list view.
-- [ ] Make the header date dynamic so it reflects the current day.
-- [ ] Ensure press wordmarks support long names, two-line wrapping, and special flags or accent variants.
-- [ ] Add reduced-motion handling so animations are disabled or simplified when requested by the OS.
-- [ ] Verify accessible roles and labels for tabs, tablist, buttons, and interactive grid controls.
+- [x] Add hover behavior on grid cells to reveal the subscribe/unsubscribe pill.
+- [x] Implement the subscribed-state grid for `내가 구독한 언론사`, including sparse cells and empty white slots.
+- [x] Add tab progress overlays for the opened-press view with the 6-second linear fill animation.
+- [x] Implement automatic tab/category advancement when the progress bar completes.
+- [x] Add ticker rotation timing, crossfade behavior, and pause-on-hover/focus logic.
+- [x] Connect page-level navigation and state changes between grid view and list view.
+- [x] Make the header date dynamic so it reflects the current day.
+- [x] Ensure press wordmarks support long names, two-line wrapping, and special flags or accent variants.
+- [x] Add reduced-motion handling so animations are disabled or simplified when requested by the OS.
+- [x] Verify accessible roles and labels for tabs, tablist, buttons, and interactive grid controls.

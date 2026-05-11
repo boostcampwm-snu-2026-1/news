@@ -5,6 +5,8 @@ type Props = {
   weight?: 400 | 500 | 700 | 800
   tracking?: 'tight' | 'normal' | 'wide'
   size?: 'xs' | 'sm' | 'md' | 'lg'
+  flag?: string
+  accent?: 'default' | 'accent' | 'muted'
 }
 
 export default function PressWordmark({
@@ -14,6 +16,8 @@ export default function PressWordmark({
   weight = 700,
   tracking = 'normal',
   size = 'md',
+  flag,
+  accent = 'default',
 }: Props) {
 
   return (
@@ -23,9 +27,12 @@ export default function PressWordmark({
       data-italic={italic ? 'true' : 'false'}
       data-tracking={tracking}
       data-size={size}
-      style={{ fontWeight: weight }}
+      data-accent={accent}
     >
-      {title}
+      <span className="press-wordmark-main" style={{ fontWeight: weight }}>
+        {title}
+      </span>
+      {flag && <span className="press-wordmark-flag">{flag}</span>}
     </span>
   )
 }

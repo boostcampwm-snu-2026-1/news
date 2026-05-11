@@ -57,27 +57,13 @@
 }
 
 .ticker {
+  --ticker-duration: 18s;
   position: relative;
   height: 49px;
   margin-top: 14px;
   border-block: 1px solid var(--line);
   background: var(--soft);
   overflow: hidden;
-}
-
-.ticker-lane {
-  position: absolute;
-  inset: 0;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  padding: 0 24px;
-  white-space: nowrap;
-}
-
-.ticker-lane-secondary {
-  opacity: 0;
 }
 
 /* Ticker auto-roll (single track using duplicated content) */
@@ -94,7 +80,6 @@
   padding: 0 24px;
   white-space: nowrap;
   will-change: transform, opacity;
-  --ticker-duration: 18s;
   animation: ticker-scroll var(--ticker-duration) linear infinite;
 }
 
@@ -104,16 +89,29 @@
 }
 
 /* Crossfade layers */
-.ticker-layer.primary { z-index: 2; }
-.ticker-layer.secondary { z-index: 1; }
+.ticker-layer.primary {
+  z-index: 2;
+  opacity: 1;
+}
+
+.ticker-layer.secondary {
+  z-index: 1;
+  opacity: 0;
+}
 
 @keyframes ticker-fade {
   0%, 45% { opacity: 1; }
   55%, 100% { opacity: 0; }
 }
 
-.ticker-layer.primary { animation: ticker-fade var(--ticker-duration) linear infinite; }
-.ticker-layer.secondary { animation: ticker-fade var(--ticker-duration) linear infinite; animation-delay: calc(var(--ticker-duration) / 2); }
+.ticker-layer.primary {
+  animation: ticker-fade var(--ticker-duration) linear infinite;
+}
+
+.ticker-layer.secondary {
+  animation: ticker-fade var(--ticker-duration) linear infinite;
+  animation-delay: calc(var(--ticker-duration) / 2);
+}
 
 .ticker:hover .ticker-track,
 .ticker:focus-within .ticker-track,
@@ -162,6 +160,32 @@
   font-weight: 700;
 }
 
+.grid-head-left {
+  display: grid;
+  gap: 8px;
+}
+
+.grid-view-tabs {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.grid-view-tab {
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  background: var(--soft-alt);
+  color: var(--sub);
+  font-size: 12px;
+  line-height: 1;
+}
+
+.grid-view-tab.is-active {
+  background: #fff;
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
 .eyebrow {
   margin: 0 0 4px;
   color: var(--sub);
@@ -182,6 +206,11 @@
   color: var(--mute);
   font-size: 18px;
   line-height: 1;
+}
+
+.chevron:disabled {
+  opacity: 0.35;
+  cursor: default;
 }
 
 .press-grid {
@@ -205,6 +234,47 @@
   position: relative;
 }
 
+.press-cell.is-selected {
+  box-shadow: inset 0 0 0 1px var(--accent-deep);
+  background: rgba(120, 144, 231, 0.07);
+}
+
+.press-cell.is-empty {
+  background: #fff;
+}
+
+.press-grid-empty {
+  grid-column: 1 / -1;
+  min-height: 120px;
+  display: grid;
+  place-items: center;
+  color: var(--mute);
+  font-size: 13px;
+  background: #fff;
+}
+
+.subscribe-pill {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 6px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--accent);
+  font-size: 12px;
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.press-cell:hover .subscribe-pill,
+.press-cell:focus-within .subscribe-pill {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .press-category {
   font-size: 11px;
   line-height: 1;
@@ -221,10 +291,20 @@
 }
 
 .press-wordmark {
-  display: block;
+  display: grid;
+  gap: 4px;
   line-height: 1.15;
+  min-height: 34px;
+}
+
+.press-wordmark-main {
   word-break: keep-all;
   white-space: normal;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .press-wordmark[data-family='sans'] {
@@ -276,6 +356,26 @@
   line-height: 1.1;
 }
 
+.press-wordmark[data-accent='accent'] .press-wordmark-main {
+  color: var(--accent-deep);
+}
+
+.press-wordmark[data-accent='muted'] .press-wordmark-main {
+  color: var(--sub);
+}
+
+.press-wordmark-flag {
+  justify-self: start;
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 10px;
+  line-height: 1;
+  color: var(--mute);
+  background: #fff;
+  letter-spacing: 0.01em;
+}
+
 .press-meta {
   font-family: var(--mono);
   font-size: 12px;
@@ -292,6 +392,8 @@
 }
 
 .tab {
+  position: relative;
+  overflow: hidden;
   min-height: 40px;
   padding: 0 14px;
   border: 1px solid var(--line);
@@ -306,6 +408,26 @@
   color: var(--ink);
   border-color: var(--accent);
   box-shadow: inset 0 -2px 0 var(--accent-deep);
+}
+
+.tab-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-deep);
+  transform-origin: left center;
+  animation: tab-progress-fill 6s linear forwards;
+}
+
+@keyframes tab-progress-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
 
 .list-layout {

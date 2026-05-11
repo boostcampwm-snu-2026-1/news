@@ -1,7 +1,7 @@
 export default function Ticker({ items }: { items: string[] }) {
   const doubled = [...items, ...items]
   return (
-    <section className="ticker" aria-label="알림 배너">
+    <section className="ticker" aria-label="알림 배너" tabIndex={0}>
       <div className="ticker-layer primary" aria-hidden="false">
         <div className="ticker-track">
           {doubled.map((item, idx) => (

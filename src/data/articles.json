@@ -1,32 +1,75 @@
-[
-  {
-    "title": "가짜 기사 제목 1: 뉴스스탠드 상단 구조와 카드 배치를 먼저 고정한다",
-    "summary": "lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus blandit, orci sed pulvinar tincidunt, sem mauris vulputate nunc, sed luctus arcu eros in justo.",
-    "time": "2분 전"
+{
+  "main": {
+    "featuredKicker": "오늘의 대표 기사",
+    "featuredSummary": "선택한 언론사의 주요 기사 흐름을 요약해 보여줍니다. 중요한 이슈를 먼저 확인할 수 있도록 구성합니다.",
+    "items": [
+      {
+        "title": "주요 기사 1: 뉴스스탠드 상단 구조와 카드 배치를 먼저 고정한다",
+        "summary": "밀도 있는 레이아웃과 안정적인 계층을 기반으로 첫 화면 정보를 빠르게 파악할 수 있게 구성합니다.",
+        "time": "2분 전"
+      },
+      {
+        "title": "주요 기사 2: 언론사 그리드는 6열 기준으로 시선 흐름을 맞춘다",
+        "summary": "그리드 간격과 경계선을 통일해 다수 매체가 표시되어도 시각적 피로를 줄이는 방향으로 조정합니다.",
+        "time": "11분 전"
+      },
+      {
+        "title": "주요 기사 3: 목록 영역은 대표 기사와 보조 기사로 분리한다",
+        "summary": "대표 카드와 우측 리스트를 분리해 중요 정보와 탐색 정보가 충돌하지 않도록 합니다.",
+        "time": "24분 전"
+      },
+      {
+        "title": "주요 기사 4: 탭 전환 애니메이션은 과하지 않게 선형 진행으로 유지한다",
+        "summary": "진행 상태는 명확하게 보이되 읽기 흐름을 방해하지 않도록 단순한 속도와 형태를 사용합니다.",
+        "time": "37분 전"
+      }
+    ]
   },
-  {
-    "title": "가짜 기사 제목 2: 언론사 그리드는 6열 기준으로 밀도 있게 채운다",
-    "summary": "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-    "time": "11분 전"
+  "latest": {
+    "featuredKicker": "방금 올라온 기사",
+    "featuredSummary": "최근 업데이트 순으로 정렬된 기사 묶음입니다. 발행 시점 중심으로 빠르게 훑어볼 수 있습니다.",
+    "items": [
+      {
+        "title": "최신 기사 1: 새벽 업데이트 - 주요 지표 변동",
+        "summary": "장 마감 이후 공개된 자료를 바탕으로 오늘 오전 이슈를 선별해 요약했습니다.",
+        "time": "방금"
+      },
+      {
+        "title": "최신 기사 2: 현장 브리핑 - 지역 현안 대응",
+        "summary": "현장 발언과 발표 문서를 묶어 맥락 중심으로 빠르게 확인할 수 있도록 정리했습니다.",
+        "time": "3분 전"
+      },
+      {
+        "title": "최신 기사 3: 기술 섹션 - 신규 서비스 출시",
+        "summary": "제품 업데이트 내용과 사용자 영향 포인트를 중심으로 핵심만 발췌했습니다.",
+        "time": "8분 전"
+      },
+      {
+        "title": "최신 기사 4: 스포츠 속보 - 경기 결과 정리",
+        "summary": "주요 경기 결과와 다음 일정 정보를 함께 제공해 연속 탐색이 가능하도록 구성했습니다.",
+        "time": "14분 전"
+      }
+    ]
   },
-  {
-    "title": "가짜 기사 제목 3: 목록 영역은 대표 기사와 보조 기사로 명확히 분리한다",
-    "summary": "curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit.",
-    "time": "24분 전"
-  },
-  {
-    "title": "가짜 기사 제목 4: 진행 상태와 탭 선택은 이후 단계에서 애니메이션을 붙인다",
-    "summary": "integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit.",
-    "time": "37분 전"
-  },
-  {
-    "title": "가짜 기사 제목 5: 구독한 언론사 전환 시에는 같은 정보 구조를 유지한다",
-    "summary": "morbi malesuada ullamcorper dui. Sed blandit aliquet dui, nec placerat sapien bibendum a. Vestibulum ante ipsum primis in faucibus.",
-    "time": "55분 전"
-  },
-  {
-    "title": "가짜 기사 제목 6: 긴 기사 문장도 두 줄 이상 자연스럽게 흘러가게 만든다",
-    "summary": "praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat.",
-    "time": "1시간 전"
+  "subs": {
+    "featuredKicker": "구독 현황 요약",
+    "featuredSummary": "현재 구독 중인 언론사 상태를 기준으로 읽지 않은 항목과 추천 흐름을 정리해 보여줍니다.",
+    "items": [
+      {
+        "title": "구독 현황: 오늘 읽지 않은 기사 12건",
+        "summary": "경제 4건, 방송 3건, IT 2건, 지역/종합 3건으로 분포되어 있습니다.",
+        "time": "업데이트 1분 전"
+      },
+      {
+        "title": "구독 현황: 가장 많이 본 언론사 TOP 3",
+        "summary": "1) 매일경제 2) JTBC 3) 전자신문 순으로 최근 7일 조회 비중이 높습니다.",
+        "time": "오늘"
+      },
+      {
+        "title": "구독 현황: 추천 구독 2개",
+        "summary": "현재 읽는 카테고리를 기준으로 시사위크, 아시아경제를 추천합니다.",
+        "time": "추천"
+      }
+    ]
   }
-]
+}

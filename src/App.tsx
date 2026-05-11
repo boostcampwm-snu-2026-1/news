@@ -1,10 +1,17 @@
 import './App.css'
+import { useRef, useState } from 'react'
 import Header from './components/Header'
 import Ticker from './components/Ticker'
 import PressGrid from './components/PressGrid'
 import ArticleList from './components/ArticleList'
 import presses from './data/presses.json'
 import articles from './data/articles.json'
+
+type Press = {
+  id: string
+  title: string
+  category: string
+}
 
 const todayLabel = new Intl.DateTimeFormat('ko-KR', {
   year: 'numeric',
@@ -20,7 +27,14 @@ const tickerItems = [
 ]
 
 function App() {
-  const featured = (presses as any)[0]
+  const pressList = presses as Press[]
+  const [openedPress, setOpenedPress] = useState<Press>(pressList[0])
+  const listSectionRef = useRef<HTMLElement | null>(null)
+
+  function handleSelectPress(press: Press) {
+    setOpenedPress(press)
+    listSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   return (
     <div className="newsstand-app">
@@ -28,8 +42,16 @@ function App() {
       <Ticker items={tickerItems} />
 
       <main className="newsstand-main">
-        <PressGrid presses={presses as any} />
-        <ArticleList featured={featured as any} articles={articles as any} />
+        <PressGrid
+          presses={pressList}
+          selectedPressId={openedPress.id}
+          onSelectPress={handleSelectPress}
+        />
+        <ArticleList
+          featured={openedPress}
+          articlesByTab={articles as any}
+          sectionRef={listSectionRef}
+        />
       </main>
     </div>
   )
