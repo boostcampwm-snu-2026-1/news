@@ -84,8 +84,10 @@
 
 .list {
   flex: 1;
+  max-height: 260px;
   margin: 0;
   padding: 0;
+  overflow-y: auto;
   list-style: none;
 }
 
@@ -97,6 +99,10 @@
   line-height: 1.5;
 }
 
+.list li + li {
+  margin-top: 14px;
+}
+
 .list li::before {
   position: absolute;
   top: 0.8em;
@@ -105,4 +111,10 @@
   height: 3px;
   background: var(--color-ink);
   content: "";
+}
+
+.list h3 {
+  margin: 0 0 6px;
+  font-size: var(--text-list-size);
+  line-height: 1.45;
 }
