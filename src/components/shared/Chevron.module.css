@@ -1,0 +1,27 @@
+.chevron {
+  position: absolute;
+  top: 430px;
+  width: 24px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-mute);
+  cursor: pointer;
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 36px;
+}
+
+.left {
+  left: 103px;
+}
+
+.right {
+  right: 103px;
+}
+
+.chevron:disabled {
+  opacity: 0;
+  cursor: default;
+}
