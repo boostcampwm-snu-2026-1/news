@@ -1,4 +1,4 @@
-import { categoryLabels } from "../../data/categories";
+import { categoryKeys, categoryLabels } from "../../data/categories";
 import type { Article, CategoryKey, Press } from "../../types/newsstand";
 import { PressWordmark } from "../PressWordmark/PressWordmark";
 import styles from "./PressOpen.module.css";
@@ -19,7 +19,7 @@ export function PressOpen({ activeCategoryKey, articles, isSubscribed, press, on
   return (
     <article className={styles.open}>
       <div className={styles.fieldTabs}>
-        {press.categoryKeys.map((categoryKey) => (
+        {categoryKeys.map((categoryKey) => (
           <button aria-selected={categoryKey === activeCategoryKey} key={categoryKey} role="tab" type="button">
             {categoryLabels[categoryKey]}
           </button>
