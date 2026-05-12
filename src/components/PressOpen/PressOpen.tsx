@@ -1,11 +1,11 @@
+import { useEffect, useMemo, useState } from "react";
+import { articlesByCategory } from "../../data/articles";
 import { categoryKeys, categoryLabels } from "../../data/categories";
-import type { Article, CategoryKey, Press } from "../../types/newsstand";
+import type { CategoryKey, Press } from "../../types/newsstand";
 import { PressWordmark } from "../PressWordmark/PressWordmark";
 import styles from "./PressOpen.module.css";
 
 type PressOpenProps = {
-  activeCategoryKey: CategoryKey;
-  articles: Article[];
   isSubscribed: boolean;
   press: Press;
   onBack: () => void;
@@ -13,14 +13,29 @@ type PressOpenProps = {
   onUnsubscribe: () => void;
 };
 
-export function PressOpen({ activeCategoryKey, articles, isSubscribed, press, onBack, onSubscribe, onUnsubscribe }: PressOpenProps) {
+export function PressOpen({ isSubscribed, press, onBack, onSubscribe, onUnsubscribe }: PressOpenProps) {
+  const [activeCategoryKey, setActiveCategoryKey] = useState<CategoryKey>(press.primaryCategoryKey);
+  const articles = useMemo(
+    () => articlesByCategory[activeCategoryKey].filter((article) => article.pressId === press.id),
+    [activeCategoryKey, press.id],
+  );
   const primaryArticle = articles[0];
+
+  useEffect(() => {
+    setActiveCategoryKey(press.primaryCategoryKey);
+  }, [press.id, press.primaryCategoryKey]);
 
   return (
     <article className={styles.open}>
       <div className={styles.fieldTabs}>
         {categoryKeys.map((categoryKey) => (
-          <button aria-selected={categoryKey === activeCategoryKey} key={categoryKey} role="tab" type="button">
+          <button
+            aria-selected={categoryKey === activeCategoryKey}
+            key={categoryKey}
+            role="tab"
+            type="button"
+            onClick={() => setActiveCategoryKey(categoryKey)}
+          >
             {categoryLabels[categoryKey]}
           </button>
         ))}
