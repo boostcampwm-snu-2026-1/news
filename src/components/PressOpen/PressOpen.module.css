@@ -37,6 +37,10 @@
   background: var(--color-card);
 }
 
+.articleContent {
+  animation: articleFade 6s linear;
+}
+
 .head {
   display: flex;
   align-items: center;
@@ -117,4 +121,32 @@
   margin: 0 0 6px;
   font-size: var(--text-list-size);
   line-height: 1.45;
+}
+
+@keyframes articleFade {
+  0% {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+
+  12% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  88% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .articleContent {
+    animation: none;
+  }
 }

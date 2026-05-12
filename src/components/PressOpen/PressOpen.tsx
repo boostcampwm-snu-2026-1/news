@@ -137,31 +137,33 @@ export function PressOpen({ press, subscribedIds, onBack, onSubscribe, onUnsubsc
           ))}
         </div>
         <div className={styles.body}>
-          <header className={styles.head}>
-            <PressWordmark wordmark={displayPress.wordmark} />
-            <span>{currentArticle?.editedAt ?? "준비 중"}</span>
-            <button
-              type="button"
-              onClick={() => (isDisplayPressSubscribed ? onUnsubscribe(displayPress.id) : onSubscribe(displayPress.id))}
-            >
-              {isDisplayPressSubscribed ? "− 해지하기" : "+ 구독하기"}
-            </button>
-            <button type="button" onClick={onBack}>
-              돌아가기
-            </button>
-          </header>
-          <div className={styles.columns}>
-            <section className={styles.lead}>
-              <div className={styles.imageBox} aria-hidden="true" />
-              <h2>{currentArticle?.title ?? "등록된 기사가 없습니다."}</h2>
-            </section>
-            <ul className={styles.list}>
-              {currentArticle ? (
-                currentArticle.content.map((paragraph) => <li key={paragraph}>{paragraph}</li>)
-              ) : (
-                <li>표시할 기사 내용이 없습니다.</li>
-              )}
-            </ul>
+          <div className={styles.articleContent} key={currentArticle?.id ?? "empty"}>
+            <header className={styles.head}>
+              <PressWordmark wordmark={displayPress.wordmark} />
+              <span>{currentArticle?.editedAt ?? "준비 중"}</span>
+              <button
+                type="button"
+                onClick={() => (isDisplayPressSubscribed ? onUnsubscribe(displayPress.id) : onSubscribe(displayPress.id))}
+              >
+                {isDisplayPressSubscribed ? "− 해지하기" : "+ 구독하기"}
+              </button>
+              <button type="button" onClick={onBack}>
+                돌아가기
+              </button>
+            </header>
+            <div className={styles.columns}>
+              <section className={styles.lead}>
+                <div className={styles.imageBox} aria-hidden="true" />
+                <h2>{currentArticle?.title ?? "등록된 기사가 없습니다."}</h2>
+              </section>
+              <ul className={styles.list}>
+                {currentArticle ? (
+                  currentArticle.content.map((paragraph) => <li key={paragraph}>{paragraph}</li>)
+                ) : (
+                  <li>표시할 기사 내용이 없습니다.</li>
+                )}
+              </ul>
+            </div>
           </div>
         </div>
       </article>
