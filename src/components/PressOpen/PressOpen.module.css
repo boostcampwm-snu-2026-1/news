@@ -1,0 +1,108 @@
+.open {
+  width: 930px;
+}
+
+.fieldTabs {
+  display: flex;
+  height: 40px;
+  border: 1px solid var(--color-line);
+  background: var(--color-soft);
+}
+
+.fieldTabs button {
+  flex: 1;
+  border: 0;
+  border-right: 1px solid var(--color-line);
+  background: transparent;
+  color: var(--color-sub);
+  cursor: pointer;
+  font-size: var(--text-list-size);
+}
+
+.fieldTabs button:last-child {
+  border-right: 0;
+}
+
+.fieldTabs button[aria-selected="true"] {
+  background: var(--color-accent);
+  color: var(--color-card);
+  font-weight: 700;
+}
+
+.body {
+  height: 348px;
+  padding: 24px 32px;
+  border: 1px solid var(--color-line);
+  border-top: 0;
+  background: var(--color-card);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.head span {
+  color: var(--color-sub);
+  font-size: var(--text-caption-size);
+}
+
+.head button {
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  background: var(--color-card);
+  color: var(--color-sub);
+  cursor: pointer;
+  font-size: var(--text-caption-size);
+}
+
+.columns {
+  display: flex;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.lead {
+  width: 340px;
+}
+
+.imageBox {
+  width: 340px;
+  height: 188px;
+  border: 1px solid var(--color-line);
+  background: var(--color-soft);
+}
+
+.lead h2 {
+  margin: 12px 0 0;
+  font-size: var(--text-heading-size);
+  line-height: 1.45;
+}
+
+.list {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list li {
+  position: relative;
+  padding-left: 12px;
+  color: var(--color-ink);
+  font-size: var(--text-list-size);
+  line-height: 1.5;
+}
+
+.list li::before {
+  position: absolute;
+  top: 0.8em;
+  left: 0;
+  width: 3px;
+  height: 3px;
+  background: var(--color-ink);
+  content: "";
+}
