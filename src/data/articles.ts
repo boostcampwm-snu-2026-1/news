@@ -1,4 +1,5 @@
-import type { Article, TickerItem } from "../types/newsstand";
+import { categoryKeys } from "./categories";
+import type { Article, ArticlesByCategory, TickerItem } from "../types/newsstand";
 
 export const articles: Article[] = [
   { id: "yonhap-politics-1", pressId: "yonhap", name: "연합뉴스", categoryKey: "politics", title: "국회, 민생 법안 처리 일정 조율", editedAt: "2026.05.03. 18:10" },
@@ -8,6 +9,15 @@ export const articles: Article[] = [
   { id: "hani-society-1", pressId: "hani", name: "한겨레", categoryKey: "society", title: "지역 공공의료 확충 논의 다시 속도", editedAt: "2026.05.03. 14:55" },
   { id: "sbs-culture-1", pressId: "sbs", name: "SBS뉴스", categoryKey: "culture", title: "주말 공연가, 가족 관객 중심으로 활기", editedAt: "2026.05.03. 13:40" },
 ];
+
+export const articlesByCategory: ArticlesByCategory = categoryKeys.reduce((cache, categoryKey) => {
+  cache[categoryKey] = [];
+  return cache;
+}, {} as ArticlesByCategory);
+
+articles.forEach((article) => {
+  articlesByCategory[article.categoryKey].push(article);
+});
 
 export const tickerItems: TickerItem[] = articles.map((article) => ({
   pressName: article.name,

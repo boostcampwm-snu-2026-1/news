@@ -44,6 +44,8 @@ export type Article = {
   editedAt: string;
 };
 
+export type ArticlesByCategory = Record<CategoryKey, Article[]>;
+
 export type NewsstandState = {
   tab: NewsstandTab;
   viewer: ViewerMode;

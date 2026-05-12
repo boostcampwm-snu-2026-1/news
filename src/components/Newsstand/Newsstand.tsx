@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useReducer } from "react";
-import { articles, tickerItems } from "../../data/articles";
+import { articlesByCategory, tickerItems } from "../../data/articles";
 import { PAGE_SIZE, presses } from "../../data/presses";
 import type { NewsstandState, NewsstandTab, ViewerMode } from "../../types/newsstand";
 import { getLastPage, getPageItems } from "../../utils/pagination";
@@ -124,6 +124,13 @@ export function Newsstand() {
   const currentPage = Math.min(state.page, lastPage);
   const pageItems = getPageItems(visiblePresses, currentPage, PAGE_SIZE);
   const openedPress = presses.find((press) => press.id === state.opened) ?? null;
+  const openedArticles = useMemo(() => {
+    if (!openedPress) {
+      return [];
+    }
+
+    return articlesByCategory[state.tabKey].filter((article) => article.pressId === openedPress.id);
+  }, [openedPress, state.tabKey]);
 
   useEffect(() => {
     window.localStorage.setItem(SUBSCRIBED_STORAGE_KEY, JSON.stringify(Array.from(state.subscribed)));
@@ -150,7 +157,7 @@ export function Newsstand() {
         {openedPress ? (
           <PressOpen
             activeCategoryKey={state.tabKey}
-            articles={articles.filter((article) => article.pressId === openedPress.id)}
+            articles={openedArticles}
             isSubscribed={state.subscribed.has(openedPress.id)}
             press={openedPress}
             onBack={() => dispatch({ type: "changeViewer", viewer: "grid" })}
