@@ -1,6 +1,6 @@
 .chevron {
   position: absolute;
-  top: 430px;
+  top: var(--chevron-top, 430px);
   width: 24px;
   height: 40px;
   padding: 0;
