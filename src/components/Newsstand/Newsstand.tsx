@@ -149,6 +149,7 @@ export function Newsstand() {
       <section className={styles.contentArea}>
         {openedPress ? (
           <PressOpen
+            activeCategoryKey={state.tabKey}
             articles={articles.filter((article) => article.pressId === openedPress.id)}
             isSubscribed={state.subscribed.has(openedPress.id)}
             press={openedPress}

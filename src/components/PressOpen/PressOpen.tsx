@@ -1,9 +1,10 @@
 import { categoryLabels } from "../../data/categories";
-import type { Article, Press } from "../../types/newsstand";
+import type { Article, CategoryKey, Press } from "../../types/newsstand";
 import { PressWordmark } from "../PressWordmark/PressWordmark";
 import styles from "./PressOpen.module.css";
 
 type PressOpenProps = {
+  activeCategoryKey: CategoryKey;
   articles: Article[];
   isSubscribed: boolean;
   press: Press;
@@ -12,14 +13,14 @@ type PressOpenProps = {
   onUnsubscribe: () => void;
 };
 
-export function PressOpen({ articles, isSubscribed, press, onBack, onSubscribe, onUnsubscribe }: PressOpenProps) {
+export function PressOpen({ activeCategoryKey, articles, isSubscribed, press, onBack, onSubscribe, onUnsubscribe }: PressOpenProps) {
   const primaryArticle = articles[0];
 
   return (
     <article className={styles.open}>
       <div className={styles.fieldTabs}>
-        {press.categoryKeys.map((categoryKey, index) => (
-          <button aria-selected={index === 0} key={categoryKey} role="tab" type="button">
+        {press.categoryKeys.map((categoryKey) => (
+          <button aria-selected={categoryKey === activeCategoryKey} key={categoryKey} role="tab" type="button">
             {categoryLabels[categoryKey]}
           </button>
         ))}
