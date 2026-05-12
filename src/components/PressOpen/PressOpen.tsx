@@ -2,10 +2,13 @@ import { useEffect, useMemo, useState } from "react";
 import { articlesByCategory } from "../../data/articles";
 import { categoryKeys, categoryLabels } from "../../data/categories";
 import { presses } from "../../data/presses";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 import type { CategoryKey, Press } from "../../types/newsstand";
 import { Chevron } from "../shared/Chevron";
 import { PressWordmark } from "../PressWordmark/PressWordmark";
 import styles from "./PressOpen.module.css";
+
+const ARTICLE_ROTATE_INTERVAL_MS = 6000;
 
 type PressOpenProps = {
   press: Press;
@@ -16,6 +19,7 @@ type PressOpenProps = {
 };
 
 export function PressOpen({ press, subscribedIds, onBack, onSubscribe, onUnsubscribe }: PressOpenProps) {
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [activeCategoryKey, setActiveCategoryKey] = useState<CategoryKey>(press.primaryCategoryKey);
   const [currentArticleIndex, setCurrentArticleIndex] = useState(0);
   const articles = useMemo(() => articlesByCategory[activeCategoryKey], [activeCategoryKey]);
@@ -85,6 +89,36 @@ export function PressOpen({ press, subscribedIds, onBack, onSubscribe, onUnsubsc
       setCurrentArticleIndex(0);
     }
   }
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      return;
+    }
+
+    const interval = window.setInterval(() => {
+      if (currentArticleIndex < articles.length - 1) {
+        setCurrentArticleIndex((index) => index + 1);
+        return;
+      }
+
+      if (nextCategoryKey) {
+        setActiveCategoryKey(nextCategoryKey);
+        setCurrentArticleIndex(0);
+        return;
+      }
+
+      const firstCategoryKey = categoryKeys.find((categoryKey) => articlesByCategory[categoryKey].length > 0);
+
+      if (firstCategoryKey) {
+        setActiveCategoryKey(firstCategoryKey);
+        setCurrentArticleIndex(0);
+      }
+    }, ARTICLE_ROTATE_INTERVAL_MS);
+
+    return () => {
+      window.clearInterval(interval);
+    };
+  }, [articles.length, currentArticleIndex, nextCategoryKey, prefersReducedMotion]);
 
   return (
     <>

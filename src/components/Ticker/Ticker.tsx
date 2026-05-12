@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 import type { TickerItem } from "../../types/newsstand";
 import styles from "./Ticker.module.css";
 
@@ -8,27 +9,6 @@ type TickerProps = {
 
 const ROTATE_INTERVAL_MS = 3200;
 const LANE_OFFSET_MS = 1600;
-
-function usePrefersReducedMotion() {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReducedMotion(mediaQuery.matches);
-
-    const handleChange = () => {
-      setPrefersReducedMotion(mediaQuery.matches);
-    };
-
-    mediaQuery.addEventListener("change", handleChange);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleChange);
-    };
-  }, []);
-
-  return prefersReducedMotion;
-}
 
 export function Ticker({ items }: TickerProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
