@@ -166,8 +166,12 @@ export function Newsstand() {
           />
         )}
       </section>
-      <Chevron dir="left" disabled={currentPage === 0} onClick={() => dispatch({ type: "setPage", page: Math.max(0, currentPage - 1) })} />
-      <Chevron dir="right" disabled={currentPage >= lastPage} onClick={() => dispatch({ type: "setPage", page: Math.min(lastPage, currentPage + 1) })} />
+      {!openedPress ? (
+        <>
+          <Chevron dir="left" disabled={currentPage === 0} onClick={() => dispatch({ type: "setPage", page: Math.max(0, currentPage - 1) })} />
+          <Chevron dir="right" disabled={currentPage >= lastPage} onClick={() => dispatch({ type: "setPage", page: Math.min(lastPage, currentPage + 1) })} />
+        </>
+      ) : null}
     </main>
   );
 }
