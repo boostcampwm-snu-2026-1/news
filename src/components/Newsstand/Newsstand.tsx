@@ -149,11 +149,11 @@ export function Newsstand() {
       <section className={styles.contentArea}>
         {openedPress ? (
           <PressOpen
-            isSubscribed={state.subscribed.has(openedPress.id)}
             press={openedPress}
+            subscribedIds={state.subscribed}
             onBack={() => dispatch({ type: "changeViewer", viewer: "grid" })}
-            onSubscribe={() => dispatch({ type: "subscribe", pressId: openedPress.id })}
-            onUnsubscribe={() => dispatch({ type: "unsubscribe", pressId: openedPress.id })}
+            onSubscribe={(pressId) => dispatch({ type: "subscribe", pressId })}
+            onUnsubscribe={(pressId) => dispatch({ type: "unsubscribe", pressId })}
           />
         ) : (
           <PressGrid

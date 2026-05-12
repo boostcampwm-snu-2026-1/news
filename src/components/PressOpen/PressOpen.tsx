@@ -1,25 +1,28 @@
 import { useEffect, useMemo, useState } from "react";
 import { articlesByCategory } from "../../data/articles";
 import { categoryKeys, categoryLabels } from "../../data/categories";
+import { presses } from "../../data/presses";
 import type { CategoryKey, Press } from "../../types/newsstand";
 import { PressWordmark } from "../PressWordmark/PressWordmark";
 import styles from "./PressOpen.module.css";
 
 type PressOpenProps = {
-  isSubscribed: boolean;
   press: Press;
+  subscribedIds: Set<string>;
   onBack: () => void;
-  onSubscribe: () => void;
-  onUnsubscribe: () => void;
+  onSubscribe: (pressId: string) => void;
+  onUnsubscribe: (pressId: string) => void;
 };
 
-export function PressOpen({ isSubscribed, press, onBack, onSubscribe, onUnsubscribe }: PressOpenProps) {
+export function PressOpen({ press, subscribedIds, onBack, onSubscribe, onUnsubscribe }: PressOpenProps) {
   const [activeCategoryKey, setActiveCategoryKey] = useState<CategoryKey>(press.primaryCategoryKey);
-  const articles = useMemo(
-    () => articlesByCategory[activeCategoryKey].filter((article) => article.pressId === press.id),
-    [activeCategoryKey, press.id],
-  );
+  const articles = useMemo(() => articlesByCategory[activeCategoryKey], [activeCategoryKey]);
   const primaryArticle = articles[0];
+  const displayPress = useMemo(
+    () => presses.find((item) => item.id === primaryArticle?.pressId) ?? press,
+    [press, primaryArticle?.pressId],
+  );
+  const isDisplayPressSubscribed = subscribedIds.has(displayPress.id);
 
   useEffect(() => {
     setActiveCategoryKey(press.primaryCategoryKey);
@@ -42,10 +45,13 @@ export function PressOpen({ isSubscribed, press, onBack, onSubscribe, onUnsubscr
       </div>
       <div className={styles.body}>
         <header className={styles.head}>
-          <PressWordmark wordmark={press.wordmark} />
+          <PressWordmark wordmark={displayPress.wordmark} />
           <span>{primaryArticle?.editedAt ?? "준비 중"}</span>
-          <button type="button" onClick={isSubscribed ? onUnsubscribe : onSubscribe}>
-            {isSubscribed ? "− 해지하기" : "+ 구독하기"}
+          <button
+            type="button"
+            onClick={() => (isDisplayPressSubscribed ? onUnsubscribe(displayPress.id) : onSubscribe(displayPress.id))}
+          >
+            {isDisplayPressSubscribed ? "− 해지하기" : "+ 구독하기"}
           </button>
           <button type="button" onClick={onBack}>
             돌아가기
