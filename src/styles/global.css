@@ -55,6 +55,25 @@ a {
   position: relative;
 }
 
+.view-container {
+  position: relative;
+}
+
+.view-panel {
+  animation: view-fade-in 0.25s ease-out;
+}
+
+@keyframes view-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .view-panel {
+    animation: none;
+  }
+}
+
 @media (max-width: 1280px) {
   .newsstand-wrap {
     transform-origin: top center;

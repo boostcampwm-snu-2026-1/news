@@ -10,7 +10,12 @@ function SubscribePill({ subscribed, onClick }: SubscribePillProps) {
   const icon = subscribed ? '−' : '+';
 
   return (
-    <button className="pill" onClick={onClick} aria-label={label}>
+    <button
+      className="pill"
+      onClick={onClick}
+      onMouseDown={(e) => e.preventDefault()}
+      aria-label={label}
+    >
       <span className="pill__icon" aria-hidden="true">{icon}</span>
       <span className="pill__text">{label}</span>
     </button>

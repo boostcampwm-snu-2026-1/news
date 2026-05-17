@@ -17,11 +17,12 @@ function TickerLane({
   const [animating, setAnimating] = useState(false);
   const pausedRef = useRef(false);
   const laneRef = useRef<HTMLDivElement>(null);
+  const fadeTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const advance = useCallback(() => {
     if (pausedRef.current) return;
     setAnimating(true);
-    setTimeout(() => {
+    fadeTimerRef.current = setTimeout(() => {
       setCurrent((prev) => (prev + 1) % items.length);
       setAnimating(false);
     }, 550);
@@ -36,7 +37,10 @@ function TickerLane({
 
   useEffect(() => {
     const interval = setInterval(advance, 3200);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
+    };
   }, [advance]);
 
   const handlePause = () => {
