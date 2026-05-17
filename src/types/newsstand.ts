@@ -42,7 +42,10 @@ export type Article = {
   categoryKey: CategoryKey;
   title: string;
   editedAt: string;
+  content: string[];
 };
+
+export type ArticlesByCategory = Record<CategoryKey, Article[]>;
 
 export type NewsstandState = {
   tab: NewsstandTab;

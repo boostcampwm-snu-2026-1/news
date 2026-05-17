@@ -1,5 +1,7 @@
 import type { CategoryKey } from "../types/newsstand";
 
+export const categoryKeys: CategoryKey[] = ["politics", "economy", "society", "culture", "world", "tech", "sports"];
+
 export const categoryLabels: Record<CategoryKey, string> = {
   politics: "정치",
   economy: "경제",
