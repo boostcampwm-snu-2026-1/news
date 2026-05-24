@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 29px;
+}
+
+.header__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.header__wordmark {
+  font: var(--text-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--color-ink);
+}
+
+.header__date {
+  font: var(--text-body);
+  letter-spacing: var(--tracking-ko);
+  color: var(--color-sub);
+}

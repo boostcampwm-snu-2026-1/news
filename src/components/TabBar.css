@@ -1,0 +1,67 @@
+.tabbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 24px;
+  margin-top: 32px;
+}
+
+.tabbar__tabs {
+  display: flex;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.tabbar__tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: var(--text-body);
+  color: var(--color-mute);
+  letter-spacing: var(--tracking-ko);
+}
+
+.tabbar__tab--active {
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.tabbar__badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-badge);
+  background: var(--color-accent);
+  color: var(--color-badge-ink);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.tabbar__views {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.tabbar__view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--color-mute);
+  width: 24px;
+  height: 24px;
+}
+
+.tabbar__view-btn--active {
+  color: var(--color-ink);
+}
