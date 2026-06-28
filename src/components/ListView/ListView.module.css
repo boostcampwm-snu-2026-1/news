@@ -1,0 +1,137 @@
+.list {
+  width: 930px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  min-height: 388px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 52px;
+  border-bottom: 1px solid var(--line);
+  gap: 12px;
+}
+
+.navBtn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--sub);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.navBtn:hover {
+  background: var(--soft);
+  color: var(--ink);
+}
+
+.publisherName {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+
+.progressTrack {
+  height: 3px;
+  background: var(--line);
+  width: 100%;
+}
+
+.progressBar {
+  height: 100%;
+  background: var(--accent);
+  animation: progress linear forwards;
+}
+
+@keyframes progress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+.categories {
+  display: flex;
+  border-bottom: 1px solid var(--line);
+  padding: 0 20px;
+  gap: 0;
+}
+
+.catTab {
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--mute);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-bottom: -1px;
+}
+
+.catTab:hover {
+  color: var(--ink);
+}
+
+.catActive {
+  color: var(--ink);
+  font-weight: 700;
+  border-bottom-color: var(--ink);
+}
+
+.articleList {
+  list-style: none;
+  flex: 1;
+}
+
+.articleItem {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--soft);
+  gap: 16px;
+  cursor: pointer;
+}
+
+.articleItem:hover {
+  background: var(--soft);
+}
+
+.articleTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  flex: 1;
+  line-height: 1.5;
+}
+
+.articleTitle:hover {
+  text-decoration: underline;
+}
+
+.articleTime {
+  font-size: 12px;
+  color: var(--mute);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.empty {
+  padding: 48px 20px;
+  text-align: center;
+  color: var(--mute);
+  font-size: 14px;
+}

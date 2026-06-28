@@ -1,3 +1,10 @@
+.wrapper {
+  width: 930px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -7,4 +14,57 @@
   border: 1px solid var(--line);
   width: 930px;
   height: 388px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.chevron {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--card);
+  font-size: 18px;
+  color: var(--sub);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+.chevron:disabled {
+  color: var(--line);
+  cursor: default;
+}
+
+.chevron:not(:disabled):hover {
+  background: var(--soft);
+  color: var(--ink);
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  background: var(--line);
+  cursor: pointer;
+  padding: 0;
+}
+
+.dotActive {
+  background: var(--ink);
 }

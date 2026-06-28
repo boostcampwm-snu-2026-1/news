@@ -2,7 +2,7 @@ import { useState } from 'react'
 import PressWordmark from './PressWordmark'
 import styles from './PublisherCell.module.css'
 
-export default function PublisherCell({ press, isSubscribed, onSubscribe, onUnsubscribe }) {
+export default function PublisherCell({ press, isSubscribed, onSubscribe, onUnsubscribe, onClick }) {
   const [hovered, setHovered] = useState(false)
 
   return (
@@ -12,11 +12,15 @@ export default function PublisherCell({ press, isSubscribed, onSubscribe, onUnsu
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setHovered(true)}
       onBlur={() => setHovered(false)}
+      onClick={onClick}
     >
       {hovered ? (
         <button
           className={`${styles.pill} ${isSubscribed ? styles.unsub : styles.sub}`}
-          onClick={() => isSubscribed ? onUnsubscribe(press.id) : onSubscribe(press.id)}
+          onClick={e => {
+            e.stopPropagation()
+            isSubscribed ? onUnsubscribe(press.id) : onSubscribe(press.id)
+          }}
         >
           <span className={styles.pillIcon}>{isSubscribed ? '−' : '+'}</span>
           {isSubscribed ? '해지하기' : '구독하기'}
